@@ -95,12 +95,13 @@
 <meta property="og:description" content="这一章介绍的是线性回归，是监督学习中最简单的一个模型。通常来讲，线性回归模型一般用于预测属量反应（quantitative response）的问题。线性回归在统计分析当中已经存在了很长的一段时间，虽然跟一些更现代的统计模型相比来说可能会看起来没有那么华丽，但是线性回归方法还是一种非常有效以及应用广泛的统计模型。并且在接下来将要学习到的那些更为华丽的模型当中很多都是又线性回归模型衍生出来的。所以学">
 <meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.1.png">
 <meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.3.png">
+<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/ch3.2.png">
 <meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.4.png">
 <meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.5.png">
 <meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.6.png">
 <meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.7.png">
 <meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.8.png">
-<meta property="og:updated_time" content="2017-03-18T15:37:18.717Z">
+<meta property="og:updated_time" content="2017-03-19T04:25:02.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ch3 线性回归分析（建立模型）">
 <meta name="twitter:description" content="这一章介绍的是线性回归，是监督学习中最简单的一个模型。通常来讲，线性回归模型一般用于预测属量反应（quantitative response）的问题。线性回归在统计分析当中已经存在了很长的一段时间，虽然跟一些更现代的统计模型相比来说可能会看起来没有那么华丽，但是线性回归方法还是一种非常有效以及应用广泛的统计模型。并且在接下来将要学习到的那些更为华丽的模型当中很多都是又线性回归模型衍生出来的。所以学">
@@ -415,7 +416,7 @@
 <h2 id="第三步，浏览数据"><a href="#第三步，浏览数据" class="headerlink" title="第三步，浏览数据"></a>第三步，浏览数据</h2><p>首先我们需要导入数据。</p>
 <pre><code>df &lt;- read.csv(&quot;Boston.csv&quot;, header = TRUE)
 </code></pre><p>接下来用str()方法浏览数据的结构</p>
-<pre><code>str(df)[/code]
+<pre><code>str(df)
 </code></pre><p><img src="http://on02djecx.bkt.clouddn.com/Ch3.1.png" alt=""></p>
 <p>通过浏览数据结构我们可以看到该数据组有506条数据和14个变量。</p>
 <p>然后用summary()总结数据</p>
@@ -426,7 +427,8 @@
 </code></pre><p>这个方法可以打开一个像spreadsheet一样的表格，当浏览结束之后记得把该窗口关掉，否则以下命令将不能继续执行。</p>
 <p>接下来我们就要看每个变量与响应值的关系了。这时我们可以通过相关性矩阵图（correlation matrix）来浏览不同变量与相应值的关系。</p>
 <pre><code>plot(df, pch = &quot;.&quot;, col = &quot;blue&quot;)
-</code></pre><p>ch3.2当然除了使用最直观的相关性矩阵图来观察相关性，我们还可以使用cor()来了解变量之间的具体相关值</p>
+</code></pre><p><img src="http://on02djecx.bkt.clouddn.com/ch3.2.png" alt=""></p>
+<p>当然除了使用最直观的相关性矩阵图来观察相关性，我们还可以使用cor()来了解变量之间的具体相关值</p>
 <pre><code>cor(df)
 </code></pre><p><img src="http://on02djecx.bkt.clouddn.com/Ch3.4.png" alt=""></p>
 <p>当我们对数据进行了基本的分析之后，可以发现房屋价值（medv）跟房间数量（rm）还有底层人群的百分比（lstat）具有最强的相关性。相关指数分别为0.695和－0.738. 同时我们从相关性矩阵图中可以看出底层人群的百分比（lstat）与房屋价值（medv）之间虽然存在较强的负相关性，但是他们的关系并不是线性（liner）的。这里我们就遇到了处理线性回归的第一个常见问题－变量与响应值之间的非线性（non-linearity）关系。我们还发现某些变量之间也具有较强的相关性。比如非零售商业化面积的比率（indus）与一氧化氮浓度（nox）的相关性为0.764，非零售商业化面积的比率（indus）与财产税税率（tax）的相关性为0.721.另外距离高数公路的指数（rad）和财产税税率（tax）的相关性为0.91. 这里如果我们把这些具有相关性较强的变量同时放在模型中的时候就有可能会遇到我们处理线性回归分析的第二个常见问题－共线性（Collinearity）。在该总结的第二部分模型改善中，我会详细的介绍如何通过解决这两个常见问题以及另外其他的四个常见问题（异方差性，离群值，高杠杆率点和误差项相关）来改善模型。</p>
@@ -675,7 +677,7 @@ predict(lm.fit2, interval = &quot;prediction&quot;)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题1：响应值与变量之间的关系"><span class="nav-number">1.</span> <span class="nav-text">问题1：响应值与变量之间的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步，分析目的"><span class="nav-number">1.1.</span> <span class="nav-text">第一步，分析目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二步，数据直觉"><span class="nav-number">1.2.</span> <span class="nav-text">第二步，数据直觉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步，浏览数据"><span class="nav-number">1.3.</span> <span class="nav-text">第三步，浏览数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四步，观察响应值分布"><span class="nav-number">1.4.</span> <span class="nav-text">第四步，观察响应值分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五步，建立初步模型lm-fit"><span class="nav-number">1.5.</span> <span class="nav-text">第五步，建立初步模型lm.fit</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题2：选取重要变量"><span class="nav-number">2.</span> <span class="nav-text">问题2：选取重要变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题3：模型拟合"><span class="nav-number">3.</span> <span class="nav-text">问题3：模型拟合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题4：模型预测"><span class="nav-number">4.</span> <span class="nav-text">问题4：模型预测</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题1：响应值与变量之间的关系"><span class="nav-text">问题1：响应值与变量之间的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步，分析目的"><span class="nav-text">第一步，分析目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二步，数据直觉"><span class="nav-text">第二步，数据直觉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步，浏览数据"><span class="nav-text">第三步，浏览数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四步，观察响应值分布"><span class="nav-text">第四步，观察响应值分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五步，建立初步模型lm-fit"><span class="nav-text">第五步，建立初步模型lm.fit</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题2：选取重要变量"><span class="nav-text">问题2：选取重要变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题3：模型拟合"><span class="nav-text">问题3：模型拟合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题4：模型预测"><span class="nav-text">问题4：模型预测</span></a></li></ol></div>
             
 
           </div>

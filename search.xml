@@ -121,7 +121,7 @@ summary(lm.fit6)
 <h2 id="第三步，浏览数据"><a href="#第三步，浏览数据" class="headerlink" title="第三步，浏览数据"></a>第三步，浏览数据</h2><p>首先我们需要导入数据。</p>
 <pre><code>df &lt;- read.csv(&quot;Boston.csv&quot;, header = TRUE)
 </code></pre><p>接下来用str()方法浏览数据的结构</p>
-<pre><code>str(df)[/code]
+<pre><code>str(df)
 </code></pre><p><img src="http://on02djecx.bkt.clouddn.com/Ch3.1.png" alt=""></p>
 <p>通过浏览数据结构我们可以看到该数据组有506条数据和14个变量。</p>
 <p>然后用summary()总结数据</p>
@@ -132,7 +132,8 @@ summary(lm.fit6)
 </code></pre><p>这个方法可以打开一个像spreadsheet一样的表格，当浏览结束之后记得把该窗口关掉，否则以下命令将不能继续执行。</p>
 <p>接下来我们就要看每个变量与响应值的关系了。这时我们可以通过相关性矩阵图（correlation matrix）来浏览不同变量与相应值的关系。</p>
 <pre><code>plot(df, pch = &quot;.&quot;, col = &quot;blue&quot;)
-</code></pre><p>ch3.2当然除了使用最直观的相关性矩阵图来观察相关性，我们还可以使用cor()来了解变量之间的具体相关值</p>
+</code></pre><p><img src="http://on02djecx.bkt.clouddn.com/ch3.2.png" alt=""></p>
+<p>当然除了使用最直观的相关性矩阵图来观察相关性，我们还可以使用cor()来了解变量之间的具体相关值</p>
 <pre><code>cor(df)
 </code></pre><p><img src="http://on02djecx.bkt.clouddn.com/Ch3.4.png" alt=""></p>
 <p>当我们对数据进行了基本的分析之后，可以发现房屋价值（medv）跟房间数量（rm）还有底层人群的百分比（lstat）具有最强的相关性。相关指数分别为0.695和－0.738. 同时我们从相关性矩阵图中可以看出底层人群的百分比（lstat）与房屋价值（medv）之间虽然存在较强的负相关性，但是他们的关系并不是线性（liner）的。这里我们就遇到了处理线性回归的第一个常见问题－变量与响应值之间的非线性（non-linearity）关系。我们还发现某些变量之间也具有较强的相关性。比如非零售商业化面积的比率（indus）与一氧化氮浓度（nox）的相关性为0.764，非零售商业化面积的比率（indus）与财产税税率（tax）的相关性为0.721.另外距离高数公路的指数（rad）和财产税税率（tax）的相关性为0.91. 这里如果我们把这些具有相关性较强的变量同时放在模型中的时候就有可能会遇到我们处理线性回归分析的第二个常见问题－共线性（Collinearity）。在该总结的第二部分模型改善中，我会详细的介绍如何通过解决这两个常见问题以及另外其他的四个常见问题（异方差性，离群值，高杠杆率点和误差项相关）来改善模型。</p>
