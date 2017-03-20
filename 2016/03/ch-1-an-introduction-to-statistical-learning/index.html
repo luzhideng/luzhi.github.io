@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://luzhideng.github.io/2016/03/ch-1-an-introduction-to-statistical-learning/index.html">
 <meta property="og:site_name" content="Luzhi's Notebook">
 <meta property="og:description" content="最近Google旗下Deepmind开发出的软件程序AlphaGo以4：1的成绩战胜韩国围棋9段选手李世石的新闻引起了很多人的关注。同时深度学习（Deep Learning）和各种算法（Algorithm）等词汇也进入了很多人的视线。在数据分析行业又掀起了机器学习（Machine Learning）的热潮。其实机器学习并不是什么新的概念，Deepmind开发出来的AlphaGo也运用到了很多机器学">
-<meta property="og:updated_time" content="2017-03-18T10:38:54.873Z">
+<meta property="og:updated_time" content="2017-03-20T14:52:33.740Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ch.1 机器学习介绍（读书笔记）">
 <meta name="twitter:description" content="最近Google旗下Deepmind开发出的软件程序AlphaGo以4：1的成绩战胜韩国围棋9段选手李世石的新闻引起了很多人的关注。同时深度学习（Deep Learning）和各种算法（Algorithm）等词汇也进入了很多人的视线。在数据分析行业又掀起了机器学习（Machine Learning）的热潮。其实机器学习并不是什么新的概念，Deepmind开发出来的AlphaGo也运用到了很多机器学">
@@ -330,6 +330,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/定量学/" itemprop="url" rel="index">
+                    <span itemprop="name">定量学</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -367,7 +389,7 @@
       
         <p>最近Google旗下Deepmind开发出的软件程序AlphaGo以4：1的成绩战胜韩国围棋9段选手李世石的新闻引起了很多人的关注。同时深度学习（Deep Learning）和各种算法（Algorithm）等词汇也进入了很多人的视线。在数据分析行业又掀起了机器学习（Machine Learning）的热潮。其实机器学习并不是什么新的概念，Deepmind开发出来的AlphaGo也运用到了很多机器学习的一些算法。我们的日常生活中也到处充满了机器学习的产物，Google搜索的的自动填词功能，iPhone上的Siri，还有最早的手机上的手写功能都运用到了机器学习的算法。</p>
 <p>近几年来，机器学习在商业上的应用也成为各个行业的热门。尤其是在市场研究和金融领域的应用更是成为了不少行业领头羊的核心竞争力。我大概1年多以前读了一本由美国斯坦福大学两名教授（Trevor Hastie and Robert Tibshirani）和他们的学生（Gareth James, Daniela Witten）一起完成的一本关于“数据学习”（很多时候也就是我们所讲的机器学习）的书 <a href="http://www-bcf.usc.edu/~gareth/ISL/book.html" target="_blank">An Introduction to Statistical Learning with Applications in R</a> (ISLR)。最近，我又重新复习了一遍这本书，然后打算用自己的博客记录一下自己学习这本书的过程。一方面是当作自己的读书笔记，让自己能够更深入的去理解书中的统计分析技巧，另一方面就是要把这本书分享给大家。我个人认为这本书是目前为止最适合，没有或者只有有限计量学背景，并且又致力于成为数据分析师的朋友们。更重要的是，希望大家通过在跟我一起学习的过程中，能够使用机器学习的技巧去解决真正的商业问题。</p>
-<p>简单的介绍一下这本书，这本书包含了统计学习（机器学习）的一个概况，并且提供了不同领域的大量的复杂的数据库用作实战练习。同时，书中提供了几乎所有非常重要以及常用的建模和预测技巧，其中包含线性回归分析（linear regression），分类分析（classification），重采样法（resampling methods），梯度下降法（shrinkage approaches），树形分簇法（tree-based methods），支持向量机（support vector machines）和聚类分析法（clustering）等等。另外在书的每一章的最后一个章节会提供一个基于R语言的实验分析教学课程，如果你没有接触过R或者刚刚接触R，这本书的实验部分绝对是一个绝佳的开始。其中我认为实验部分最大的亮点就是，书中给你的数据会出现各种在你进行真正数据分析时遇到的各种问题，而不是仅仅提供了一个简单的答案。例如，在进行回归分析的时候，很多时候我们会遇到非线性（non-linearity）问题的干扰，本书的实验部分给出的数据也同样出现了非线性的问题。这时，实验就会详细的给你介绍解决该问题的详细办法以及步骤。</p>
+<p>简单的介绍一下这本书，这本书包含了统计学习（机器学习）的一个概况，并且提供了不同领域的大量的复杂的数据库用作实战练习。同时，书中提供了几乎所有非常重要以及常用的建模和预测技巧，其中包含线性回归分析（linear regression），分类分析（classification），重采样法（resampling methods），梯度下降法（shrinkage approaches），树形分簇法（tree-based methods），支持向量机（support vector machines）和聚类分析法（clustering）等等。另外在书的每一章的最后一个章节会提供一个基于R语言的实验分析教学课程，如果你没有接触过R或者刚刚接触R，这本书的实验部分绝对是一个绝佳的开始。其中我认为实验部分最大的亮点就是，书中给你的数据会出现各种在你进行真正数据分析时遇到的各种问题，而不是仅仅提供了一个简单的答案。例如，在进行线性回归分析的时候，我们经常会遇到非线性（non-linearity）问题的干扰。本书的实验部分所给出的数据也同样出现了非线性的问题。这时，实验就会详细的介绍解决该问题的详细办法以及步骤。</p>
 <p>我刚刚也提到了，这本书非常适合没有计量学或者有有限计量学的朋友来学习。因为，该书在编写的时候刻意的去除了大部分的高级技术词汇。所以只要你有一些初级的统计学知识，你就可以去轻松的阅读这本书。这里有一个问题就是，这本书是英文版的，所以如果你不读英文的话可能没办法去学习（不确定是否国内已经有人翻译了这本书）。这也是我写这个读书笔记的另外一个目的，用中文把书中的重点记录下来分享给大家。我的终极目标就是自己把这本书吃透，让读了我读书笔记的人可以跟我一样熟练的去使用这些统计学方法去解决实际问题。当然如果你有任何学习方面的问题也欢迎在评论中分享，共同学习。</p>
 
       

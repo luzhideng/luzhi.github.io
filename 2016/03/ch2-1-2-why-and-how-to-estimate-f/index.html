@@ -99,7 +99,7 @@ Y-hat = ƒ-hat (X)
 先来谈一下预测。在一般情况情况下，一系列的变量X通常是可获得的。但是Y通常不是那么容易的得到。这时我们就需要通过使用X来预测Y。用数学公式表示就是：
 Y-hat = ƒ-hat (X)
 这里你可能又会有些困惑，怎么一会Y一会Y-hat，到底都是什么？其实Y-hat就是代表Y，这里使用不同的">
-<meta property="og:updated_time" content="2017-03-18T12:30:54.684Z">
+<meta property="og:updated_time" content="2017-03-20T15:02:11.972Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ch2.1.2 为什么要建立ƒ与如何建立ƒ">
 <meta name="twitter:description" content="建立ƒ的目的其实主要有两点，第一是通过ƒ做预测（prediction），第二是做推理（inference）。
@@ -399,8 +399,8 @@ Y-hat = ƒ-hat (X)
         <p>建立<strong>ƒ</strong>的目的其实主要有两点，第一是通过<strong>ƒ</strong>做预测（prediction），第二是做推理（inference）。</p>
 <p>先来谈一下预测。在一般情况情况下，一系列的变量<strong>X</strong>通常是可获得的。但是<strong>Y</strong>通常不是那么容易的得到。这时我们就需要通过使用<strong>X</strong>来预测<strong>Y</strong>。用数学公式表示就是：</p>
 <p><strong>Y-hat = ƒ-hat (X)</strong></p>
-<p>这里你可能又会有些困惑，怎么一会Y一会Y-hat，到底都是什么？其实Y-hat就是代表Y，这里使用不同的标志标识是为了区分估值和实际值，因为我们在前面了解到模型不可能达到100%的准确率，中间总是会有一些误差，所以我们在这里用Y-hat来表示Y的估值。ƒ-hat同样道理。还记得前面提到的误差么？这里要详细解释一下误差到底是如何产生的。误差有两种，一种是可降误差（reducible error），一种是不可降误差（irreducible error）。Y-hat的预测准确性通常就取决了这两种误差带来的影响。因为f-hat是一个估测的模型，它永远不可能等于<strong>ƒ</strong>，只可能无限接近<strong>ƒ</strong>。因为我们可以通过很多方法去改善模型从而降低<strong>ƒ</strong>的误差，所以我们称ƒ带来的误差为可降误差。另外不要忘记在公式里（<strong>Y = ƒ(X) + ε</strong>）还有一个，这个<strong>ε</strong>代表了不可降误差。不可降误差的意思就是<strong>ε</strong>永远存在并且大于0。可能你又会问，为什么存在这个不可降误差呢？因为可能包含了我们没有放入模型并且可能对预测带来影响的变量，因为我们知道影响一个结果<strong>Y</strong>的因素有很多，我们不可能把所有的变量都放入模型当中，所以<strong>ε</strong>就捕获了该因素产生的误差。还有一种可能就是无法测量的变化带来的影响，例如，一个病人对一种药的反应取决于很多因素，比如说该病人今天和明天对同一种药可能产生不相同的反应，再比如生产该种药的生产商也无法保证每片药片100%相同。所以当我们建立一个模型的时候，我们的目的就是尽量降低可降误差。</p>
-<p>接下来就是建立<strong>ƒ</strong>的第二个目的，做推理。通常来讲，我们还对X的变化会对Y产生什么样的影响感兴趣。这时我们也需要去建立<strong>ƒ</strong>。当然这时，我们的目的不是去预测，而是去了解X与Y之间的关系。通俗一点讲，当<strong>X1</strong>，<strong>X2</strong>，…..，<strong>Xp</strong>变化时会对Y产生什么影响。做统计推理时，我们希望回答以下三个问题：</p>
+<p>这里你可能又会有些困惑，怎么一会Y一会Y-hat，到底都是什么？其实Y-hat就是代表Y，这里使用不同的标志标识是为了区分估值和实际值，因为我们在前面了解到模型不可能达到100%的准确率，中间总是会有一些误差，所以我们在这里用Y-hat来表示Y的估值。ƒ-hat同样道理。还记得前面提到的误差么？这里要详细解释一下误差到底是如何产生的。误差有两种，一种是可降误差（reducible error），一种是不可降误差（irreducible error）。Y-hat的预测准确性通常就取决了这两种误差带来的影响。因为ƒ-hat是一个估测的模型，它永远不可能等于<strong>ƒ</strong>，只可能无限接近<strong>ƒ</strong>。因为我们可以通过很多方法去改善模型从而降低<strong>ƒ</strong>的误差，所以我们称<strong>ƒ</strong>带来的误差为可降误差。另外不要忘记在公式里（<strong>Y = ƒ(X) + ε</strong>）还有一个，这个<strong>ε</strong>代表了不可降误差。不可降误差的意思就是<strong>ε</strong>永远存在并且大于0。可能你又会问，为什么存在这个不可降误差呢？因为可能包含了我们没有放入模型并且可能对预测带来影响的变量，因为我们知道影响一个结果<strong>Y</strong>的因素有很多，我们不可能把所有的变量都放入模型当中，所以<strong>ε</strong>就捕获了该因素产生的误差。还有一种可能就是无法测量的变化带来的影响，例如，一个病人对一种药的反应取决于很多因素，比如说该病人今天和明天对同一种药可能产生不相同的反应，再比如生产该种药的生产商也无法保证每片药片100%相同。所以当我们建立一个模型的时候，我们的目的就是尽量降低可降误差。</p>
+<p>接下来就是建立<strong>ƒ</strong>的第二个目的，做推理。通常来讲，我们还对X的变化会对Y产生什么样的影响感兴趣。这时我们也需要去建立<strong>ƒ</strong>。当然这时，我们的目的不是去预测，而是去了解<strong>X</strong>与<strong>Y</strong>之间的关系。通俗一点讲，当<strong>X1</strong>，<strong>X2</strong>，…..，<strong>Xp</strong>变化时会对<strong>Y</strong>产生什么影响。做统计推理时，我们希望回答以下三个问题：</p>
 <ol>
 <li>哪一个变量（<strong>X</strong>）与结果（<strong>Y</strong>）有关系？</li>
 <li>每一个变量（<strong>X1</strong>，<strong>X2</strong>，…<strong>Xp</strong>）与结果（<strong>Y</strong>）之间的关系是什么？</li>

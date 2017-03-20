@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="机器学习," />
+  <meta name="keywords" content="市场营销, 数据分析" />
 
 
 
@@ -87,26 +87,12 @@
 
 
 
-<meta name="description" content="这是本书的第二章，开头以一个简单的例子来介绍统计学习（机器学习）可以解决怎样的实际问题。例子如下：
-假设我们是被一家公司雇佣来解决如何改善公司特定一款产品的销售量。然后公司提供给我们了一组数据，这组数据包含了200个市场中该产品的销售额（sales）和花费在该产品上的广告预算，分别是电视广告（TV），广播广告（radio）和报纸广告（newspaper）。
-图片来源: http://www-bcf">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Ch2.1.1 统计学习与方差分析简介">
-<meta property="og:url" content="http://luzhideng.github.io/2016/03/ch2-1-1-statistical-learning-and-regression/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Luzhi's Notebook">
+<meta property="og:url" content="http://luzhideng.github.io/categories/定量学/page/2/index.html">
 <meta property="og:site_name" content="Luzhi's Notebook">
-<meta property="og:description" content="这是本书的第二章，开头以一个简单的例子来介绍统计学习（机器学习）可以解决怎样的实际问题。例子如下：
-假设我们是被一家公司雇佣来解决如何改善公司特定一款产品的销售量。然后公司提供给我们了一组数据，这组数据包含了200个市场中该产品的销售额（sales）和花费在该产品上的广告预算，分别是电视广告（TV），广播广告（radio）和报纸广告（newspaper）。
-图片来源: http://www-bcf">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/ch2.1.png">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/ch2.2.png">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/ch2.3.png">
-<meta property="og:updated_time" content="2017-03-20T14:56:41.948Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ch2.1.1 统计学习与方差分析简介">
-<meta name="twitter:description" content="这是本书的第二章，开头以一个简单的例子来介绍统计学习（机器学习）可以解决怎样的实际问题。例子如下：
-假设我们是被一家公司雇佣来解决如何改善公司特定一款产品的销售量。然后公司提供给我们了一组数据，这组数据包含了200个市场中该产品的销售额（sales）和花费在该产品上的广告预算，分别是电视广告（TV），广播广告（radio）和报纸广告（newspaper）。
-图片来源: http://www-bcf">
-<meta name="twitter:image" content="http://on02djecx.bkt.clouddn.com/ch2.1.png">
+<meta name="twitter:title" content="Luzhi's Notebook">
 
 
 
@@ -134,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://luzhideng.github.io/2016/03/ch2-1-1-statistical-learning-and-regression/"/>
+  <link rel="canonical" href="http://luzhideng.github.io/categories/定量学/page/2/"/>
 
 
 
 
 
-  <title> Ch2.1.1 统计学习与方差分析简介 | Luzhi's Notebook </title>
+  <title> 分类: 定量学 | Luzhi's Notebook </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -165,7 +151,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -283,202 +269,51 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://luzhideng.github.io/2016/03/ch2-1-1-statistical-learning-and-regression/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Luzhi Deng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Luzhi's Notebook">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                Ch2.1.1 统计学习与方差分析简介
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-24T04:50:30+08:00">
-                2016-03-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/定量学/" itemprop="url" rel="index">
-                    <span itemprop="name">定量学</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2016/03/ch2-1-1-statistical-learning-and-regression/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/ch2-1-1-statistical-learning-and-regression/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>这是本书的第二章，开头以一个简单的例子来介绍统计学习（机器学习）可以解决怎样的实际问题。例子如下：</p>
-<p><em>假设我们是被一家公司雇佣来解决如何改善公司特定一款产品的销售量。然后公司提供给我们了一组数据，这组数据包含了200个市场中该产品的<font color="#ff6600">销售额（sales）</font>和花费在该产品上的广告预算，分别是<font color="#ff6600">电视广告（TV）</font>，<font color="#ff6600">广播广告（radio）</font>和<font color="#ff6600">报纸广告（newspaper）</font>。</em></p>
-<p><img src="http://on02djecx.bkt.clouddn.com/ch2.1.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.1.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.1.pdf</a></p>
-<p>当我们把这些数据画在一张图上时，我们可以了解对于这家公司来讲，他们没有直接的办法去增长销售量。但是，他们可以通过控制调整三份不同的广告预算来间接的增长销售量。换句话说，如果我们可以找到广告与销售量的关系就可以通过建立一个统计模型来通过广告预算预测销售量。比如说以下这个模型：</p>
-<p><strong>销售量 ≈ ƒ(电视广告，广播广告，报纸广告)</strong></p>
-<p>这里“销售量”是一个我们想要预测的相应值，通常我们以<strong>Y</strong>来表示。电视广告，广播广告，报纸广告在这里叫做变量，通常我们以X来表示。这里我们把电视广告用<strong>X1</strong>代表，广播广告用<strong>X2</strong>，报纸广告用<strong>X3</strong>代表。我们把3个变量<strong>X1，X2，X3</strong>放在一个矢量里面写作<strong>X = (X1，X2，X3)</strong>，我们就可以把该模型简化成：</p>
-<p><strong>Y = ƒ(X) + ε</strong></p>
-<p>如果你看不明白上面的公式，让我来退一步解释一下。</p>
-<p>销售量 ≈  <strong>ƒ(电视广告，广播广告，报纸广告)</strong></p>
-<p><strong>Y = ƒ(X) +ε</strong></p>
-<p>这两个公式其实是一模一样的，除了<strong>ε</strong>。</p>
-<p><strong>Y </strong>：销售量<br><strong>ƒ(X)</strong>：ƒ(电视广告，广播广告，报纸广告)<br><strong>ε</strong>：误差<br>这里你可能会有疑问，为什么第二个公式多出一个<strong>ε</strong>呢？其实第一个销售量的中文公式中也应该是有的，我为了让你在第一步不会感到困惑，所以就没有增加误差<strong>ε</strong>。你可能又会问，那误差是怎么产生的呢？让我们来看第二个例子：<br><img src="http://on02djecx.bkt.clouddn.com/ch2.2.png" alt=""></p>
-<p>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.2.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.2.pdf</a></p>
-<p>这幅图展示了30个人“<font color="#ff6600">收入</font>”与“<font color="#ff6600">受教育年数</font>”的关系。左边的那幅图每一个红色的点代表一个人。这时，当你建立一个模型<strong>ƒ</strong>时，连接变量（<font color="#ff6600">受教育年数</font>）和相应值（<font color="#ff6600">收入</font>）的<strong>ƒ</strong>其实是未知的。通俗一点讲，<strong>ƒ</strong>其实是一个估算方法，也就是你在右图中看到的那条蓝色的线。并不是所有红色的点都刚好在那条线上对不对？有的点在线的上方，有的点在线的下方。每一个点到蓝线的距离就是误差。</p>
-<p>在实际应用中，通常在<strong>ƒ</strong>中会不只一个变量。就像第一个销售量与广告预算的例子中展示的那样。下图展示了“<font color="#ff6600">收入</font>”与“<font color="#ff6600">受教育年数</font>”和“<font color="#ff6600">资历年限</font>”的关系。这时我们为了方便就用一个平面表示<strong>ƒ</strong>，从而来表现“<font color="#ff6600">受教育年数</font>”和“<font color="#ff6600">资历年限</font>”这两个变量与“<font color="#ff6600">收入</font>”之间的关系。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/ch2.3.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.3.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.3.pdf</a></p>
-<p><strong>所以，统计学习（机器学习）的精华基本上就是浑身解数找出ƒ并且改善ƒ的一个过程。</strong></p>
-
-      
+  <section id="posts" class="posts-collapse">
+    <div class="collection-title">
+      <h2 >
+        定量学
+        <small>分类</small>
+      </h2>
     </div>
 
-    <div>
+    
       
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
         
-
-      
-    </div>
-
-    <div>
-      
+            <a class="post-title-link" href="/2016/03/ch-1-an-introduction-to-statistical-learning/" itemprop="url">
+              
+                <span itemprop="name">Ch.1 机器学习介绍（读书笔记）</span>
+              
+            </a>
         
+      </h2>
 
-      
-    </div>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2016-03-19T04:32:01+08:00"
+              content="2016-03-19" >
+          03-19
+        </time>
+      </div>
 
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
-          
-        </div>
-      
-
-      
-        
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/03/ch-1-an-introduction-to-statistical-learning/" rel="next" title="Ch.1 机器学习介绍（读书笔记）">
-                <i class="fa fa-chevron-left"></i> Ch.1 机器学习介绍（读书笔记）
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/03/ch2-1-2-why-and-how-to-estimate-f/" rel="prev" title="Ch2.1.2 为什么要建立ƒ与如何建立ƒ">
-                Ch2.1.2 为什么要建立ƒ与如何建立ƒ <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
+    </header>
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/categories/定量学/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/categories/定量学/">1</a><span class="page-number current">2</span>
+  </nav>
+
+
 
           
           </div>
@@ -486,14 +321,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2016/03/ch2-1-1-statistical-learning-and-regression/"
-           data-title="Ch2.1.1 统计学习与方差分析简介" data-url="http://luzhideng.github.io/2016/03/ch2-1-1-statistical-learning-and-regression/">
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -726,10 +553,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
 
   
 

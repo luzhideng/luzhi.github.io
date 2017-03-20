@@ -348,8 +348,8 @@ predict(lm.fit2, interval = &quot;prediction&quot;)
       <content type="html"><![CDATA[<p>建立<strong>ƒ</strong>的目的其实主要有两点，第一是通过<strong>ƒ</strong>做预测（prediction），第二是做推理（inference）。</p>
 <p>先来谈一下预测。在一般情况情况下，一系列的变量<strong>X</strong>通常是可获得的。但是<strong>Y</strong>通常不是那么容易的得到。这时我们就需要通过使用<strong>X</strong>来预测<strong>Y</strong>。用数学公式表示就是：</p>
 <p><strong>Y-hat = ƒ-hat (X)</strong></p>
-<p>这里你可能又会有些困惑，怎么一会Y一会Y-hat，到底都是什么？其实Y-hat就是代表Y，这里使用不同的标志标识是为了区分估值和实际值，因为我们在前面了解到模型不可能达到100%的准确率，中间总是会有一些误差，所以我们在这里用Y-hat来表示Y的估值。ƒ-hat同样道理。还记得前面提到的误差么？这里要详细解释一下误差到底是如何产生的。误差有两种，一种是可降误差（reducible error），一种是不可降误差（irreducible error）。Y-hat的预测准确性通常就取决了这两种误差带来的影响。因为f-hat是一个估测的模型，它永远不可能等于<strong>ƒ</strong>，只可能无限接近<strong>ƒ</strong>。因为我们可以通过很多方法去改善模型从而降低<strong>ƒ</strong>的误差，所以我们称ƒ带来的误差为可降误差。另外不要忘记在公式里（<strong>Y = ƒ(X) + ε</strong>）还有一个，这个<strong>ε</strong>代表了不可降误差。不可降误差的意思就是<strong>ε</strong>永远存在并且大于0。可能你又会问，为什么存在这个不可降误差呢？因为可能包含了我们没有放入模型并且可能对预测带来影响的变量，因为我们知道影响一个结果<strong>Y</strong>的因素有很多，我们不可能把所有的变量都放入模型当中，所以<strong>ε</strong>就捕获了该因素产生的误差。还有一种可能就是无法测量的变化带来的影响，例如，一个病人对一种药的反应取决于很多因素，比如说该病人今天和明天对同一种药可能产生不相同的反应，再比如生产该种药的生产商也无法保证每片药片100%相同。所以当我们建立一个模型的时候，我们的目的就是尽量降低可降误差。</p>
-<p>接下来就是建立<strong>ƒ</strong>的第二个目的，做推理。通常来讲，我们还对X的变化会对Y产生什么样的影响感兴趣。这时我们也需要去建立<strong>ƒ</strong>。当然这时，我们的目的不是去预测，而是去了解X与Y之间的关系。通俗一点讲，当<strong>X1</strong>，<strong>X2</strong>，…..，<strong>Xp</strong>变化时会对Y产生什么影响。做统计推理时，我们希望回答以下三个问题：</p>
+<p>这里你可能又会有些困惑，怎么一会Y一会Y-hat，到底都是什么？其实Y-hat就是代表Y，这里使用不同的标志标识是为了区分估值和实际值，因为我们在前面了解到模型不可能达到100%的准确率，中间总是会有一些误差，所以我们在这里用Y-hat来表示Y的估值。ƒ-hat同样道理。还记得前面提到的误差么？这里要详细解释一下误差到底是如何产生的。误差有两种，一种是可降误差（reducible error），一种是不可降误差（irreducible error）。Y-hat的预测准确性通常就取决了这两种误差带来的影响。因为ƒ-hat是一个估测的模型，它永远不可能等于<strong>ƒ</strong>，只可能无限接近<strong>ƒ</strong>。因为我们可以通过很多方法去改善模型从而降低<strong>ƒ</strong>的误差，所以我们称<strong>ƒ</strong>带来的误差为可降误差。另外不要忘记在公式里（<strong>Y = ƒ(X) + ε</strong>）还有一个，这个<strong>ε</strong>代表了不可降误差。不可降误差的意思就是<strong>ε</strong>永远存在并且大于0。可能你又会问，为什么存在这个不可降误差呢？因为可能包含了我们没有放入模型并且可能对预测带来影响的变量，因为我们知道影响一个结果<strong>Y</strong>的因素有很多，我们不可能把所有的变量都放入模型当中，所以<strong>ε</strong>就捕获了该因素产生的误差。还有一种可能就是无法测量的变化带来的影响，例如，一个病人对一种药的反应取决于很多因素，比如说该病人今天和明天对同一种药可能产生不相同的反应，再比如生产该种药的生产商也无法保证每片药片100%相同。所以当我们建立一个模型的时候，我们的目的就是尽量降低可降误差。</p>
+<p>接下来就是建立<strong>ƒ</strong>的第二个目的，做推理。通常来讲，我们还对X的变化会对Y产生什么样的影响感兴趣。这时我们也需要去建立<strong>ƒ</strong>。当然这时，我们的目的不是去预测，而是去了解<strong>X</strong>与<strong>Y</strong>之间的关系。通俗一点讲，当<strong>X1</strong>，<strong>X2</strong>，…..，<strong>Xp</strong>变化时会对<strong>Y</strong>产生什么影响。做统计推理时，我们希望回答以下三个问题：</p>
 <ol>
 <li>哪一个变量（<strong>X</strong>）与结果（<strong>Y</strong>）有关系？</li>
 <li>每一个变量（<strong>X1</strong>，<strong>X2</strong>，…<strong>Xp</strong>）与结果（<strong>Y</strong>）之间的关系是什么？</li>
@@ -388,23 +388,20 @@ predict(lm.fit2, interval = &quot;prediction&quot;)
       <url>http://luzhideng.github.io/2016/03/ch2-1-1-statistical-learning-and-regression/</url>
       <content type="html"><![CDATA[<p>这是本书的第二章，开头以一个简单的例子来介绍统计学习（机器学习）可以解决怎样的实际问题。例子如下：</p>
 <p><em>假设我们是被一家公司雇佣来解决如何改善公司特定一款产品的销售量。然后公司提供给我们了一组数据，这组数据包含了200个市场中该产品的<font color="#ff6600">销售额（sales）</font>和花费在该产品上的广告预算，分别是<font color="#ff6600">电视广告（TV）</font>，<font color="#ff6600">广播广告（radio）</font>和<font color="#ff6600">报纸广告（newspaper）</font>。</em></p>
-<p><img src="http://on02djecx.bkt.clouddn.com/ch2.1.png" alt=""></p>
-<p>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.1.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.1.pdf</a></p>
+<p><img src="http://on02djecx.bkt.clouddn.com/ch2.1.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.1.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.1.pdf</a></p>
 <p>当我们把这些数据画在一张图上时，我们可以了解对于这家公司来讲，他们没有直接的办法去增长销售量。但是，他们可以通过控制调整三份不同的广告预算来间接的增长销售量。换句话说，如果我们可以找到广告与销售量的关系就可以通过建立一个统计模型来通过广告预算预测销售量。比如说以下这个模型：</p>
 <p><strong>销售量 ≈ ƒ(电视广告，广播广告，报纸广告)</strong></p>
-<p>这里“销售量”是一个我们想要预测的相应值，通常我们以<strong>Y</strong>来表示。电视广告，广播广告，报纸广告在这里叫做变量，通常我们以X来表示。这里我们把电视广告用<strong>X1</strong>代表，广播广告用<strong>X2</strong>，报纸广告用X3代表。我们把3个变量<strong>X1，X2，X3</strong>放在一个矢量里面写作<strong>X = (X1，X2，X3)</strong>，我们就可以把该模型简化成：</p>
+<p>这里“销售量”是一个我们想要预测的相应值，通常我们以<strong>Y</strong>来表示。电视广告，广播广告，报纸广告在这里叫做变量，通常我们以X来表示。这里我们把电视广告用<strong>X1</strong>代表，广播广告用<strong>X2</strong>，报纸广告用<strong>X3</strong>代表。我们把3个变量<strong>X1，X2，X3</strong>放在一个矢量里面写作<strong>X = (X1，X2，X3)</strong>，我们就可以把该模型简化成：</p>
 <p><strong>Y = ƒ(X) + ε</strong></p>
 <p>如果你看不明白上面的公式，让我来退一步解释一下。</p>
 <p>销售量 ≈  <strong>ƒ(电视广告，广播广告，报纸广告)</strong></p>
 <p><strong>Y = ƒ(X) +ε</strong></p>
 <p>这两个公式其实是一模一样的，除了<strong>ε</strong>。</p>
-<p><strong>Y </strong>：销售量<br><strong>ƒ(X)</strong>：ƒ(电视广告，广播广告，报纸广告)<br><strong>ε</strong>：误差<br>这里你可能会有疑问，为什么第二个公式多出一个呢？其实第一个销售量的中文公式中也应该是有的，我为了让你在第一步不会感到困惑所以就没有加。你可能又会问，那误差是怎么产生的呢？让我们来看第二个例子：</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/ch2.2.png" alt=""></p>
+<p><strong>Y </strong>：销售量<br><strong>ƒ(X)</strong>：ƒ(电视广告，广播广告，报纸广告)<br><strong>ε</strong>：误差<br>这里你可能会有疑问，为什么第二个公式多出一个<strong>ε</strong>呢？其实第一个销售量的中文公式中也应该是有的，我为了让你在第一步不会感到困惑，所以就没有增加误差<strong>ε</strong>。你可能又会问，那误差是怎么产生的呢？让我们来看第二个例子：<br><img src="http://on02djecx.bkt.clouddn.com/ch2.2.png" alt=""></p>
 <p>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.2.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.2.pdf</a></p>
-<p>这幅图展示了30个人“<font color="#ff6600">收入</font>”与“<font color="#ff6600">受教育年数</font>”的关系。左边的那幅图每一个红色的点代表一个人。这时，当你建立一个模型<strong>ƒ</strong>时，连接变量（<font color="#ff6600">受教育年数</font>）和相应值（<font color="#ff6600">收入</font>）的<strong>ƒ</strong>其实是未知的。通俗一点讲，<strong>ƒ</strong>其实是一个估算方法，也就是你在右图中看到的那条蓝色的线。并不是所有红色的点都刚好在那条线上对不对？有的点在线的上方，有的点在线的下方。每一个点到西蓝线的距离就是误差。</p>
+<p>这幅图展示了30个人“<font color="#ff6600">收入</font>”与“<font color="#ff6600">受教育年数</font>”的关系。左边的那幅图每一个红色的点代表一个人。这时，当你建立一个模型<strong>ƒ</strong>时，连接变量（<font color="#ff6600">受教育年数</font>）和相应值（<font color="#ff6600">收入</font>）的<strong>ƒ</strong>其实是未知的。通俗一点讲，<strong>ƒ</strong>其实是一个估算方法，也就是你在右图中看到的那条蓝色的线。并不是所有红色的点都刚好在那条线上对不对？有的点在线的上方，有的点在线的下方。每一个点到蓝线的距离就是误差。</p>
 <p>在实际应用中，通常在<strong>ƒ</strong>中会不只一个变量。就像第一个销售量与广告预算的例子中展示的那样。下图展示了“<font color="#ff6600">收入</font>”与“<font color="#ff6600">受教育年数</font>”和“<font color="#ff6600">资历年限</font>”的关系。这时我们为了方便就用一个平面表示<strong>ƒ</strong>，从而来表现“<font color="#ff6600">受教育年数</font>”和“<font color="#ff6600">资历年限</font>”这两个变量与“<font color="#ff6600">收入</font>”之间的关系。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/ch2.3.png" alt=""></p>
-<p>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.3.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.3.pdf</a></p>
+<p><img src="http://on02djecx.bkt.clouddn.com/ch2.3.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.3.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.3.pdf</a></p>
 <p><strong>所以，统计学习（机器学习）的精华基本上就是浑身解数找出ƒ并且改善ƒ的一个过程。</strong></p>
 ]]></content>
       
@@ -428,10 +425,16 @@ predict(lm.fit2, interval = &quot;prediction&quot;)
       <url>http://luzhideng.github.io/2016/03/ch-1-an-introduction-to-statistical-learning/</url>
       <content type="html"><![CDATA[<p>最近Google旗下Deepmind开发出的软件程序AlphaGo以4：1的成绩战胜韩国围棋9段选手李世石的新闻引起了很多人的关注。同时深度学习（Deep Learning）和各种算法（Algorithm）等词汇也进入了很多人的视线。在数据分析行业又掀起了机器学习（Machine Learning）的热潮。其实机器学习并不是什么新的概念，Deepmind开发出来的AlphaGo也运用到了很多机器学习的一些算法。我们的日常生活中也到处充满了机器学习的产物，Google搜索的的自动填词功能，iPhone上的Siri，还有最早的手机上的手写功能都运用到了机器学习的算法。</p>
 <p>近几年来，机器学习在商业上的应用也成为各个行业的热门。尤其是在市场研究和金融领域的应用更是成为了不少行业领头羊的核心竞争力。我大概1年多以前读了一本由美国斯坦福大学两名教授（Trevor Hastie and Robert Tibshirani）和他们的学生（Gareth James, Daniela Witten）一起完成的一本关于“数据学习”（很多时候也就是我们所讲的机器学习）的书 <a href="http://www-bcf.usc.edu/~gareth/ISL/book.html" target="_blank">An Introduction to Statistical Learning with Applications in R</a> (ISLR)。最近，我又重新复习了一遍这本书，然后打算用自己的博客记录一下自己学习这本书的过程。一方面是当作自己的读书笔记，让自己能够更深入的去理解书中的统计分析技巧，另一方面就是要把这本书分享给大家。我个人认为这本书是目前为止最适合，没有或者只有有限计量学背景，并且又致力于成为数据分析师的朋友们。更重要的是，希望大家通过在跟我一起学习的过程中，能够使用机器学习的技巧去解决真正的商业问题。</p>
-<p>简单的介绍一下这本书，这本书包含了统计学习（机器学习）的一个概况，并且提供了不同领域的大量的复杂的数据库用作实战练习。同时，书中提供了几乎所有非常重要以及常用的建模和预测技巧，其中包含线性回归分析（linear regression），分类分析（classification），重采样法（resampling methods），梯度下降法（shrinkage approaches），树形分簇法（tree-based methods），支持向量机（support vector machines）和聚类分析法（clustering）等等。另外在书的每一章的最后一个章节会提供一个基于R语言的实验分析教学课程，如果你没有接触过R或者刚刚接触R，这本书的实验部分绝对是一个绝佳的开始。其中我认为实验部分最大的亮点就是，书中给你的数据会出现各种在你进行真正数据分析时遇到的各种问题，而不是仅仅提供了一个简单的答案。例如，在进行回归分析的时候，很多时候我们会遇到非线性（non-linearity）问题的干扰，本书的实验部分给出的数据也同样出现了非线性的问题。这时，实验就会详细的给你介绍解决该问题的详细办法以及步骤。</p>
+<p>简单的介绍一下这本书，这本书包含了统计学习（机器学习）的一个概况，并且提供了不同领域的大量的复杂的数据库用作实战练习。同时，书中提供了几乎所有非常重要以及常用的建模和预测技巧，其中包含线性回归分析（linear regression），分类分析（classification），重采样法（resampling methods），梯度下降法（shrinkage approaches），树形分簇法（tree-based methods），支持向量机（support vector machines）和聚类分析法（clustering）等等。另外在书的每一章的最后一个章节会提供一个基于R语言的实验分析教学课程，如果你没有接触过R或者刚刚接触R，这本书的实验部分绝对是一个绝佳的开始。其中我认为实验部分最大的亮点就是，书中给你的数据会出现各种在你进行真正数据分析时遇到的各种问题，而不是仅仅提供了一个简单的答案。例如，在进行线性回归分析的时候，我们经常会遇到非线性（non-linearity）问题的干扰。本书的实验部分所给出的数据也同样出现了非线性的问题。这时，实验就会详细的介绍解决该问题的详细办法以及步骤。</p>
 <p>我刚刚也提到了，这本书非常适合没有计量学或者有有限计量学的朋友来学习。因为，该书在编写的时候刻意的去除了大部分的高级技术词汇。所以只要你有一些初级的统计学知识，你就可以去轻松的阅读这本书。这里有一个问题就是，这本书是英文版的，所以如果你不读英文的话可能没办法去学习（不确定是否国内已经有人翻译了这本书）。这也是我写这个读书笔记的另外一个目的，用中文把书中的重点记录下来分享给大家。我的终极目标就是自己把这本书吃透，让读了我读书笔记的人可以跟我一样熟练的去使用这些统计学方法去解决实际问题。当然如果你有任何学习方面的问题也欢迎在评论中分享，共同学习。</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 定量学 </category>
+            
+        </categories>
+        
         
         <tags>
             
