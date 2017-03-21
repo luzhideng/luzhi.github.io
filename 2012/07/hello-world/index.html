@@ -71,8 +71,6 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="市场营销, 数据分析" />
-
 
 
 
@@ -108,7 +106,7 @@ Welcome to Hexo! This is your very first post. Check documentation for more info
   var CONFIG = {
     root: '/',
     scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -336,16 +334,6 @@ Welcome to Hexo! This is your very first post. Check documentation for more info
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2012/07/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2012/07/hello-world/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -441,10 +429,6 @@ Welcome to Hexo! This is your very first post. Check documentation for more info
 
           
   <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2012/07/hello-world/"
-           data-title="Hello World" data-url="http://luzhideng.github.io/2012/07/hello-world/">
-      </div>
     
   </div>
 
@@ -640,6 +624,8 @@ Welcome to Hexo! This is your very first post. Check documentation for more info
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
         
+          <span id="scrollpercent"><span>0</span>%</span>
+        
       </div>
     
     
@@ -719,39 +705,32 @@ Welcome to Hexo! This is your very first post. Check documentation for more info
 
   
 
-  
-    
-  
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"luzhideng"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
 
   
-    
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
+
+
+
+
+	
+
+
+
+
+
   
 
 
 
 
 
+  
 
 
 
 
 
+  
 
 
 
