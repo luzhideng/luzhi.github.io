@@ -503,6 +503,12 @@ End Sub
 <p>原文链接：<a href="http://www.extendoffice.com/documents/excel/1174-excel-split-data-into-multiple-worksheets-based-on-column.html" target="_blank" rel="external">http://www.extendoffice.com/documents/excel/1174-excel-split-data-into-multiple-worksheets-based-on-column.html</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 数据处理 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -516,9 +522,9 @@ End Sub
       <title><![CDATA[“xlsx” 包 OutOfMemoryError 解决办法]]></title>
       <url>http://luzhideng.github.io/2015/11/solution-for-xlsx-package-java-lang-out-of-memory-error/</url>
       <content type="html"><![CDATA[<p>read.xlsx( ) 是“xlsx” Package中读取Excel中.xlsx的方法，但是在Windows环境下读取相对较大的xlsx文件的时候，有可能出现下面的错误信息导致文件无法读取：</p>
-<pre><code>`Error in .jcall(&quot;RJavaTools&quot;, &quot;Ljava/lang/Object;&quot;, &quot;invokeMethod&quot;, cl,: java.lang.OutOfMemoryError: Java heap space
+<pre><code>Error in .jcall(&quot;RJavaTools&quot;, &quot;Ljava/lang/Object;&quot;, &quot;invokeMethod&quot;, cl,: java.lang.OutOfMemoryError: Java heap space
 </code></pre><p>当你得到这个错误信息的时候只需要在你载入xlsx package之前运行下列代码即可解决：</p>
-<pre><code>`#### 设置 ####
+<pre><code>#### 设置 ####
 options(java.parameters = &quot;-Xmx1000m&quot;)
 ################
 if (Sys.getenv(&quot;JAVA_HOME&quot;)!=&quot;&quot;) {
@@ -553,10 +559,18 @@ library (&quot;xlsx&quot;)
 <p><a href="https://www.dropbox.com/sh/502wurmehq06606/AAA7QBTG090bkeJvec3BnuqHa?dl=0" target="_blank">码农的世界你不懂</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 数据分析 </category>
+            
+        </categories>
+        
         
         <tags>
             
             <tag> R </tag>
+            
+            <tag> 咖啡 </tag>
             
         </tags>
         
@@ -579,6 +593,12 @@ library (&quot;xlsx&quot;)
 <p>我写这篇文章的目的只有一个，就是想告诉大家恐怖主义不是某个国家的问题，而是世界问题！</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 数据分析 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -633,6 +653,12 @@ library (&quot;xlsx&quot;)
 <p>原文链接：<a href="http://www.datasciencecentral.com/profiles/blogs/how-to-become-a-data-scientist-for-free-1" target="_blank" rel="external">http://www.datasciencecentral.com/profiles/blogs/how-to-become-a-data-scientist-for-free-1</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 数据科学 </category>
+            
+        </categories>
+        
         
     </entry>
     
@@ -651,6 +677,12 @@ library (&quot;xlsx&quot;)
 <p>以上是我在学习以及工作的过程中遇到的问题和对我个人经验的总结。希望对想成为数据分析师的你带来一些帮助，让你少走一些弯路。</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 抛砖引玉 </category>
+            
+        </categories>
+        
         
     </entry>
     
@@ -670,6 +702,18 @@ library (&quot;xlsx&quot;)
 <p><strong>SEO+内容+社交媒体 = SEOer Rock !!!</strong></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 抛砖引玉 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> SEO </tag>
+            
+        </tags>
         
     </entry>
     
@@ -685,6 +729,12 @@ library (&quot;xlsx&quot;)
 <p>当然，这只是价格制定中的一个小技巧，在使用的时候一定要小心。因为价格的制定受到很多因素的影响，比如经济状况，市场需求，市场供应等等。</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 市场研究 </category>
+            
+        </categories>
+        
         
     </entry>
     
@@ -718,6 +768,12 @@ library (&quot;xlsx&quot;)
 <p><iframe src="http://embed.ted.com/talks/lang/zh-cn/sheena_iyengar_choosing_what_to_choose.html" width="560" height="315" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe><br><br>欢迎大家提出你的观点与大家共同分享探讨。</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 营销视频 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -738,6 +794,12 @@ library (&quot;xlsx&quot;)
 <p>你在生活当中是否遇到了类似的词语呢？在评论中分享给我和大家吧。</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 市场研究 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -762,6 +824,18 @@ library (&quot;xlsx&quot;)
 <p>你对处理产品选择过剩的问题有什么建议和看法呢？</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 营销视频 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Ted </tag>
+            
+        </tags>
         
     </entry>
     
@@ -791,6 +865,12 @@ library (&quot;xlsx&quot;)
 <p>这些词汇有一个相同点，那就是每一个都会触发你的感觉神经，每一个都会有可能让你产生冲动购买行为。作为营销者，我们要学会合理的使用这14个神奇的词汇。你可以把这些词汇运用到你内容营销中，社会化媒体营销中，当然还有移动营销中。如果你初次使用这些词汇，我的个人建议是，挑选其中的几个词汇，放入到你接下来的营销活动中（如，广告，SMS，邮件，微博），然后做A/B测试比较与没有这几个词汇的版本的结果。</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 市场研究 </category>
+            
+        </categories>
+        
         
     </entry>
     
@@ -817,6 +897,12 @@ library (&quot;xlsx&quot;)
 <p>尽管，国内的实体店铺存在很多不足，但是商家可以采取通过结合电子商务以及完善实体店铺功能等满足顾客的需求。你是否有更好的想法来完善国内实体店铺呢？你对解决国内电子商务对实体店铺的冲击有什么好的建议？</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 市场研究 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -835,6 +921,12 @@ library (&quot;xlsx&quot;)
 <p>这也就是为什么我们在跟朋友一起出去购物时，往往比自己单独一个人出去购物时购买更多东西的原因。作为营销者，我们不仅仅需要成为事件的发起者。更重要的是，要找到你的第一位跟随者（稍等一下，似乎想到了什么…）。</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 营销视频 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -861,6 +953,12 @@ library (&quot;xlsx&quot;)
 <p>通过明确这3个基本问题，你会明白你为什么要为用户建立手机网站。用户在什么情形下会使用手机登陆网站，而不是通过PC登陆。用户在需要通过手机登陆网站的情形下，最需要查询的是哪一类信息？</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 市场研究 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -876,6 +974,12 @@ library (&quot;xlsx&quot;)
       <content type="html"><![CDATA[<p>物理学和市场营销似乎没有什么相似之处，但是丹.科布利却对两者充满热情。他利用牛顿第二定律、海森堡的不确定原理、科学的方法以及热力学的第二定律将这些毫不相干的两者放到一起来解释品牌化的基本理论。</p>
 <center><br><iframe src="http://embed.ted.com/talks/lang/zh-cn/dan_cobley_what_physics_taught_me_about_marketing.html" width="560" height="315" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe><br></center>]]></content>
       
+        <categories>
+            
+            <category> 营销视频 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -904,6 +1008,12 @@ library (&quot;xlsx&quot;)
 <p>以上数据均来自：<a href="http://www.truste.com/us-consumer-confidence-index-2014/" target="_blank">http://www.truste.com/us-consumer-confidence-index-2014/</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> 市场研究 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -923,6 +1033,20 @@ library (&quot;xlsx&quot;)
 <p>然而，根据我个人的观点。我认为星巴克可以采取一些非直接的运营方式进入意大利这个咖啡需求大国。例如，星巴克可以收购当地的一些咖啡品牌，利用自己强大的资金实力，形成竞争优势。对于担心品牌形象受损和美国咖啡在意大利不利的形象，星巴克可以让这些咖啡厅独立运营，暂时不要提及这条“绿色的美人鱼”。</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 市场研究 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 咖啡 </tag>
+            
+            <tag> 星巴克 </tag>
+            
+        </tags>
         
     </entry>
     
@@ -941,6 +1065,12 @@ library (&quot;xlsx&quot;)
 <p>其实两种标签在传达相同的信息——酸奶是无脂肪的，但是不同消费者对这两种标签却会产生认知偏差。</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 市场研究 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -959,6 +1089,12 @@ library (&quot;xlsx&quot;)
 <p>你是否真正了解你的消费者呢？</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 营销视频 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -982,6 +1118,12 @@ library (&quot;xlsx&quot;)
 <p>在这个时间贫乏感不断增加的世界，营销者需要意识到“时间就是金钱”这是理论的重要性，想办法去缩短或者“缩短”排队的等待时间。</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 市场研究 </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -1004,6 +1146,12 @@ library (&quot;xlsx&quot;)
 <p>饭店通过“卡通杯”影响到了小孩子的行为。虽然，我们成年人并没有受到任何影响，但是饭店通过这种巧妙的手法抓住了小孩子的心理，从而抓住了父母的钱包。我们都明白，小孩子的心智并不成熟，一点改变都有可能影响到他们的行为。如果营销者发现一种手法没有办法获得理想的顾客，或者没有办法收获更多的利益，不如借助“卡通杯”案例来开拓一条新的思路吧。</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 市场研究 </category>
+            
+        </categories>
+        
         
         <tags>
             
