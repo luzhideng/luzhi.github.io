@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Luzhi&#39;s Notebook</title>
+  <title>L��zhi&#39;s Notebook</title>
   <subtitle>Harnessing Data to Drive Marketing</subtitle>
   <link href="/atom.xml" rel="self"/>
   
@@ -9,7 +9,7 @@
   <id>http://mingju.net/</id>
   
   <author>
-    <name>Luzhi Deng</name>
+    <name>L��zhi Deng</name>
     
   </author>
   
@@ -178,7 +178,7 @@ summary(lm.fit6)
     <link href="http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/"/>
     <id>http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/</id>
     <published>2016-04-20T18:30:19.000Z</published>
-    <updated>2020-04-29T06:19:55.612Z</updated>
+    <updated>2020-04-29T06:31:39.000Z</updated>
     
     <content type="html"><![CDATA[<p>这一章介绍的是线性回归，是监督学习中最简单的一个模型。通常来讲，线性回归模型一般用于预测属量反应（quantitative response）的问题。线性回归在统计分析当中已经存在了很长的一段时间，虽然跟一些更现代的统计模型相比来说可能会看起来没有那么华丽，但是线性回归方法还是一种非常有效以及应用广泛的统计模型。并且在接下来将要学习到的那些更为华丽的模型当中很多都是又线性回归模型衍生出来的。所以学习并理解线性回归模型非常重要。本章在原著上大概有60多页的内容，对于没有扎实统计背景的人读起来可能有点枯燥。所以，我打算用一个实例来演示如何做线性回归分析，并且把其中会遇到的问题解释加以总结，同时给出解决这些问题的方法。这里需要声明的是，本章主要专注于线性回归分析，对于模型内的验证分析将在接下来的内容中详细讲述。本实例中使用的数据为经典的“Boston”数据。</p>
 <p>在我们进行数据分析之前，首先要了解4个主要问题：</p>
@@ -221,7 +221,7 @@ summary(lm.fit6)
 </code></pre><p>这个方法可以打开一个像spreadsheet一样的表格，当浏览结束之后记得把该窗口关掉，否则以下命令将不能继续执行。</p>
 <p>接下来我们就要看每个变量与响应值的关系了。这时我们可以通过相关性矩阵图（correlation matrix）来浏览不同变量与相应值的关系。</p>
 <pre><code>plot(df, pch = &quot;.&quot;, col = &quot;blue&quot;)
-</code></pre><p><img src="http://on02djecx.bkt.clouddn.com/ch3.2.png" alt=""></p>
+</code></pre><p><img src="http://mingju.net/uploads/images/ch3.2.png" alt=""></p>
 <p>当然除了使用最直观的相关性矩阵图来观察相关性，我们还可以使用cor()来了解变量之间的具体相关值</p>
 <pre><code>cor(df)
 </code></pre><p><img src="http://mingju.net/uploads/images/Ch3.4.png" alt=""></p>

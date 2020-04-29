@@ -193,7 +193,7 @@ summary(lm.fit6)
 </code></pre><p>这个方法可以打开一个像spreadsheet一样的表格，当浏览结束之后记得把该窗口关掉，否则以下命令将不能继续执行。</p>
 <p>接下来我们就要看每个变量与响应值的关系了。这时我们可以通过相关性矩阵图（correlation matrix）来浏览不同变量与相应值的关系。</p>
 <pre><code>plot(df, pch = &quot;.&quot;, col = &quot;blue&quot;)
-</code></pre><p><img src="http://on02djecx.bkt.clouddn.com/ch3.2.png" alt=""></p>
+</code></pre><p><img src="http://mingju.net/uploads/images/ch3.2.png" alt=""></p>
 <p>当然除了使用最直观的相关性矩阵图来观察相关性，我们还可以使用cor()来了解变量之间的具体相关值</p>
 <pre><code>cor(df)
 </code></pre><p><img src="http://mingju.net/uploads/images/Ch3.4.png" alt=""></p>
@@ -987,9 +987,9 @@ library (&quot;xlsx&quot;)
         
         <tags>
             
-            <tag> Ted </tag>
-            
             <tag> 消费者行为学 </tag>
+            
+            <tag> Ted </tag>
             
         </tags>
         
