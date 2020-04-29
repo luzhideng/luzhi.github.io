@@ -95,12 +95,12 @@
 <meta property="og:url" content="http://mingju.net/2016/03/ch-2-2-3-the-classification-setting/index.html">
 <meta property="og:site_name" content="Luzhi's Notebook">
 <meta property="og:description" content="在之前的学习中，我们主要涉及了回归问题。这里，我们来讨论一下分类问题（classification）。其实分类问题与回归问题（regression）的最大区别就是相应变量（response）y发生了变化。在回归问题中，响应变量是定量值（quantitative），在分类问题中，响应值是定性值（qualitative or categorical）。比如说我们可以用分类分析去预测吸烟者与不吸烟者得癌">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/ch2.8.png">
-<meta property="og:updated_time" content="2017-03-18T15:19:25.522Z">
+<meta property="og:image" content="http://mingju.net/uploads/images/ch2.8.png">
+<meta property="og:updated_time" content="2020-04-29T06:16:58.036Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ch2.2.3 分类问题">
 <meta name="twitter:description" content="在之前的学习中，我们主要涉及了回归问题。这里，我们来讨论一下分类问题（classification）。其实分类问题与回归问题（regression）的最大区别就是相应变量（response）y发生了变化。在回归问题中，响应变量是定量值（quantitative），在分类问题中，响应值是定性值（qualitative or categorical）。比如说我们可以用分类分析去预测吸烟者与不吸烟者得癌">
-<meta name="twitter:image" content="http://on02djecx.bkt.clouddn.com/ch2.8.png">
+<meta name="twitter:image" content="http://mingju.net/uploads/images/ch2.8.png">
 
 
 
@@ -383,7 +383,7 @@
       
         <p>在之前的学习中，我们主要涉及了回归问题。这里，我们来讨论一下分类问题（classification）。其实分类问题与回归问题（regression）的最大区别就是相应变量（response）y发生了变化。在回归问题中，响应变量是定量值（quantitative），在分类问题中，响应值是定性值（qualitative or categorical）。比如说我们可以用分类分析去预测吸烟者与不吸烟者得癌症的概率。这时的响应值y就只可能有两种，得癌症或者不得癌症，也就是我们讲的YES与NO的问题。然后基本上分类问题跟回归问题就没有什么太大的区别了，之前讲到的方差与误差之间的权衡还有评估模型的准确性同样适用于分类问题的范畴。</p>
 <p>在解决分类问题的时候，一个最简单的方法就是贝叶斯分类器（Bayes Classifer）。贝叶斯分类器的工作过程就是计算出条件概率。比如说，在一个响应值是yes还有no的问题中，贝叶斯分类器就会把所有响应值大于0.5的放在一个分类（YES）中，然后把响应值小于0.5的放在另一个分类（NO）中。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/ch2.8.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.13.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.13.pdf</a></p>
+<p><img src="http://mingju.net/uploads/images/ch2.8.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.13.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.13.pdf</a></p>
 <p>图中展示了一组模拟数据被贝叶斯分类器分类过后的效果。其中这组模拟数据有两个变量X1和X2，每一个X1和X2变量都会有一个相对应的概率值。概率大于50%的为橘黄色，小于50%的为蓝色。刚好等于50%就落在了那条紫色的线上。那条紫色的线叫做贝叶斯决策边界（Bayes decision boundary）。但是理论上，我们总是希望使用贝叶斯分类器去预测定性值结果。可是，在现实生活中的数据中，当我们有X的时候我们无法去计算Y的条件分布。所以这里就引用了一种可以估测概率的预测方法－临近规则法（K-nearest neighbor or KNN）。在接下来的学习中会详细介绍这一经典的算法。</p>
 
       

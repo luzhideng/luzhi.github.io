@@ -100,10 +100,10 @@
 
 均方差越小">
 <meta property="og:image" content="https://upload.wikimedia.org/math/0/6/8/0686d09b81bdb146174754ee2f74b81f.png">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/ch2.5.png">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/ch2.7.png">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/ch2.6.png">
-<meta property="og:updated_time" content="2017-03-18T15:13:32.851Z">
+<meta property="og:image" content="http://mingju.net/uploads/images/ch2.5.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/ch2.7.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/ch2.6.png">
+<meta property="og:updated_time" content="2020-04-29T06:16:21.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ch2.2.1 评估模型的准确性">
 <meta name="twitter:description" content="当我们在选择建立模型的过程中需要不断的改善模型以提高模型的准确性。这也是统计分析中最大的难点。在验证一个统计模型的表现时，我们需要找出去测量预测值与实际值的匹配度有多好。也就是说，当我们用我们的模型预测出一个预测值的时候，我们需要知道预测值与实际值到底相差多少。这时我们需要一个方法去测量这个误差。在回归（regression）的问题当中，我们通常使用均方差（MSE）来验证。公式如下：
@@ -393,12 +393,12 @@
         <p>当我们在选择建立模型的过程中需要不断的改善模型以提高模型的准确性。这也是统计分析中最大的难点。在验证一个统计模型的表现时，我们需要找出去测量预测值与实际值的匹配度有多好。也就是说，当我们用我们的模型预测出一个预测值的时候，我们需要知道预测值与实际值到底相差多少。这时我们需要一个方法去测量这个误差。在回归（regression）的问题当中，我们通常使用均方差（MSE）来验证。公式如下：</p>
 <p><img src="https://upload.wikimedia.org/math/0/6/8/0686d09b81bdb146174754ee2f74b81f.png" alt="\operatorname{MSE}=\frac{1}{n}\sum_{i=1}^n(\hat{Y_i} - Y_i)^2"></p>
 <p>均方差越小说明预测值与实际值越接近，均方差越大说明预测值与实际值相差越远。我们的目标是尽量降低均方差的值。因为均方差越小说明模型的预测能力越准确。但是问题是，我们在建立模型的时候使用的是训练数据（training data），这时我们算出来的均方差也是训练数据的均方差。在现实中，我们对训练数据的均方差并没有太大的兴趣。我们更在意的是测试数据（test data）的均方差。因为用来建立模型的训练数据我们已经知道了结果（y），这时我们并不需要再去预测我们已经知道的结果。而我们更在意的是，是否可以使用这个用训练数据建立的模型来预测出新的测试数据的结果。例如，我们使用一组医疗数据（身高，体重，血压，年龄，是否有糖尿病）来建立了一个模型ƒ。在实际应用中，我们希望当我们拿到一个新的病人的身高，体重，血压以及年龄等时候就可以预测出该病人是否患了糖尿病，而不是去预测我们用来建模型的那些数据中的病人是否患病，因为在训练数据中我们已经知道哪位病人患有糖尿病了。所以这时你应该明白我们为什么更在意测试数据的均方差了。回到现实，在实际应用中，有时我们会有测试数据供我们使用，但是大部分情况测试数据是不存在的。但是如果测试数据不存在我们怎么去计算测试数据的均方差呢？一般的处理方法就是选择具有最小训练数据均方差的模型，因为大多数情况训练数据的均方差和测试数据的均方差是具有相关性的。但是，不幸的是这种处理方法有一个基本的问题就是，没有办法保证模型具有最低的训练数据均方差（training MSE）就一定会有最低的测试数据均方差（test MSE）。接下来将会用例子告诉你为什么会存在这个基本问题。</p>
-<p>左图用数据模拟了一个模型ƒ，其中模型ƒ用黑色线代表。另外我们还上面其他建立的3个估测模型ƒ-hat。线性回归（橘黄色线），还有两个平滑样条（蓝色和绿色）。<br><img src="http://on02djecx.bkt.clouddn.com/ch2.5.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.9.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.9.pdf</a></p>
+<p>左图用数据模拟了一个模型ƒ，其中模型ƒ用黑色线代表。另外我们还上面其他建立的3个估测模型ƒ-hat。线性回归（橘黄色线），还有两个平滑样条（蓝色和绿色）。<br><img src="http://mingju.net/uploads/images/ch2.5.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.9.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.9.pdf</a></p>
 <p>右图灰色曲线代表了训练数据均方差，红色曲线代表了测试数据均方差。中间那条灰色的虚线代表了所有模型可能达到的最小测试数据均方差。灰色曲线和红色曲线上面的方块代表了左图三种测试模型的训练数据和测试数据的均方差。方块颜色与左图3个估测模型的颜色相照应。我们从左图可以看出蓝色的线代表的模型是最接近真正的模型ƒ的，所以在相对的右图中，我们看到这个模型同时具有最小的训练数据和测试数据的均方差。我们从左图还看到线性模型（橘黄色线）并没有很好的代表了所有数据点（与真正模型ƒ相比有较大的误差），所以右图中他们的训练数据和测试数据的均方差也就比更接近真正模型ƒ的蓝色线要高很多。当然，我们还可以看到这两个模型的训练数据和测试数据的均方差相差并不是很多，所以在测试数据不存在的时候我们可以用训练数据的均方差来确定最佳模型。但是，如果我们再看一下绿色线所代表的模型时情况就完全不同了。绿色线在左图中，可以看出是拟合数据点最好的模型，所有再右图中该模型的训练数据均方差也是最低的，但是为什么它却有了相对较高的测试数据均方差呢？因为从左图我们可以看出，绿色线代表的模型过度的跟随数据点出现了过度拟合（overfitting）的情况。所以，当我们拿训练数据建立的模型去验证测试数据时就出现了较高的测试数据均方差。因为我们知道过度拟合出来的模型可以很好的代表训练数据，但是不一定可以代表测试数据。所以这个例子也就解释了为什么我们<strong>无法保证模型具有最低的训练数据均方差就一定会有最低的测试数据均方差的道理</strong>。</p>
 <p>从之前的学习中，我们可以判断出这模型的严格和灵活程度。我们知道在上面的例子当中，线性回归（橘黄色）是三个模型当中最严格的，其次是蓝色线所代表的模型，最灵活的是绿色线所代表的模型。我们可以看到，随着模型越灵活度的增高，训练数据均方差会降低，但是测试数据的均方差却不一定。当我们看到一个模型给出了很低的训练数据均方差，但是很高的测试数据的均方差时，我们称作这种情况为过度拟合。通常情况下，训练数据的均方差都会比测试数据的均方差高，因为大多数的统计模型都会直接或者间接的刻意的去降低训练数据均方差。当然，我们在前面也提到，很多时候测试数据并不存在，所以我们在接下来的学习中会讲到一些其他方法去通过训练数据均方差估测测试数据的均方差，比如非常重要的一个方法－交叉验证（cross-validation）。</p>
 <p>接下来两幅图用不同类型的模型ƒ，表示了训练数据均方差和测试数据均方差的关系。有兴趣的朋友可以根据前面的叙述来理解这两幅图中的信息。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/ch2.7.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.10.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.10.pdf</a></p>
-<p><img src="http://on02djecx.bkt.clouddn.com/ch2.6.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.11.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.11.pdf</a></p>
+<p><img src="http://mingju.net/uploads/images/ch2.7.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.10.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.10.pdf</a></p>
+<p><img src="http://mingju.net/uploads/images/ch2.6.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.11.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.11.pdf</a></p>
 
       
     </div>

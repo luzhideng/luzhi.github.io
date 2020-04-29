@@ -183,11 +183,11 @@ summary(lm.fit6)
 <pre><code>df &lt;- read.csv(&quot;Boston.csv&quot;, header = TRUE)
 </code></pre><p>接下来用str()方法浏览数据的结构</p>
 <pre><code>str(df)
-</code></pre><p><img src="http://on02djecx.bkt.clouddn.com/Ch3.1.png" alt=""></p>
+</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.1.png" alt=""></p>
 <p>通过浏览数据结构我们可以看到该数据组有506条数据和14个变量。</p>
 <p>然后用summary()总结数据</p>
 <pre><code>summary(df)
-</code></pre><p><img src="http://on02djecx.bkt.clouddn.com/Ch3.3.png" alt=""></p>
+</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.3.png" alt=""></p>
 <p>我个人强烈建议大家在进行任何数据分析之前，一定要进行这两个步骤，这样可以让你对数据有一个初步的理解。如果这里想要像在Excel里面那样浏览数据可以使用一个方法</p>
 <pre><code>fix(df)
 </code></pre><p>这个方法可以打开一个像spreadsheet一样的表格，当浏览结束之后记得把该窗口关掉，否则以下命令将不能继续执行。</p>
@@ -196,16 +196,16 @@ summary(lm.fit6)
 </code></pre><p><img src="http://on02djecx.bkt.clouddn.com/ch3.2.png" alt=""></p>
 <p>当然除了使用最直观的相关性矩阵图来观察相关性，我们还可以使用cor()来了解变量之间的具体相关值</p>
 <pre><code>cor(df)
-</code></pre><p><img src="http://on02djecx.bkt.clouddn.com/Ch3.4.png" alt=""></p>
+</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.4.png" alt=""></p>
 <p>当我们对数据进行了基本的分析之后，可以发现房屋价值（medv）跟房间数量（rm）还有底层人群的百分比（lstat）具有最强的相关性。相关指数分别为0.695和－0.738. 同时我们从相关性矩阵图中可以看出底层人群的百分比（lstat）与房屋价值（medv）之间虽然存在较强的负相关性，但是他们的关系并不是线性（liner）的。这里我们就遇到了处理线性回归的第一个常见问题－变量与响应值之间的非线性（non-linearity）关系。我们还发现某些变量之间也具有较强的相关性。比如非零售商业化面积的比率（indus）与一氧化氮浓度（nox）的相关性为0.764，非零售商业化面积的比率（indus）与财产税税率（tax）的相关性为0.721.另外距离高数公路的指数（rad）和财产税税率（tax）的相关性为0.91. 这里如果我们把这些具有相关性较强的变量同时放在模型中的时候就有可能会遇到我们处理线性回归分析的第二个常见问题－共线性（Collinearity）。在该总结的第二部分模型改善中，我会详细的介绍如何通过解决这两个常见问题以及另外其他的四个常见问题（异方差性，离群值，高杠杆率点和误差项相关）来改善模型。</p>
 <h2 id="第四步，观察响应值分布"><a href="#第四步，观察响应值分布" class="headerlink" title="第四步，观察响应值分布"></a>第四步，观察响应值分布</h2><p>理论上，当我们要进行线性回归分析时，我们希望响应值（Y）是成正态分布（Normal Distribution）。但是在处理实际生活中的案例时，很少会出现响应值是正态分布的情况。最直观去观察响应值的分布就是使用直方图（histogram）。</p>
 <pre><code>hist(df$medv)
-</code></pre><p><img src="http://on02djecx.bkt.clouddn.com/Ch3.5.png" alt=""></p>
+</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.5.png" alt=""></p>
 <p>从对房屋价值（medv）的直方图中，我们可以看出数据称右偏态分布（right skewed distribution）通常我们处理右偏态分布的方法是使用对数转换法（log transformation）。如果数据称左偏态分布（left skewed）的话，通常的处理方法为平方转换法（squaring）。在这里我们首先不对任何数据进行转换，直接建立模型，然后在接下来的分析中我会介绍如何通过转换数据来改善模型。</p>
 <h2 id="第五步，建立初步模型lm-fit"><a href="#第五步，建立初步模型lm-fit" class="headerlink" title="第五步，建立初步模型lm.fit"></a>第五步，建立初步模型lm.fit</h2><pre><code>lm.fit &lt;- lm(medv ~., data = Boston)
 summary(lm.fit)
 </code></pre><p>我们通过lm()方法拟合了一个多变量线性模型，其中“medv ~.”这个语法表示把所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/Ch3.6.png" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/Ch3.6.png" alt=""></p>
 <p>通常我们在建立线性回归模型之后，首先需要检查的是F值。通常情况下，如果F值大于1的话我们就基本有证据去否定零假设（null hypothesis, H0），也就是可以说明模型中至少一个变量（X）与响应值（Y）相关。如果没有任何变量与响应值有关系的话，我们一般期望F值接近于1。在上述例子中我们可以看到F值（F-statistic）为108.1，因为F值比1大很多，所以这里我们可以否定零假设H0. 那么如果F值如果只大于1一点，我们应该如何判断呢？这里请遵循以下两个基本原则：</p>
 <ol>
 <li>如果数据组中的样本（n）很大，即使F值稍微大于1一点，也为我们提供了去否定零假设H0的证据。</li>
@@ -216,7 +216,7 @@ summary(lm.fit)
 <pre><code>lm.fit2 &lt;- lm(medv ~.-age-indus, data = df)
 summary(lm.fit2)
 </code></pre><p>其中“medv ~.-age-indus”这个语法表示把除了age和indus之外的所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/Ch3.7.png" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/Ch3.7.png" alt=""></p>
 <p>选择重要变量的方法有很多，我们这里采取的是一种最普通的处理方法。当我们拥有更多数量的变量供我们选择的时候，这种简单的方法就不适用了。通常当我们遇到大量变量时，我们会使用向前逐步回归（forward selection），向后逐步回归（backward selection）或者合并（mixed selection）这两种方法。这里我们只对这三种方法进行简单的介绍，在接下来的文章中我会对这三种方法的使用做详细的解释。</p>
 <p><strong>向前逐步回归：</strong>开始于一个只有截距（intercept）没有任何变量的空模型（null model），然后向模型中不断的加入变量，然后看哪些变量可以带来最低的残差平方和（RSS）。</p>
 <p><strong>向后逐步回归：</strong>把所有变量放入模型中，然后逐步移除p值比较大的变量。（我们上面运用的方法就是简化版的向后逐步法。</p>
@@ -229,7 +229,7 @@ summary(lm.fit2)
 <p>在我们的Boston例子中，如何进行可靠区间的计算呢？如果我们想要获得估值系数（coefficient estimates）的可靠区间，可以使用：</p>
 <pre><code>confint(lm.fit2)
 </code></pre><p>得到了以下的结果：</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/Ch3.8.png" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/Ch3.8.png" alt=""></p>
 <p>这个结果告诉了我们每一个变量系数的可靠区间。比如变量rm的95%的可靠区间为[3.003258393, 4.59989929]. 换言之，这个可靠区间[3.003258393, 4.59989929], 包含了95%的该变量所预估的实际值。这时，我们可能更感兴趣的是观察模型预测之后的区间范围。我们可以使用：</p>
 <pre><code>predict(lm.fit2, interval = &quot;confidence&quot;)
 predict(lm.fit2, interval = &quot;prediction&quot;)
@@ -283,7 +283,7 @@ predict(lm.fit2, interval = &quot;prediction&quot;)
       <url>http://mingju.net/2016/03/ch-2-2-3-the-classification-setting/</url>
       <content type="html"><![CDATA[<p>在之前的学习中，我们主要涉及了回归问题。这里，我们来讨论一下分类问题（classification）。其实分类问题与回归问题（regression）的最大区别就是相应变量（response）y发生了变化。在回归问题中，响应变量是定量值（quantitative），在分类问题中，响应值是定性值（qualitative or categorical）。比如说我们可以用分类分析去预测吸烟者与不吸烟者得癌症的概率。这时的响应值y就只可能有两种，得癌症或者不得癌症，也就是我们讲的YES与NO的问题。然后基本上分类问题跟回归问题就没有什么太大的区别了，之前讲到的方差与误差之间的权衡还有评估模型的准确性同样适用于分类问题的范畴。</p>
 <p>在解决分类问题的时候，一个最简单的方法就是贝叶斯分类器（Bayes Classifer）。贝叶斯分类器的工作过程就是计算出条件概率。比如说，在一个响应值是yes还有no的问题中，贝叶斯分类器就会把所有响应值大于0.5的放在一个分类（YES）中，然后把响应值小于0.5的放在另一个分类（NO）中。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/ch2.8.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.13.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.13.pdf</a></p>
+<p><img src="http://mingju.net/uploads/images/ch2.8.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.13.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.13.pdf</a></p>
 <p>图中展示了一组模拟数据被贝叶斯分类器分类过后的效果。其中这组模拟数据有两个变量X1和X2，每一个X1和X2变量都会有一个相对应的概率值。概率大于50%的为橘黄色，小于50%的为蓝色。刚好等于50%就落在了那条紫色的线上。那条紫色的线叫做贝叶斯决策边界（Bayes decision boundary）。但是理论上，我们总是希望使用贝叶斯分类器去预测定性值结果。可是，在现实生活中的数据中，当我们有X的时候我们无法去计算Y的条件分布。所以这里就引用了一种可以估测概率的预测方法－临近规则法（K-nearest neighbor or KNN）。在接下来的学习中会详细介绍这一经典的算法。</p>
 ]]></content>
       
@@ -335,12 +335,12 @@ predict(lm.fit2, interval = &quot;prediction&quot;)
       <content type="html"><![CDATA[<p>当我们在选择建立模型的过程中需要不断的改善模型以提高模型的准确性。这也是统计分析中最大的难点。在验证一个统计模型的表现时，我们需要找出去测量预测值与实际值的匹配度有多好。也就是说，当我们用我们的模型预测出一个预测值的时候，我们需要知道预测值与实际值到底相差多少。这时我们需要一个方法去测量这个误差。在回归（regression）的问题当中，我们通常使用均方差（MSE）来验证。公式如下：</p>
 <p><img src="https://upload.wikimedia.org/math/0/6/8/0686d09b81bdb146174754ee2f74b81f.png" alt="\operatorname{MSE}=\frac{1}{n}\sum_{i=1}^n(\hat{Y_i} - Y_i)^2"></p>
 <p>均方差越小说明预测值与实际值越接近，均方差越大说明预测值与实际值相差越远。我们的目标是尽量降低均方差的值。因为均方差越小说明模型的预测能力越准确。但是问题是，我们在建立模型的时候使用的是训练数据（training data），这时我们算出来的均方差也是训练数据的均方差。在现实中，我们对训练数据的均方差并没有太大的兴趣。我们更在意的是测试数据（test data）的均方差。因为用来建立模型的训练数据我们已经知道了结果（y），这时我们并不需要再去预测我们已经知道的结果。而我们更在意的是，是否可以使用这个用训练数据建立的模型来预测出新的测试数据的结果。例如，我们使用一组医疗数据（身高，体重，血压，年龄，是否有糖尿病）来建立了一个模型ƒ。在实际应用中，我们希望当我们拿到一个新的病人的身高，体重，血压以及年龄等时候就可以预测出该病人是否患了糖尿病，而不是去预测我们用来建模型的那些数据中的病人是否患病，因为在训练数据中我们已经知道哪位病人患有糖尿病了。所以这时你应该明白我们为什么更在意测试数据的均方差了。回到现实，在实际应用中，有时我们会有测试数据供我们使用，但是大部分情况测试数据是不存在的。但是如果测试数据不存在我们怎么去计算测试数据的均方差呢？一般的处理方法就是选择具有最小训练数据均方差的模型，因为大多数情况训练数据的均方差和测试数据的均方差是具有相关性的。但是，不幸的是这种处理方法有一个基本的问题就是，没有办法保证模型具有最低的训练数据均方差（training MSE）就一定会有最低的测试数据均方差（test MSE）。接下来将会用例子告诉你为什么会存在这个基本问题。</p>
-<p>左图用数据模拟了一个模型ƒ，其中模型ƒ用黑色线代表。另外我们还上面其他建立的3个估测模型ƒ-hat。线性回归（橘黄色线），还有两个平滑样条（蓝色和绿色）。<br><img src="http://on02djecx.bkt.clouddn.com/ch2.5.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.9.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.9.pdf</a></p>
+<p>左图用数据模拟了一个模型ƒ，其中模型ƒ用黑色线代表。另外我们还上面其他建立的3个估测模型ƒ-hat。线性回归（橘黄色线），还有两个平滑样条（蓝色和绿色）。<br><img src="http://mingju.net/uploads/images/ch2.5.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.9.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.9.pdf</a></p>
 <p>右图灰色曲线代表了训练数据均方差，红色曲线代表了测试数据均方差。中间那条灰色的虚线代表了所有模型可能达到的最小测试数据均方差。灰色曲线和红色曲线上面的方块代表了左图三种测试模型的训练数据和测试数据的均方差。方块颜色与左图3个估测模型的颜色相照应。我们从左图可以看出蓝色的线代表的模型是最接近真正的模型ƒ的，所以在相对的右图中，我们看到这个模型同时具有最小的训练数据和测试数据的均方差。我们从左图还看到线性模型（橘黄色线）并没有很好的代表了所有数据点（与真正模型ƒ相比有较大的误差），所以右图中他们的训练数据和测试数据的均方差也就比更接近真正模型ƒ的蓝色线要高很多。当然，我们还可以看到这两个模型的训练数据和测试数据的均方差相差并不是很多，所以在测试数据不存在的时候我们可以用训练数据的均方差来确定最佳模型。但是，如果我们再看一下绿色线所代表的模型时情况就完全不同了。绿色线在左图中，可以看出是拟合数据点最好的模型，所有再右图中该模型的训练数据均方差也是最低的，但是为什么它却有了相对较高的测试数据均方差呢？因为从左图我们可以看出，绿色线代表的模型过度的跟随数据点出现了过度拟合（overfitting）的情况。所以，当我们拿训练数据建立的模型去验证测试数据时就出现了较高的测试数据均方差。因为我们知道过度拟合出来的模型可以很好的代表训练数据，但是不一定可以代表测试数据。所以这个例子也就解释了为什么我们<strong>无法保证模型具有最低的训练数据均方差就一定会有最低的测试数据均方差的道理</strong>。</p>
 <p>从之前的学习中，我们可以判断出这模型的严格和灵活程度。我们知道在上面的例子当中，线性回归（橘黄色）是三个模型当中最严格的，其次是蓝色线所代表的模型，最灵活的是绿色线所代表的模型。我们可以看到，随着模型越灵活度的增高，训练数据均方差会降低，但是测试数据的均方差却不一定。当我们看到一个模型给出了很低的训练数据均方差，但是很高的测试数据的均方差时，我们称作这种情况为过度拟合。通常情况下，训练数据的均方差都会比测试数据的均方差高，因为大多数的统计模型都会直接或者间接的刻意的去降低训练数据均方差。当然，我们在前面也提到，很多时候测试数据并不存在，所以我们在接下来的学习中会讲到一些其他方法去通过训练数据均方差估测测试数据的均方差，比如非常重要的一个方法－交叉验证（cross-validation）。</p>
 <p>接下来两幅图用不同类型的模型ƒ，表示了训练数据均方差和测试数据均方差的关系。有兴趣的朋友可以根据前面的叙述来理解这两幅图中的信息。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/ch2.7.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.10.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.10.pdf</a></p>
-<p><img src="http://on02djecx.bkt.clouddn.com/ch2.6.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.11.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.11.pdf</a></p>
+<p><img src="http://mingju.net/uploads/images/ch2.7.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.10.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.10.pdf</a></p>
+<p><img src="http://mingju.net/uploads/images/ch2.6.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.11.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.11.pdf</a></p>
 ]]></content>
       
         <categories>
@@ -385,7 +385,7 @@ predict(lm.fit2, interval = &quot;prediction&quot;)
     <entry>
       <title><![CDATA[Ch2.1.3 模型预测精确度与可解释性之间的权衡]]></title>
       <url>http://mingju.net/2016/03/ch2-1-3-the-trade-off-between-prediction-accuracy-and-model-interpretability/</url>
-      <content type="html"><![CDATA[<p>在前面的介绍当中，我们已经知道了有的模型相对来说比较严格，有的模型相对来说就灵活很多。可能我们都会有一个问题，那为什么我们要使用那些严格的模型而不是更灵活的模型呢？其实这个问题又回到了你建立模型目的的问题上。如果你的目的是统计推理（inference），那么严格的模型更容易去解释。例如，如果你的目的是统计推理，线性模型相比其他更灵活的模型来讲，更容易去解释。下图展示了模型预测精确度与可解释性之间的权衡：<br><img src="http://on02djecx.bkt.clouddn.com/ch2.4.png" alt=""></p>
+      <content type="html"><![CDATA[<p>在前面的介绍当中，我们已经知道了有的模型相对来说比较严格，有的模型相对来说就灵活很多。可能我们都会有一个问题，那为什么我们要使用那些严格的模型而不是更灵活的模型呢？其实这个问题又回到了你建立模型目的的问题上。如果你的目的是统计推理（inference），那么严格的模型更容易去解释。例如，如果你的目的是统计推理，线性模型相比其他更灵活的模型来讲，更容易去解释。下图展示了模型预测精确度与可解释性之间的权衡：<br><img src="http://mingju.net/uploads/images/ch2.4.png" alt=""></p>
 <p>所以这里我们总结为：</p>
 <ol>
 <li>当你的目标是推理时，选择更严格，更简单的统计学习模型。</li>
@@ -455,7 +455,7 @@ predict(lm.fit2, interval = &quot;prediction&quot;)
       <url>http://mingju.net/2016/03/ch2-1-1-statistical-learning-and-regression/</url>
       <content type="html"><![CDATA[<p>这是本书的第二章，开头以一个简单的例子来介绍统计学习（机器学习）可以解决怎样的实际问题。例子如下：</p>
 <p><em>假设我们是被一家公司雇佣来解决如何改善公司特定一款产品的销售量。然后公司提供给我们了一组数据，这组数据包含了200个市场中该产品的<font color="#ff6600">销售额（sales）</font>和花费在该产品上的广告预算，分别是<font color="#ff6600">电视广告（TV）</font>，<font color="#ff6600">广播广告（radio）</font>和<font color="#ff6600">报纸广告（newspaper）</font>。</em></p>
-<p><img src="http://on02djecx.bkt.clouddn.com/ch2.1.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.1.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.1.pdf</a></p>
+<p><img src="http://mingju.net/uploads/images/ch2.1.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.1.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.1.pdf</a></p>
 <p>当我们把这些数据画在一张图上时，我们可以了解对于这家公司来讲，他们没有直接的办法去增长销售量。但是，他们可以通过控制调整三份不同的广告预算来间接的增长销售量。换句话说，如果我们可以找到广告与销售量的关系就可以通过建立一个统计模型来通过广告预算预测销售量。比如说以下这个模型：</p>
 <p><strong>销售量 ≈ ƒ(电视广告，广播广告，报纸广告)</strong></p>
 <p>这里“销售量”是一个我们想要预测的相应值，通常我们以<strong>Y</strong>来表示。电视广告，广播广告，报纸广告在这里叫做变量，通常我们以X来表示。这里我们把电视广告用<strong>X1</strong>代表，广播广告用<strong>X2</strong>，报纸广告用<strong>X3</strong>代表。我们把3个变量<strong>X1，X2，X3</strong>放在一个矢量里面写作<strong>X = (X1，X2，X3)</strong>，我们就可以把该模型简化成：</p>
@@ -464,11 +464,11 @@ predict(lm.fit2, interval = &quot;prediction&quot;)
 <p>销售量 ≈  <strong>ƒ(电视广告，广播广告，报纸广告)</strong></p>
 <p><strong>Y = ƒ(X) +ε</strong></p>
 <p>这两个公式其实是一模一样的，除了<strong>ε</strong>。</p>
-<p><strong>Y </strong>：销售量<br><strong>ƒ(X)</strong>：ƒ(电视广告，广播广告，报纸广告)<br><strong>ε</strong>：误差<br>这里你可能会有疑问，为什么第二个公式多出一个<strong>ε</strong>呢？其实第一个销售量的中文公式中也应该是有的，我为了让你在第一步不会感到困惑，所以就没有增加误差<strong>ε</strong>。你可能又会问，那误差是怎么产生的呢？让我们来看第二个例子：<br><img src="http://on02djecx.bkt.clouddn.com/ch2.2.png" alt=""></p>
+<p><strong>Y </strong>：销售量<br><strong>ƒ(X)</strong>：ƒ(电视广告，广播广告，报纸广告)<br><strong>ε</strong>：误差<br>这里你可能会有疑问，为什么第二个公式多出一个<strong>ε</strong>呢？其实第一个销售量的中文公式中也应该是有的，我为了让你在第一步不会感到困惑，所以就没有增加误差<strong>ε</strong>。你可能又会问，那误差是怎么产生的呢？让我们来看第二个例子：<br><img src="http://mingju.net/uploads/images/ch2.2.png" alt=""></p>
 <p>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.2.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.2.pdf</a></p>
 <p>这幅图展示了30个人“<font color="#ff6600">收入</font>”与“<font color="#ff6600">受教育年数</font>”的关系。左边的那幅图每一个红色的点代表一个人。这时，当你建立一个模型<strong>ƒ</strong>时，连接变量（<font color="#ff6600">受教育年数</font>）和相应值（<font color="#ff6600">收入</font>）的<strong>ƒ</strong>其实是未知的。通俗一点讲，<strong>ƒ</strong>其实是一个估算方法，也就是你在右图中看到的那条蓝色的线。并不是所有红色的点都刚好在那条线上对不对？有的点在线的上方，有的点在线的下方。每一个点到蓝线的距离就是误差。</p>
 <p>在实际应用中，通常在<strong>ƒ</strong>中会不只一个变量。就像第一个销售量与广告预算的例子中展示的那样。下图展示了“<font color="#ff6600">收入</font>”与“<font color="#ff6600">受教育年数</font>”和“<font color="#ff6600">资历年限</font>”的关系。这时我们为了方便就用一个平面表示<strong>ƒ</strong>，从而来表现“<font color="#ff6600">受教育年数</font>”和“<font color="#ff6600">资历年限</font>”这两个变量与“<font color="#ff6600">收入</font>”之间的关系。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/ch2.3.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.3.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.3.pdf</a></p>
+<p><img src="http://mingju.net/uploads/images/ch2.3.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.3.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.3.pdf</a></p>
 <p><strong>所以，统计学习（机器学习）的精华基本上就是浑身解数找出ƒ并且改善ƒ的一个过程。</strong></p>
 ]]></content>
       
@@ -515,8 +515,8 @@ predict(lm.fit2, interval = &quot;prediction&quot;)
       <title><![CDATA[EXCEL如何把数据基于列分离到不同工作表中]]></title>
       <url>http://mingju.net/2016/02/excel-split-data-into-multiple-worksheets-based-on-column/</url>
       <content type="html"><![CDATA[<p>前一段工作遇到一个需要处理分离大量数据的重复工作，所以在网上找到了一个方法可以比较快速的根据列明把数据分离到不同的sheet中，而且可以把sheet名称命名为该列名。图片可能看得更明白一些，你可能想把上图中的情况根据A列来把数据根据不同的姓名分离成4个不同的工作表从而达到下面4副小图的情况。过程需要使用VBA代码，但是不用担心，接下来我会详细告诉你操作步骤。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/doc-split-data-by-columns1.png" alt=""></p>
-<p><img src="http://on02djecx.bkt.clouddn.com/doc-split-data-by-columns2.png" alt=""><br><img src="http://on02djecx.bkt.clouddn.com/doc-split-data-by-columns3.png" alt=""><br><img src="http://on02djecx.bkt.clouddn.com/doc-split-data-by-columns4.png" alt=""><br><img src="http://on02djecx.bkt.clouddn.com/doc-split-data-by-columns5.png" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/doc-split-data-by-columns1.png" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/doc-split-data-by-columns2.png" alt=""><br><img src="http://mingju.net/uploads/images/doc-split-data-by-columns3.png" alt=""><br><img src="http://mingju.net/uploads/images/doc-split-data-by-columns4.png" alt=""><br><img src="http://mingju.net/uploads/images/doc-split-data-by-columns5.png" alt=""></p>
 <p>第一步，同时按住Alt+F11键打开Microsoft Visual Basic for Applications</p>
 <p>第二步，找到“插入”&gt;“Module”，然后把以下代码复制粘贴到Module窗口中。</p>
 <pre><code>Sub parse_data()
@@ -750,7 +750,7 @@ library (&quot;xlsx&quot;)
 <h2 id="SEO转向内容营销"><a href="#SEO转向内容营销" class="headerlink" title="SEO转向内容营销"></a>SEO转向内容营销</h2><p>随着Google算法（<a href="http://baike.baidu.com/view/6359984.htm" target="_blank">熊猫算法</a>，<a href="http://baike.baidu.com/view/8486132.htm" target="_blank">企鹅算法</a>）的改变，一些所谓的SEO技巧已经彻底过时。很多的SEO从业者转向了内容营销（Content Marketing）。其实这才是SEO最初的本质——为用户提供高质量的内容，而不是为搜索引擎提供垃圾信息。</p>
 <h2 id="SEO与社交媒体结合"><a href="#SEO与社交媒体结合" class="headerlink" title="SEO与社交媒体结合"></a>SEO与社交媒体结合</h2><p>对于Krogue所说的社交媒体取代SEO行业的看法，我个人不是完全同意。SEO与社交媒体结合有可能会是未来SEO行业的一个趋势。在2014年1月，Matt Cuttz回答了一个关于社交媒体信号是否会影响页面的排名（视频字幕正在翻译，将在近期发布在咕嘟博客）的问题。Matt虽然没有明确指出Google会使用社交媒体信号计算页面排名。但是他也提到，社交媒体信号可能会在未来成为影响页面排名的因素。</p>
 <h2 id="SEO从业者现状"><a href="#SEO从业者现状" class="headerlink" title="SEO从业者现状"></a>SEO从业者现状</h2><p>美国很多公司已经不再单一的去招聘一名SEO专员去处理公司的SEO业务。就目前我看到的现状而言，公司更多招聘的是具有SEO技能的市场营销人员。</p>
-<center><br><img src="http://on02djecx.bkt.clouddn.com/SEO-Jobs-Trend.jpg" alt=""><br></center>
+<center><br><img src="http://mingju.net/uploads/images/SEO-Jobs-Trend.jpg" alt=""><br></center>
 
 <p>上图是美国知名招聘网站<a href="http://www.indeed.com/jobanalytics/jobtrends?q=seo&amp;l=" target="_blank">Indeed</a>上与SEO相关的职位需求走势图。从2012年到2014年，SEO职位需求不断减少。</p>
 <h2 id="SEO不会死"><a href="#SEO不会死" class="headerlink" title="SEO不会死"></a>SEO不会死</h2><p>为什么说SEO不会死？因为搜索引擎需要你的内容，所以它需要给你一定的刺激（如，好的排名-&gt;利益）让你不断的贡献优质的内容，这才是搜索引擎存在的本质与意义。如果有一天，你从搜索引擎的搜索结果中得到的到处是广告信息，相信这个搜索引擎离倒闭不远了。</p>
@@ -779,9 +779,9 @@ library (&quot;xlsx&quot;)
       <url>http://mingju.net/2014/03/pricing-strategy-and-technique/</url>
       <content type="html"><![CDATA[<p>不知道大家对产品的价格制定了解多少。下面是我最近从Pros公司听到的一个关于产品价格制定的一个小技巧。这里值得注意的是，这个技巧只是提供了一个价格制定的思想。并不是所有情况都适用。</p>
 <p>在下图中，横轴是消费者愿意购买一件产品的价格，纵轴是消费者人数。我们可以看出大多数的消费者愿意为这件产品付出$1.9美元。那么是不是意味着我们就要把这件产品的价格定在$1.9美元呢？</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/Pricing1.jpg" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/Pricing1.jpg" alt=""></p>
 <p>根据Pros的Matt介绍说，根据他多年的价格制定经验，可以把价格稍微提高一些，比如制定在$2.1美元。这样的制定策略可以获得更多的利益。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/Pricing2.jpg" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/Pricing2.jpg" alt=""></p>
 <p>Matt还介绍到，适当的提高一点价格短期内可能会造成客户损失的现象，然而当消费者逐渐适应$2.1美元这个价格时，消费者损失的这种现象就会消失了。但是，不可以把价格定的太高，比如$2.9美金。</p>
 <p>当然，这只是价格制定中的一个小技巧，在使用的时候一定要小心。因为价格的制定受到很多因素的影响，比如经济状况，市场需求，市场供应等等。</p>
 ]]></content>
@@ -936,11 +936,11 @@ library (&quot;xlsx&quot;)
       <url>http://mingju.net/2014/02/the-expectation-of-chinese-online-shoppers-to-offline-stores/</url>
       <content type="html"><![CDATA[<p>美国服装零售巨头J.C. Penny在今天又关闭了在美国的30家实体店铺，裁掉了2000名员工。电子商务的崛起已经迫使全球诸多零售商关掉了自家的实体店铺。尽管电子商务对实体店的生意带来了巨大的冲击。但是我个人认为，实体店还是具有很多的不可替代性。</p>
 <p>根据<a href="http://www.pwc.com/gx/en/retail-consumer/retail-consumer-publications/global-multi-channel-consumer-survey/index.jhtml" target="_blank">PwC</a>的数据统计，83%的中国网购用户每个月至少会去一次实体店进行购物。选择去实体店购物的3大原因分别是：</p>
-<center><img src="http://on02djecx.bkt.clouddn.com/3-Reasons-for-Offline-Shopping.jpg" alt=""></center>
+<center><img src="http://mingju.net/uploads/images/3-Reasons-for-Offline-Shopping.jpg" alt=""></center>
 
 <p>尽管PwC的数据没有直接表明网购顾客的忧虑，但是从顾客选择实体店购物的3大原因当中还是可以清楚的看到，网购无法满足顾客需求的弊端。无法触及感受到实际商品，无法确保商品是否100%适合自己以及无法随时拿到商品成为顾客选择实体店购物的主要原因。</p>
 <p>PwC还有一项数据表明，56%的网购顾客表示希望可以把不需要的网购订单退还到实体店中，从而可以省下邮寄费用的开销。</p>
-<center><img src="http://on02djecx.bkt.clouddn.com/Free-Return.jpg" alt=""></center>
+<center><img src="http://mingju.net/uploads/images/Free-Return.jpg" alt=""></center>
 
 <p>这一数据说明，中国网购顾客并不希望自己承担网购所带来的风险。在美国，多数B2C零售商在各个地区都有自己的实体店铺。顾客可以选择在网上购买商品，在实体店进行提货或退货。这样大大降低了顾客网购的风险。</p>
 <p>当然，让每一家公司在全国各地设置自己实体店铺的想法并不切合实际。但是公司可以转变思路，采取其他方案降低消费者的网购风险。例如，设置办事处处理退货，提供免邮费退货等等。</p>
@@ -999,9 +999,9 @@ library (&quot;xlsx&quot;)
       <title><![CDATA[2014中国移动市场与营销现状分析]]></title>
       <url>http://mingju.net/2014/02/overview-of-mobile-marketing-in-china/</url>
       <content type="html"><![CDATA[<p>根据<a href="http://www.pwc.com/gx/en/retail-consumer/retail-consumer-publications/global-multi-channel-consumer-survey/index.jhtml" target="_blank">PwC</a>的最新数据统计，2013年中国有77%的手机用户以及66%的平板电脑用户在网上购物。其中75%的中国用户每周都要进行一次网上购物。这些数据远远超过了北美以及欧洲多数发达国家。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/Mobile-Devices-Usage-for-Online-Shopping.jpg" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/Mobile-Devices-Usage-for-Online-Shopping.jpg" alt=""></p>
 <p>52%的用户喜欢使用移动浏览器网购，56%的用户喜欢使用手机应用购物。这两项指标仅存在细微的差别。所以无论是使用手机网站进行移动营销的，还是使用手机应用进行移动营销的，都应该把重心放在如何提供最佳移动体验上。</p>
-<center><img src="http://on02djecx.bkt.clouddn.com/APP-or-Mobile-Broswer.jpg" alt=""></center>
+<center><img src="http://mingju.net/uploads/images/APP-or-Mobile-Broswer.jpg" alt=""></center>
 
 <p>在写这篇文章之前，我随机用手机测试了国内几个行业的手机网站。其中包括电子商务网站业，淘宝网，天猫，京东商城，当当网。银行业，中国银行，中国建设银行，中国工商银行，中国农业银行。酒店行业，如家，汉庭，7天连锁。航空业，中国航空，海南航空，深圳航空，南方航空，东方航空。餐饮业，俏江南，全聚德，面点王。其中发现，国内电子商务业，酒店行业及航空行业的移动网站相对较好，基本抓住了移动商务的重点，注重用户移动体验。国内手机银行网站欠佳，部分手机银行网站设计没有抓到移动网站的重点，中国银行的手机银行登陆出现乱码。餐饮业在我测试的这三家知名品牌中，竟然没有一家拥有移动手机网站。</p>
 <p>移动营销在国内虽然发展势头迅猛，但是在提供用户移动体验方面做的还远不如欧美发达国家。不了解真正移动网站的目的成为无法为用户提供优秀移动体验的一大劣势。</p>
@@ -1051,12 +1051,12 @@ library (&quot;xlsx&quot;)
       <url>http://mingju.net/2014/02/coupons-for-daughter-killed-in-car-crash/</url>
       <content type="html"><![CDATA[<p>悲剧发生在美国伊利诺伊州的一个普通家庭。当Mike Seay先生回到家时，发现妻子在厨房一个人哭泣，Seay先生强忍着泪水说不出话来。这对夫妇还没有完全从失去女儿的悲痛中走出来。看到妻子心烦意乱，Seay更是做好了听到最坏消息的准备。</p>
 <p>妻子拿出了OfficeMax Inc寄来的一封信。收件人一栏写着“车祸中丧生的女儿”。</p>
-<center><img src="http://on02djecx.bkt.clouddn.com/heartbroken_letter.jpg" alt=""></center>
+<center><img src="http://mingju.net/uploads/images//heartbroken_letter.jpg" alt=""></center>
 
 <p>Seay先生推测可能是Things Remembered泄露了他们的隐私，因为他的朋友最近从这家公司送给他一个放女儿照片的相框。但是他怎么也想不明白，Things Remembered 为什么要记录和保留女儿车祸去世的信息。</p>
 <p>零售商通过中介买卖客户信息已经持续了有几个世纪。但是这一悲剧的发生，再次让每一个美国人的神经紧绷了起来。公众们对自己的隐私问题更加担忧了。</p>
 <p>根据2013年12月，<a href="http://www.harrisinteractive.com/" target="_blank">Harris Interactive</a>公司为数据隐私管理公司<a href="http://www.truste.com/" target="_blank">TRUSTe</a>的一项调查研究发现，92%的美国互联网用户担心他们的在线隐私问题。89%的互联网用户选择避免与不能保护他们隐私的公司做交易。</p>
-<center><img src="http://on02djecx.bkt.clouddn.com/privacy_concern1.jpg" alt=""><br><br><img src="http://on02djecx.bkt.clouddn.com/privacy_concern2.jpg" alt=""></center>
+<center><img src="http://mingju.net/uploads/images/privacy_concern1.jpg" alt=""><br><br><img src="http://mingju.net/uploads/images/privacy_concern2.jpg" alt=""></center>
 
 <p>公众们的担忧不是毫无道理。公司之间分享用户信息，追踪用户行为等活动，使得更多用户开始担心他们的隐私问题。这些担心让83%的用户不愿意点击在线广告，80%的用户不愿意使用陌生应用程序，74%的用户不愿打开定位服务。</p>
 <center><img src="http://on02djecx.bkt.clouddn.com/privacy_concern3.jpg" alt=""></center>
@@ -1084,7 +1084,7 @@ library (&quot;xlsx&quot;)
       <title><![CDATA[为什么意大利没有星巴克？]]></title>
       <url>http://mingju.net/2013/12/why-starbucks-is-not-present-in-italy/</url>
       <content type="html"><![CDATA[<p>为了寻找为什么意大利没有星巴克的原因，我特意去了几家罗马著名的咖啡馆。当我去到一家名字叫做Sant’ Eustachio II Caffè的咖啡馆时，我惊呆了。当时大概有40多个人排队等着点咖啡，小小的咖啡店站满了人，我甚至找不到一个站的地方。吧台边大家互相聊着天，咖啡师娴熟的向咖啡杯里倒着浓缩咖啡，店员跟顾客们互相开着玩笑。然而在美国的星巴克，你是不可能看到这种情景的。顾客通常点上一杯咖啡，坐在桌子旁掏出出手机或拿出笔记本电脑连上Wi-Fi，各自做着自己的事情。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/Sant%20Eustachio%20II%20Caffe.jpg" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/SEIICaffe.jpg" alt=""></p>
 <p></p><p style="text-align: center;">图为在Sant’ Eustachio II Caffè排队买咖啡的人</p><br>当晚，我和一个在意大利留学的朋友聊天时问到，“为什么罗马没有一家星巴克呢”？朋友说，“大部分的意大利人认为星巴克不明白如何制作真正的咖啡。意大利人认为自己是世界上最好咖啡的发源地，而且他们很以自己的咖啡为骄傲。因此让意大利人去喝美国的咖啡，有点强人所难”。<p></p>
 <p>我们知道星巴克发展的转折点发生在Howard Schultz 先生在20世纪80年代访问意大利之后。他把意大利的咖啡文化带到了美国并加以改进，从而使得更适合美国的文化。然而这些改进是建立在意大利咖啡文化的基础上进行的。一方面，意大利人是根本不会考虑手持一个纸杯在街道上或者开车的时候喝咖啡的。他们把在一间咖啡馆喝咖啡当做是一种生活上的享受。另一方面，意大利因咖啡而著名，如果星巴克进军意大利市场的计划失败，星巴克不仅仅损失的是金钱，同时也损害了星巴克的品牌形象。所以，从目前来看，星巴克选择不进入意大利市场看似是一个合理的决定。</p>
 <p>然而，根据我个人的观点。我认为星巴克可以采取一些非直接的运营方式进入意大利这个咖啡需求大国。例如，星巴克可以收购当地的一些咖啡品牌，利用自己强大的资金实力，形成竞争优势。对于担心品牌形象受损和美国咖啡在意大利不利的形象，星巴克可以让这些咖啡厅独立运营，暂时不要提及这条“绿色的美人鱼”。</p>
@@ -1112,12 +1112,12 @@ library (&quot;xlsx&quot;)
       <url>http://mingju.net/2013/02/75-lean-or-25-fat-ground-beef-which-one-tastes-better/</url>
       <content type="html"><![CDATA[<p>75%的瘦牛肉和25%的肥牛肉是同一种牛肉，味道当然没有差别。然而据调查显示消费者却不这么认为。</p>
 <p>请参考调查结果：</p>
-<center><img src="http://on02djecx.bkt.clouddn.com/beef_attitude.JPG" alt=""></center>
+<center><img src="http://mingju.net/uploads/images/beef_attitude.JPG" alt=""></center>
 
 <p>从上述数据分析来看，我们可以看到消费者对75% 瘦的牛肉评价更高，尤其是在对“肥瘦”，“质量”以及“油腻”这三个指标中体现的更为明显。</p>
 <p>为什么会出现这种情况呢？其实这是心理学中框架效应（Framing effect）在作怪。框架效应是一种认知偏差，人们会根据某个特定的选项，看起来是获利或是损失，从而做出不同的回应。正是由于这种认知偏差导致人们在面对相同产品时，对不同标签产生了完全不同的消费决策。所以，营销者在进行营销操作的时候，要注意到有没有被框架效应所影响。如果被框架效应带来了影响，营销者应该采取相应的对策。</p>
 <p>以下是我发现的另一个框架效应的例子：</p>
-<center><img src="http://on02djecx.bkt.clouddn.com/yogurt2.jpg" alt=""><br><img src="http://on02djecx.bkt.clouddn.com/yogurt1.jpg" alt=""></center>
+<center><img src="http://mingju.net/uploads/images/yogurt2.jpg" alt=""><br><img src="http://mingju.net/uploads/images/yogurt1.jpg" alt=""></center>
 
 <p>其实两种标签在传达相同的信息——酸奶是无脂肪的，但是不同消费者对这两种标签却会产生认知偏差。</p>
 ]]></content>
@@ -1194,7 +1194,7 @@ library (&quot;xlsx&quot;)
       <title><![CDATA[卡通对儿童消费行为的影响]]></title>
       <url>http://mingju.net/2012/07/how-childrens-consumer-behavior-is-influenced-by-cartoons/</url>
       <content type="html"><![CDATA[<p>大概去年的这个时候，我同朋友家的两个小孩去HuHot Mongolian Grill（一家在美国的蒙古炒面自助餐店）吃饭。当我们坐下点完相同的饮料之后，服务员却送上了两种不同的杯装饮料。我的杯子是普通的白色塑料杯，而小孩子的杯子却是比我小了一半的“卡通杯”，上面印有“蜘蛛侠”图案。</p>
-<center><img src="http://on02djecx.bkt.clouddn.com/spiderman_cup.jpg" alt=""></center>
+<center><img src="http://mingju.net/uploads/images/spiderman_cup.jpg" alt=""></center>
 
 <p>在吃饭期间，我无意的观察了两个小孩子对“卡通杯”的反应。当小孩子们拿到 “卡通杯”之后相当兴奋，不停的吵着“See, Spiderman!”（看那，蜘蛛侠耶）然后还向邻桌的其他人炫耀。当我们吃完饭离开的时候，饮料都已经喝光了，但是他们还是把“卡通杯”带到了车上。当时我为了进一步确定他们对杯子的喜好程度，还故意对他们说，“把空杯子丢掉吧”我想你已经猜到了他们的回应了吧。” No Way!!!”</p>
 <p>一周后的周末，我都已经把“卡通杯”事件给完全忘记了。突然听到两个小孩子在楼上跟他的爸爸吵着说要去HuHot. 这个表现突然引起了我极大的兴趣。我马上问两个小孩子，“为什么要去HuHot呀？想吃炒面吗？“</p>
