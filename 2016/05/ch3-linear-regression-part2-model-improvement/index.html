@@ -95,18 +95,18 @@
 <meta property="og:url" content="http://mingju.net/2016/05/ch3-linear-regression-part2-model-improvement/index.html">
 <meta property="og:site_name" content="Luzhi's Notebook">
 <meta property="og:description" content="在线性回归第一部分模型建立当中，我们在浏览数据（第三步），观察相应值分布（第四步）以及建立模型（第五步）的过程中发现了一些数据的常见问题。其中在第三步中我们发现了常见问题1：变量与响应值之间的非线性（non-linearity）关系和常见问题2：共线性（Collinearity）。其中在模型的建立过程中经常遇到的问题还会有问题3：离群值（outlier），问题4：高杠杆率点（high-levera">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.9.png">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.10.png">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.11.png">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.12.png">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.14.png">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.13.png">
-<meta property="og:image" content="http://on02djecx.bkt.clouddn.com/Ch3.14-1.png">
-<meta property="og:updated_time" content="2017-03-22T14:25:58.410Z">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.9.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.10.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.11.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.12.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.14.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.13.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.14-1.png">
+<meta property="og:updated_time" content="2020-04-29T04:51:33.388Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ch3 线性回归分析（改善模型）">
 <meta name="twitter:description" content="在线性回归第一部分模型建立当中，我们在浏览数据（第三步），观察相应值分布（第四步）以及建立模型（第五步）的过程中发现了一些数据的常见问题。其中在第三步中我们发现了常见问题1：变量与响应值之间的非线性（non-linearity）关系和常见问题2：共线性（Collinearity）。其中在模型的建立过程中经常遇到的问题还会有问题3：离群值（outlier），问题4：高杠杆率点（high-levera">
-<meta name="twitter:image" content="http://on02djecx.bkt.clouddn.com/Ch3.9.png">
+<meta name="twitter:image" content="http://mingju.net/uploads/images/Ch3.9.png">
 
 
 
@@ -390,9 +390,9 @@
         <p>在<a href="http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/">线性回归第一部分模型建立当</a>中，我们在<a href="http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/#第三步，浏览数据">浏览数据（第三步）</a>，<a href="http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/#第四步，观察响应值分布">观察相应值分布（第四步）</a>以及<a href="http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/#第五步，建立初步模型lm-fit">建立模型（第五步）</a>的过程中发现了一些数据的常见问题。其中在第三步中我们发现了常见问题1：变量与响应值之间的非线性（non-linearity）关系和常见问题2：共线性（Collinearity）。其中在模型的建立过程中经常遇到的问题还会有问题3：离群值（outlier），问题4：高杠杆率点（high-leverage points），问题5：误差项相关（correlation of error terms）和问题6：异方差性（non-constant variance of error terms）。</p>
 <p>接下来，我们将会通过在改善Boston数据模型的过程中逐一介绍如何通过检验与改善这6个问题从而达到改善回归模型的目的。</p>
 <h2 id="问题1：非线性（non-linearity）"><a href="#问题1：非线性（non-linearity）" class="headerlink" title="问题1：非线性（non-linearity）"></a>问题1：非线性（non-linearity）</h2><p>因为在线性回归模型当中，我们假设变量与响应值之间的关系是一条直线。但是如果样本数据的真实关系并非是线性的时候，那么模型的预测能力将会大打折扣。比如在Ch3 线性回归分析（建立模型）数据浏览的步骤当中，我们通过相关性矩阵图就发现了底层人群的百分比（lstat）与房屋价值（medv）之间存在着非线性关系。为了更直观的展示这两个变量的关系，我把该关系用图表示出来如下：</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/Ch3.9.png" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/Ch3.9.png" alt=""></p>
 <p>我们可以看出lstat与medv之间的关系更像是二次方的关系（quadratic），所以当我们使用参数法（parametric）假设样本数据符合线性模型（linear model）的时候，就出现了拟合程度较低的模型。通常我们会使用残差图（residual plot）去检验线性模型当中的非线性关系。以下为模型lm.fit2的残差图：</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/Ch3.10.png" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/Ch3.10.png" alt=""></p>
 <p>在理想的模型状态下，我们期望残差图是没有可识别的图形（discernible pattern），也就是说，我们不希望在残差图中看出什么规律来。但是上图中我们明显的看到了residuals和fitted values之间的关系（红线表示的趋势中可以看出明显的图形）。</p>
 <p><strong>解决办法：</strong>通常我们解决模型中的非线性使用的方法是转换变量，比如Log X， X，X2等。在接下来的学习中我们还会学到更高级的一些对于此问题的处理办法。但是在这里，我们先使用最常见也是最基本的方法去处理我们的变量。</p>
 <p>在上面我们通过图案观察出了变量lstat与medv之间是二次方的关系，所以在改善过后的模型lm.fit3中，我们加入了lstat的二次方变量。</p>
@@ -400,16 +400,16 @@
 summary(lm.fit3)
 </code></pre><p>在summary该模型之后，比较模型lm.fit2，我们发现Adjusted R-squared 由0.7348提升到了0.7816, 这个提升说明了模型lm.fit3相比lm.fit2可以解释更多的样本数据。同时我们发现Residual standard error由4.736降低到了4.298，F值从128.2提升到了151.6. 改善都说明我们的lm.fit3相对lm.fit2得到了不错的改善。</p>
 <p>在完成上述步骤之后，我们还需要继续检验新模型lm.fit3的残差图：</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/Ch3.11.png" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/Ch3.11.png" alt=""></p>
 <p>相比lm.fit2的残差图，lm.fit3的残差图并没有出现显而易见的趋势，这说明我们通过转换变量lstat加入了lstat^2之后，模型得到了改善。这也是我们想要的结果。</p>
 <h2 id="问题2：共线性（Collinearity）"><a href="#问题2：共线性（Collinearity）" class="headerlink" title="问题2：共线性（Collinearity）"></a>问题2：共线性（Collinearity）</h2><p>共线性是指两个或者多个变量之间存在较强的相关性。变量之间的强相关性会在回归模型当中造成一些问题。如果模型中存在两个或者多个强相关性变量，那么我们的模型是没有办法分辨到底是哪些个变量真正对响应值造成了影响。换句话说，我们通过在《建立模型》部分的相关性矩阵图中发现了变量距离高数公路的指数（rad）和财产税税率（tax）之间存在着很强的正相关性（0.91），也就是说，变量rad和变量tax通常会同时增长或者同时下降。这时，我们对于到底是rad的变化对medv造成了影响还是tax的变化对medv造成了影响的判别就变得非常模糊了。一般来说，我们可以通过使用相关性矩阵图（correlation matrix）或者变量相关值来判断变量之间是否存在共线性的问题。但是，并不是所有的共线性问题都可以通过观察相关矩阵图或者变量相关值来判断的。有时，共线性的问题还有可能在三个或者多个变量中发生，有时甚至这些变量之间没有很高的相关值，我们把这种情况叫做多共线性（multicollinearity）。所以，更实用的一种检验共线性的方法就是计算方差膨胀因子(Variance Inflation Factor,VIF)。VIF最小的值为1，代表该变量完全没有共线性问题。通常在实际应用当中，只会有一小部分的变量会有较小的VIF值。一般来讲，当VIF值大于5或者10的时候我们就可以判断该变量存在共线性问题。</p>
 <p>让我们来验证一下我们Boston模型lm.fit3是否存在共线性问题。在R中car包提供了计算VIF值的功能，如果第一次使用请记得安装car包。</p>
 <pre><code>library(car)
 vif(lm.fit3)
 </code></pre><p>我们得到了以下结果：</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/Ch3.12.png" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/Ch3.12.png" alt=""></p>
 <p>其中我们发现变了rad的VIF值为6.876185，变量tax的VIF值为7.308601。可以看出这两个变量的VIF值超过了5，根据当VIF值大于5或者10的时候我们就可以判断该变量存在共线性问题这一规则，我们可以说这两个变量在模型中存在一定的共线性问题。这也验证了我们前面通过观察相关性矩阵图和变量相关值的结论。另外我们发现，变量lstat和新加入的变量lstat^2 （模型中用I(lstat^2)表示）也具有相当高的VIF值，分别达到了19.744844和15.575471，这是因为变量lstat^2是lstat的二次方形式，他们之间必然存在着高度相关性，所以这两个变量出现较高的VIF值也就显而易见了。通过下图我们可以看出lstat和lstat^2之间的关系，可以看出这两个变量之间的高度相关性。</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/Ch3.14.png" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/Ch3.14.png" alt=""></p>
 <p><strong>解决办法：</strong>解决共线性问题的方法一般有两种：</p>
 <ol>
 <li>第一种是从模型中去除其中一个造成共线性问题的变量</li>
@@ -425,7 +425,7 @@ summary(lm.fit4)
 <h2 id="问题3：离群值（Outlier）"><a href="#问题3：离群值（Outlier）" class="headerlink" title="问题3：离群值（Outlier）"></a>问题3：离群值（Outlier）</h2><p>离群值是数据中的模型预测出结果与实际值（yi）相差太多的一种情形。离群值的出现一般会有多种原因，其中最常见的一种可能是在收集数据的过程中出现了纪录错误。一般来讲样本数据中的一个或者多个离群值可能会对模型的拟合带来一些严重的影响。比如说会造成标准化残差（RSE or Residual standard error）的升高，P值的升高或者R2的降低等不理想结果。通常我们可以使用残差图来发现离群值。R语言会把可能存在问题的数据用数字标记出来。在模型lm.fit4中的残差图中我们发现样本372, 373, 369被标记了出来，这些值需要值得我们特别注意，因为他们很可能是离群值。在是在实际应用当中，我们去根据残差去确定离群值并不是那么容易，到底需要多大的残差我们才能确定一个样本为离群值呢？所以我们可以根据观察Normal QQ图，Scale-Location图和Residuals-Vs-Leverage图来确定离群值。通过以下代码，我们可以获得出了残差图之外的另外三幅图：</p>
 <pre><code>par(mfrow=c(2,2))
 plot(lm.fit4)
-</code></pre><p><img src="http://on02djecx.bkt.clouddn.com/Ch3.13.png" alt=""></p>
+</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.13.png" alt=""></p>
 <p>通过观察这四副图，我们看到了被数字标记出来的样本有365, 369, 372和373. 在此我们基本可以确定这几个值有极大的可能是离群值。另外car包中也提供了一些验证离群值的方法：</p>
 <pre><code>library(car)
 outlierTest(lm.fit4)
@@ -448,7 +448,7 @@ summary(lm.fit5)
 <p>值得注意的是，在非时间序列数据中误差项相关的问题也是存在的。比如说，当我们要研究使用身高去预测体重的时候，如果我们的样本数据中包含了比如说来自相同家庭的样本，具有相同饮食习惯的样本或者在相同环境相生活的样本时，误差项相关这一问题就极有可能出现。</p>
 <p><strong>解决办法：</strong>好的实验设计是避免该问题的关键。</p>
 <h2 id="问题6：异方差性（non-constant-variance-of-error-terms）"><a href="#问题6：异方差性（non-constant-variance-of-error-terms）" class="headerlink" title="问题6：异方差性（non-constant variance of error terms）"></a>问题6：异方差性（non-constant variance of error terms）</h2><p>在线性模型中另外一个重要的假设就是假设误差值具有持续一致的方差（constant variance），标准差的计算还有可靠区间的计算都依靠这一假设。但是不幸的是，很多时候方差是不持续一致的。检验异方差性（non-constatnt variance in error terms or heteroscedasicity）的方法可以通过观察残差图的形状来判断。如果你得到的残差图是一个漏斗形状（funnel shape），通常说明你的模型拟合存在了异方差性。下图展示了存在异方差性问题和处理解决问题之后的残差对比图：</p>
-<p><img src="http://on02djecx.bkt.clouddn.com/Ch3.14-1.png" alt=""><br>图片来源：<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter3/3.11.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter3/3.11.pdf</a></p>
+<p><img src="http://mingju.net/uploads/images/Ch3.14-1.png" alt=""><br>图片来源：<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter3/3.11.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter3/3.11.pdf</a></p>
 <p><strong>解决办法：</strong>通常我们通过转换响应值Y的方法来解决异方差性，如，LogY或者√Y.</p>
 <h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><p>还记得在第一部分当中，我们在浏览数据的第四步（观察响应值分布）中提到，当数据响应值存在右偏态的时候，通常我们需要对其进行log转换。我们通过以下代码对模型进行了修改</p>
 <pre><code>lm.fit6 &lt;- lm(log(medv) ~.-age-indus+I(lstat^2)-tax, data = df_outlierfree)
@@ -701,7 +701,7 @@ summary(lm.fit6)
         <div class="copyright" >
   
   &copy;  2012 - 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-git"></i>
   </span>
