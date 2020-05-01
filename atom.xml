@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://mingju.net/"/>
-  <updated>2020-04-29T04:51:33.388Z</updated>
+  <updated>2020-05-01T23:53:54.371Z</updated>
   <id>http://mingju.net/</id>
   
   <author>
@@ -14,6 +14,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Pandas基础笔记</title>
+    <link href="http://mingju.net/2020/04/notes/"/>
+    <id>http://mingju.net/2020/04/notes/</id>
+    <published>2020-04-28T17:22:40.000Z</published>
+    <updated>2020-05-01T23:53:54.371Z</updated>
+    
+    <content type="html"><![CDATA[<p>Pandas中的<code>pd.to_numeric()</code>可以把一系列的值转变为float浮点类型，同时可以通过参数|<code>errors=&#39;coerce&#39;</code>可以把其中的strings强制转换为NaN空值以便于后续的数据清理。</p>
+<p>“<code>Python
+pd.to_numeric(df, errors=&#39;coerce&#39;)
+&quot;</code></p>
+<p>这部分总结</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Pandas中的&lt;code&gt;pd.to_numeric()&lt;/code&gt;可以把一系列的值转变为float浮点类型，同时可以通过参数|&lt;code&gt;errors=&amp;#39;coerce&amp;#39;&lt;/code&gt;可以把其中的strings强制转换为NaN空值以便于后续的数据清理。&lt;
+    
+    </summary>
+    
+    
+      <category term="Python, Pandas" scheme="http://mingju.net/tags/Python-Pandas/"/>
+    
+  </entry>
   
   <entry>
     <title>Ch3 线性回归分析（改善模型）</title>
@@ -806,55 +831,6 @@ library (&quot;xlsx&quot;)
     
       <category term="市场研究" scheme="http://mingju.net/categories/%E5%B8%82%E5%9C%BA%E7%A0%94%E7%A9%B6/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>5个营销者必看的Ted演讲</title>
-    <link href="http://mingju.net/2014/03/5-ted-talks-every-marketer-must-watch/"/>
-    <id>http://mingju.net/2014/03/5-ted-talks-every-marketer-must-watch/</id>
-    <published>2014-03-05T14:59:23.000Z</published>
-    <updated>2017-03-24T08:27:42.256Z</updated>
-    
-    <content type="html"><![CDATA[<p>Ted上有很多精彩的演讲，但是关于市场营销的却不多。咕嘟博在今天整理了“5个营销者必看的Ted演讲”，希望能给各位营销者带来一些灵感。看完之后不要忘记留下你对这5个演讲的看法。</p>
-<p><strong>如何在刚果销售避孕套</strong></p>
-<p>艾滋病在刚果民主共和国是个严重的问题，大批援助机构进入这个国家，带来了免费或者低价的避孕套却没有多少人使用，为什么？“营销改革家”艾米·洛克伍德提出了一个不同寻常的答案，颠覆了慈善事业的传统模式。</p>
-<center><br><iframe src="http://embed.ted.com/talks/lang/zh-cn/amy_lockwood_selling_condoms_in_the_congo.html" width="560" height="315" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe><br></center>
-
-<p><strong>为什么网络视频会风靡</strong></p>
-<p>凯文·阿劳卡是YouTube的趋势分析经理，他对逗趣的网络视频有着深刻的想法。在这段来自TED青年大会的演讲中，他与大家分享了网络视频风靡的四个原因。</p>
-<p><center></center></p>
-<p><iframe src="http://embed.ted.com/talks/lang/zh-cn/kevin_allocca_why_videos_go_viral.html" width="560" height="315" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe><br><br><strong>物理学教我市场营销</strong></p>
-<p>物理学和市场营销似乎没有什么相似之处，但是丹.科布利却对两者充满热情。他利用牛顿第二定律、海森堡的不确定原理、科学的方法以及热力学的第二定律将这些毫不相干的两者放到一起来解释品牌化的基本理论。</p>
-<p><center></center></p>
-<p><iframe src="http://embed.ted.com/talks/lang/zh-cn/dan_cobley_what_physics_taught_me_about_marketing.html" width="560" height="315" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe><br><br><strong>如何发起一场运动</strong></p>
-<p>Derek Sivers，通过一个有趣的视频来阐述“如何发起一场运动”。他不仅解释了一个事件的形成过程，而且也解释了消费者行为学中的风险偏移理论（消费者在做出集体决策时比做出单独决策愿意承担更多的风险）。</p>
-<p>这也就是为什么我们在跟朋友一起出去购物时，往往比自己单独一个人出去购物时购买更多东西的原因。作为营销者，我们不仅仅需要成为事件的发起者。更重要的是，要找到你的第一位跟随者。</p>
-<p><center></center></p>
-<p><iframe src="http://embed.ted.com/talks/lang/zh-cn/derek_sivers_how_to_start_a_movement.html" width="560" height="315" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe><br><br><strong>如何令选择变得更加容易</strong></p>
-<p>在当今这个年代，我们很少再有缺少选择情况的发生。然而更多出现的是选择过剩的问题。很多时候，一大堆选择出现在我们面前时，我们变得不愿选择，甚至放弃选择。Sheena Iyengar用她的研究为商业上处理产品选择过剩的问题提供了答案。</p>
-<p>以下是她提出的改善选择体验的三个技巧：</p>
-<ul>
-<li>精简：放弃没有用的选择</li>
-<li>具体化：让选择变得更真实一些</li>
-<li>分类：我们能承受的类别比选择多</li>
-</ul>
-<p><center></center></p>
-<p><iframe src="http://embed.ted.com/talks/lang/zh-cn/sheena_iyengar_choosing_what_to_choose.html" width="560" height="315" frameborder="0" scrolling="no" allowfullscreen="allowfullscreen"></iframe><br><br>欢迎大家提出你的观点与大家共同分享探讨。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Ted上有很多精彩的演讲，但是关于市场营销的却不多。咕嘟博在今天整理了“5个营销者必看的Ted演讲”，希望能给各位营销者带来一些灵感。看完之后不要忘记留下你对这5个演讲的看法。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;如何在刚果销售避孕套&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;艾滋病在刚果
-    
-    </summary>
-    
-      <category term="营销视频" scheme="http://mingju.net/categories/%E8%90%A5%E9%94%80%E8%A7%86%E9%A2%91/"/>
-    
-    
-      <category term="Ted" scheme="http://mingju.net/tags/Ted/"/>
     
   </entry>
   
