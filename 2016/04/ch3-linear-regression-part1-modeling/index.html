@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://mingju.net/uploads/images/Ch3.6.png">
 <meta property="og:image" content="http://mingju.net/uploads/images/Ch3.7.png">
 <meta property="og:image" content="http://mingju.net/uploads/images/Ch3.8.png">
-<meta property="og:updated_time" content="2020-04-29T06:31:39.000Z">
+<meta property="og:updated_time" content="2020-05-02T00:19:03.528Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ch3 线性回归分析（建立模型）">
 <meta name="twitter:description" content="这一章介绍的是线性回归，是监督学习中最简单的一个模型。通常来讲，线性回归模型一般用于预测属量反应（quantitative response）的问题。线性回归在统计分析当中已经存在了很长的一段时间，虽然跟一些更现代的统计模型相比来说可能会看起来没有那么华丽，但是线性回归方法还是一种非常有效以及应用广泛的统计模型。并且在接下来将要学习到的那些更为华丽的模型当中很多都是又线性回归模型衍生出来的。所以学">
@@ -416,31 +416,30 @@
 <h1 id="问题1：响应值与变量之间的关系"><a href="#问题1：响应值与变量之间的关系" class="headerlink" title="问题1：响应值与变量之间的关系"></a>问题1：响应值与变量之间的关系</h1><h2 id="第一步，分析目的"><a href="#第一步，分析目的" class="headerlink" title="第一步，分析目的"></a>第一步，分析目的</h2><p>在做具体的分析之前，我们首先要了解我们此次分析的目的是什么？是推理，预测还是两者都有。显然，我们这次的分析目的是想知道是什么因素影响了房屋的价值（medv），同时我们也希望通过建立模型达到预测房屋价值的目的。所以此次分析目的为推理和预测两者都有。</p>
 <h2 id="第二步，数据直觉"><a href="#第二步，数据直觉" class="headerlink" title="第二步，数据直觉"></a>第二步，数据直觉</h2><p>当一位有经验的数据分析师拿到数据并且浏览数据之后，会有一个直觉从而对数据进行初步的判断。当我们拿到Boston数据之后，浏览完每一个变量之后，我们直觉基本就会告诉我们每个变量可能会对响应值产生什么影响。例如，变量crim，该地区的人均犯罪率，我们的直觉告诉我们犯罪率越高的地区可能房屋的价值就会越低，那么到底是不是这样呢？我们还需要进行下一步更详细的分析。初级的数据分析师刚开始可能由于不熟悉数据变量或者不熟悉公司业务，拿到数据之后没有一点头绪，这时并不需要担心。当你对一个行业领域或者一个消费群体了解越来越深入的时候，这种数据直觉就慢慢的建立起来了。</p>
 <h2 id="第三步，浏览数据"><a href="#第三步，浏览数据" class="headerlink" title="第三步，浏览数据"></a>第三步，浏览数据</h2><p>首先我们需要导入数据。</p>
-<pre><code>df &lt;- read.csv(&quot;Boston.csv&quot;, header = TRUE)
-</code></pre><p>接下来用str()方法浏览数据的结构</p>
-<pre><code>str(df)
-</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.1.png" alt=""></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df &lt;- read.csv(<span class="string">"Boston.csv"</span>, header = <span class="literal">TRUE</span>)</div></pre></td></tr></table></figure>
+<p>接下来用str()方法浏览数据的结构</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">str(df)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.1.png" alt=""></p>
 <p>通过浏览数据结构我们可以看到该数据组有506条数据和14个变量。</p>
 <p>然后用summary()总结数据</p>
-<pre><code>summary(df)
-</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.3.png" alt=""></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">summary(df)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.3.png" alt=""></p>
 <p>我个人强烈建议大家在进行任何数据分析之前，一定要进行这两个步骤，这样可以让你对数据有一个初步的理解。如果这里想要像在Excel里面那样浏览数据可以使用一个方法</p>
-<pre><code>fix(df)
-</code></pre><p>这个方法可以打开一个像spreadsheet一样的表格，当浏览结束之后记得把该窗口关掉，否则以下命令将不能继续执行。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fix(df)</div></pre></td></tr></table></figure>
+<p>这个方法可以打开一个像spreadsheet一样的表格，当浏览结束之后记得把该窗口关掉，否则以下命令将不能继续执行。</p>
 <p>接下来我们就要看每个变量与响应值的关系了。这时我们可以通过相关性矩阵图（correlation matrix）来浏览不同变量与相应值的关系。</p>
-<pre><code>plot(df, pch = &quot;.&quot;, col = &quot;blue&quot;)
-</code></pre><p><img src="http://mingju.net/uploads/images/ch3.2.png" alt=""></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plot(df, pch = <span class="string">"."</span>, col = <span class="string">"blue"</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/ch3.2.png" alt=""></p>
 <p>当然除了使用最直观的相关性矩阵图来观察相关性，我们还可以使用cor()来了解变量之间的具体相关值</p>
-<pre><code>cor(df)
-</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.4.png" alt=""></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cor(df)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.4.png" alt=""></p>
 <p>当我们对数据进行了基本的分析之后，可以发现房屋价值（medv）跟房间数量（rm）还有底层人群的百分比（lstat）具有最强的相关性。相关指数分别为0.695和－0.738. 同时我们从相关性矩阵图中可以看出底层人群的百分比（lstat）与房屋价值（medv）之间虽然存在较强的负相关性，但是他们的关系并不是线性（liner）的。这里我们就遇到了处理线性回归的第一个常见问题－变量与响应值之间的非线性（non-linearity）关系。我们还发现某些变量之间也具有较强的相关性。比如非零售商业化面积的比率（indus）与一氧化氮浓度（nox）的相关性为0.764，非零售商业化面积的比率（indus）与财产税税率（tax）的相关性为0.721.另外距离高数公路的指数（rad）和财产税税率（tax）的相关性为0.91. 这里如果我们把这些具有相关性较强的变量同时放在模型中的时候就有可能会遇到我们处理线性回归分析的第二个常见问题－共线性（Collinearity）。在该总结的第二部分模型改善中，我会详细的介绍如何通过解决这两个常见问题以及另外其他的四个常见问题（异方差性，离群值，高杠杆率点和误差项相关）来改善模型。</p>
 <h2 id="第四步，观察响应值分布"><a href="#第四步，观察响应值分布" class="headerlink" title="第四步，观察响应值分布"></a>第四步，观察响应值分布</h2><p>理论上，当我们要进行线性回归分析时，我们希望响应值（Y）是成正态分布（Normal Distribution）。但是在处理实际生活中的案例时，很少会出现响应值是正态分布的情况。最直观去观察响应值的分布就是使用直方图（histogram）。</p>
-<pre><code>hist(df$medv)
-</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.5.png" alt=""></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hist(df$medv)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.5.png" alt=""></p>
 <p>从对房屋价值（medv）的直方图中，我们可以看出数据称右偏态分布（right skewed distribution）通常我们处理右偏态分布的方法是使用对数转换法（log transformation）。如果数据称左偏态分布（left skewed）的话，通常的处理方法为平方转换法（squaring）。在这里我们首先不对任何数据进行转换，直接建立模型，然后在接下来的分析中我会介绍如何通过转换数据来改善模型。</p>
-<h2 id="第五步，建立初步模型lm-fit"><a href="#第五步，建立初步模型lm-fit" class="headerlink" title="第五步，建立初步模型lm.fit"></a>第五步，建立初步模型lm.fit</h2><pre><code>lm.fit &lt;- lm(medv ~., data = Boston)
-summary(lm.fit)
-</code></pre><p>我们通过lm()方法拟合了一个多变量线性模型，其中“medv ~.”这个语法表示把所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
+<h2 id="第五步，建立初步模型lm-fit"><a href="#第五步，建立初步模型lm-fit" class="headerlink" title="第五步，建立初步模型lm.fit"></a>第五步，建立初步模型lm.fit</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit &lt;- lm(medv ~., data = Boston)</div><div class="line">summary(lm.fit)</div></pre></td></tr></table></figure>
+<p>我们通过lm()方法拟合了一个多变量线性模型，其中“medv ~.”这个语法表示把所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
 <p><img src="http://mingju.net/uploads/images/Ch3.6.png" alt=""></p>
 <p>通常我们在建立线性回归模型之后，首先需要检查的是F值。通常情况下，如果F值大于1的话我们就基本有证据去否定零假设（null hypothesis, H0），也就是可以说明模型中至少一个变量（X）与响应值（Y）相关。如果没有任何变量与响应值有关系的话，我们一般期望F值接近于1。在上述例子中我们可以看到F值（F-statistic）为108.1，因为F值比1大很多，所以这里我们可以否定零假设H0. 那么如果F值如果只大于1一点，我们应该如何判断呢？这里请遵循以下两个基本原则：</p>
 <ol>
@@ -449,9 +448,8 @@ summary(lm.fit)
 </ol>
 <p>接下来我们需要检查的是与F值相关的p值（p-value），上述例子的p值为2.2e-16，是一个无限接近0的值，所以我们有很强的证据来证明至少有一个变量（X）是与响应值（Y）相关的。我们还注意到在上述例子中，每一个变量都会有一个对应的p值，这些变量的p值表示了每一个单独变量与响应值（Y）的关系。其中我们在每个单独变量对应的p值后面会看到“*”符号，这个符号表示了在某个显著水平（significance level）该变量是否与响应值相关。其中显著值水平在“Signif.codes”一栏有解释。这里我们看到了很多个变量的p值都很小，只有变量indus和age具有较大的p值。那么我们可以确定模型中存在单独的变量具有较小的p值，至少其中一个变量与响应值相关吗？其实这个结论是有问题的。这也就是为什么我建议大家首先验证F值的原因。因为当变量的个数相对较大的时候，我们遇到具有较小p值的变量的机会就会大大降低。也就是说当变量个数很大的时候，我们总会一不小心就会看到某几个（至少1个）变量的p值是较小的，那么这个时候我们说，这个变量肯定与响应值相关，我们的结论存在问题的可能性就相当大了。但是F值不会被这个问题所影响，因为F值会根据变量的数量作出自动调整。当然，这里需要注意的是，通过F值去验证变量与响应值之间是否存在相关性的方法只有在变量的数量相对样本来讲比较小的情况，有时候我们会遇到变量的数量远远大于样本的数量，当遇到这种情况的时候我们就没有办法继续使用F值取兖州变量与响应值之间的关系了。所以当这种情况出现的时候，我们需要使用其他办法来，比如说向前逐步回归（forward selection）来选择重要的变量来拟合模型。这种多维数据（high-dimensional）的问题我将在接下来的文章中做详细的解释。</p>
 <h1 id="问题2：选取重要变量"><a href="#问题2：选取重要变量" class="headerlink" title="问题2：选取重要变量"></a>问题2：选取重要变量</h1><p>在解决了问题1之后，我们需要观察的是哪些变量影响了响应值（Y）。通常，最简单的办法就似乎看每一个变量的p值。当然我们在问题1中也解释了这种方法在变量个数比较大时存在的危险性，所以一定记得检验F值。我们在进行对变量的p值观察之后，发现变量indus和age具有较大的p值，最简单的处理办法就是把这两个变量从模型中移除。然后把剩下统计显著的变量放入再次建立一个新的模型lm.fit2.</p>
-<pre><code>lm.fit2 &lt;- lm(medv ~.-age-indus, data = df)
-summary(lm.fit2)
-</code></pre><p>其中“medv ~.-age-indus”这个语法表示把除了age和indus之外的所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit2 &lt;- lm(medv ~.-age-indus, data = df)</div><div class="line">summary(lm.fit2)</div></pre></td></tr></table></figure>
+<p>其中“medv ~.-age-indus”这个语法表示把除了age和indus之外的所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
 <p><img src="http://mingju.net/uploads/images/Ch3.7.png" alt=""></p>
 <p>选择重要变量的方法有很多，我们这里采取的是一种最普通的处理方法。当我们拥有更多数量的变量供我们选择的时候，这种简单的方法就不适用了。通常当我们遇到大量变量时，我们会使用向前逐步回归（forward selection），向后逐步回归（backward selection）或者合并（mixed selection）这两种方法。这里我们只对这三种方法进行简单的介绍，在接下来的文章中我会对这三种方法的使用做详细的解释。</p>
 <p><strong>向前逐步回归：</strong>开始于一个只有截距（intercept）没有任何变量的空模型（null model），然后向模型中不断的加入变量，然后看哪些变量可以带来最低的残差平方和（RSS）。</p>
@@ -463,13 +461,12 @@ summary(lm.fit2)
 <h1 id="问题4：模型预测"><a href="#问题4：模型预测" class="headerlink" title="问题4：模型预测"></a>问题4：模型预测</h1><p>当我们用样本数据建立好了模型之后。当我们有变量X1，X2，…，Xp的值得时候，我们就可以使用模型去预测响应值Y。但是这里有大致三种不确定性与预测有关。</p>
 <p>模型的系数（coefficient）是估值（estimate），因为我们在Ch2.1.2 为什么要建立ƒ与如何建立ƒ，中知道数据拟合模型（least squares）为ˆY = ˆ?0+ˆ?1X1+ˆ?2X2+…+ˆ?pXp. 而真正的模型（true population regression）应该为ƒ(X) = ?0+?1X1+?2X2+…+?pXp. 所以Y是约等于 ?0+?1X1+?2X2+…+?pXp的。我们还在Ch2.1.2. 还学习到了由于估值系数产生的误差是与可降误差（reducible error）相关的。因此我们可以在这里去计算可靠区间（confidence interval）去检测ˆY和ƒ(X) 之间到底有多么接近。<br>当然当我们假设线性模型符合我们的样本数据的时候，这里也会可能产生其他的可降误差，一般我们称这种误差为模型偏差（model bias）。在Ch2.2.2 方差与偏差之间的权衡有提到过。<br>通常情况下，我们不可能知道真正的ƒ(X) 。就算我们知道，那么模型还是无法完美的去做出预测，因为我们知道模型里还存在着随机的不可降误差ε. 那么Y与ˆY到底有多接近呢？我们一般可以使用计算预测区间（prediction interval）的方法去检测。<br>这里值得注意的是，预测区间永远大于可靠区间。因为预测区间包含了两种误差。</p>
 <p>在我们的Boston例子中，如何进行可靠区间的计算呢？如果我们想要获得估值系数（coefficient estimates）的可靠区间，可以使用：</p>
-<pre><code>confint(lm.fit2)
-</code></pre><p>得到了以下的结果：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">confint(lm.fit2)</div></pre></td></tr></table></figure>
+<p>得到了以下的结果：</p>
 <p><img src="http://mingju.net/uploads/images/Ch3.8.png" alt=""></p>
 <p>这个结果告诉了我们每一个变量系数的可靠区间。比如变量rm的95%的可靠区间为[3.003258393, 4.59989929]. 换言之，这个可靠区间[3.003258393, 4.59989929], 包含了95%的该变量所预估的实际值。这时，我们可能更感兴趣的是观察模型预测之后的区间范围。我们可以使用：</p>
-<pre><code>predict(lm.fit2, interval = &quot;confidence&quot;)
-predict(lm.fit2, interval = &quot;prediction&quot;)
-</code></pre><p>来计算整个样本数据的可靠区间和预测区间。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">predict(lm.fit2, interval = <span class="string">"confidence"</span>)</div><div class="line">predict(lm.fit2, interval = <span class="string">"prediction"</span>)</div></pre></td></tr></table></figure>
+<p>来计算整个样本数据的可靠区间和预测区间。</p>
 
       
     </div>

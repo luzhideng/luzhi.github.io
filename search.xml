@@ -7,7 +7,7 @@
       <title><![CDATA[Pandas基础笔记]]></title>
       <url>http://mingju.net/2020/04/notes/</url>
       <content type="html"><![CDATA[<p>这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。</p>
-<p>Pandas中的<code>pd.to_numeric()</code>可以把一系列的值转变为float浮点类型，同时可以通过参数|<code>errors=&#39;coerce&#39;</code>可以把其中的strings强制转换为NaN空值以便于后续的数据清理。</p>
+<p>Pandas中的<code>pd.to_numeric()</code>可以把一系列的值转变为float浮点类型，同时可以通过参数<code>errors=&#39;coerce&#39;</code>可以把其中的strings强制转换为NaN空值以便于后续的数据清理。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.to_numeric(df, errors=<span class="string">'coerce'</span>)</div></pre></td></tr></table></figure>
 ]]></content>
       
@@ -57,25 +57,20 @@
 </ol>
 <p>第一种办法是最常用的一种办法，因为模型中两个或多个存在高度相关的变量，只保留其中一个变量相当于简化了模型，降低了模型的冗余，又不会对模型拟合造成大的影响。第二种办法比如可以结合两个变量并且取两个变量的平均值作为一个新的变量再加入模型中。</p>
 <p>在模型lm.fit3中，我们选择第一种办法来去除共线性问题。在该模型中我们选择去除VIF值相对较高的tax变量，然后再次对模型进行拟合得到模型lm.fit4：</p>
-<pre><code>lm.fit4 &lt;- lm(medv ~.-age-indus+I(lstat^2)-tax, data = df)
-summary(lm.fit4)
-</code></pre><p>通过summary我们可以看到Adjusted R-squared相比lm.fit3由0.7816降到了0.7778，只降低了0.0038. 标准化残差（Residual standard error）从4.298上升到了4.336，只上升了0.038. 所以，我们新的模型lm.fit4虽然相对lm.fit3，这两项指数都带来了不理想的信息，但是我们的模型拟合程度和误差程度非常非常的低，所以为了简化模型和去除共线性问题，我们决定采用新的模型lm.fit4. 可能你会有疑问说，变量lstat和lstat^2存在更大的共线性问题，我们是否可以需要除变量lstat呢？这里我并不建议你去除变量lstat，因为当使用</p>
-<pre><code>summary(lm(medv ~.-age-indus+I(lstat^2)-tax-lstat, data = df))
-</code></pre><p>把变量lstat从模型lm.fit4中去除时，模型的整体拟合程度有了相对较大的下降Adjusted R-squared从0.7778降低到了0.6878. 标准化残差也又4.336上升到了5.139. 这些指标的上升都说明了我们模型中去除了一个重要的变量。可能这时，你会搞不清楚什么时候去除产生共线性的变量，什么时候又不去除呢？很可惜，答案是根据情况而论。这时，这种决策通常更像是一种艺术而不是一种科学。比如在上述处理变量lstat和lstat^2的情况中，即使我们知道这两个变量的VIF值很高，但是我们还是为了保证模型的拟合程度选择了保留这两个变量。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit4 &lt;- lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>)-tax, data = df)</div><div class="line">summary(lm.fit4)</div></pre></td></tr></table></figure>
+<p>通过summary我们可以看到Adjusted R-squared相比lm.fit3由0.7816降到了0.7778，只降低了0.0038. 标准化残差（Residual standard error）从4.298上升到了4.336，只上升了0.038. 所以，我们新的模型lm.fit4虽然相对lm.fit3，这两项指数都带来了不理想的信息，但是我们的模型拟合程度和误差程度非常非常的低，所以为了简化模型和去除共线性问题，我们决定采用新的模型lm.fit4. 可能你会有疑问说，变量lstat和lstat^2存在更大的共线性问题，我们是否可以需要除变量lstat呢？这里我并不建议你去除变量lstat，因为当使用</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">summary(lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>)-tax-lstat, data = df))</div></pre></td></tr></table></figure>
+<p>把变量lstat从模型lm.fit4中去除时，模型的整体拟合程度有了相对较大的下降Adjusted R-squared从0.7778降低到了0.6878. 标准化残差也又4.336上升到了5.139. 这些指标的上升都说明了我们模型中去除了一个重要的变量。可能这时，你会搞不清楚什么时候去除产生共线性的变量，什么时候又不去除呢？很可惜，答案是根据情况而论。这时，这种决策通常更像是一种艺术而不是一种科学。比如在上述处理变量lstat和lstat^2的情况中，即使我们知道这两个变量的VIF值很高，但是我们还是为了保证模型的拟合程度选择了保留这两个变量。</p>
 <h2 id="问题3：离群值（Outlier）"><a href="#问题3：离群值（Outlier）" class="headerlink" title="问题3：离群值（Outlier）"></a>问题3：离群值（Outlier）</h2><p>离群值是数据中的模型预测出结果与实际值（yi）相差太多的一种情形。离群值的出现一般会有多种原因，其中最常见的一种可能是在收集数据的过程中出现了纪录错误。一般来讲样本数据中的一个或者多个离群值可能会对模型的拟合带来一些严重的影响。比如说会造成标准化残差（RSE or Residual standard error）的升高，P值的升高或者R2的降低等不理想结果。通常我们可以使用残差图来发现离群值。R语言会把可能存在问题的数据用数字标记出来。在模型lm.fit4中的残差图中我们发现样本372, 373, 369被标记了出来，这些值需要值得我们特别注意，因为他们很可能是离群值。在是在实际应用当中，我们去根据残差去确定离群值并不是那么容易，到底需要多大的残差我们才能确定一个样本为离群值呢？所以我们可以根据观察Normal QQ图，Scale-Location图和Residuals-Vs-Leverage图来确定离群值。通过以下代码，我们可以获得出了残差图之外的另外三幅图：</p>
-<pre><code>par(mfrow=c(2,2))
-plot(lm.fit4)
-</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.13.png" alt=""></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">par(mfrow=c(<span class="number">2</span>,<span class="number">2</span>))</div><div class="line">plot(lm.fit4)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.13.png" alt=""></p>
 <p>通过观察这四副图，我们看到了被数字标记出来的样本有365, 369, 372和373. 在此我们基本可以确定这几个值有极大的可能是离群值。另外car包中也提供了一些验证离群值的方法：</p>
-<pre><code>library(car)
-outlierTest(lm.fit4)
-</code></pre><p>该方法同样给出了样本365, 369, 372和373存在着是离群值的可能。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">library</span>(car)</div><div class="line">outlierTest(lm.fit4)</div></pre></td></tr></table></figure>
+<p>该方法同样给出了样本365, 369, 372和373存在着是离群值的可能。</p>
 <p><strong>解决办法：</strong>通常解决离群值的方法要根据离群值产生的原因来决定。如果我们认为离群值是由于数据录入错误产生的，我们可以去除这些离群值来解决该问题。但是有时，离群值的出现可能表明了一些特殊的意义，比如，假设我们发现了在Boston数据中，离群值只出现在了某一个特定区域的房屋（这里只是假设），这时我们可能需要更多深入的研究为什么该特定区域会出现这种情况。当遇到这种情况带来的离群值问题时，我们就不能简简单单的把离群值从模型当中去除，可能我们需要通过引入一个新的哑变量来控制这一特定地区出现的特殊情况。</p>
 <p>在Boston数据中，我们在这里假设（这里只是假设）样本数据365, 369, 372和373是由于数据录入错误产生的。我们来看一下，当我们去除这四个样本时我们的新模型有什么改变。</p>
-<pre><code>df_outlierfree &lt;- df[-c(365,369,372,373), ]
-lm.fit5 &lt;- lm(medv ~.-age-indus+I(lstat^2)-tax, data = df_outlierfree)
-summary(lm.fit5)
-</code></pre><p>新模型lm.fit5是去除了4个潜在离群值样本数据之后对模型进行重新拟合的得到的新模型。通过summary新模型，我们发现Adjusted R-squared由0.7778提升到了0.8172，Residual standard error由4.336降低到了3.841. 我们可以看到模型得到了一定的改善。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_outlierfree &lt;- df[-c(<span class="number">365</span>,<span class="number">369</span>,<span class="number">372</span>,<span class="number">373</span>), ]</div><div class="line">lm.fit5 &lt;- lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>)-tax, data = df_outlierfree)</div><div class="line">summary(lm.fit5)</div></pre></td></tr></table></figure>
+<p>新模型lm.fit5是去除了4个潜在离群值样本数据之后对模型进行重新拟合的得到的新模型。通过summary新模型，我们发现Adjusted R-squared由0.7778提升到了0.8172，Residual standard error由4.336降低到了3.841. 我们可以看到模型得到了一定的改善。</p>
 <h2 id="问题4：高杠杆率点（High-leverage-Points）"><a href="#问题4：高杠杆率点（High-leverage-Points）" class="headerlink" title="问题4：高杠杆率点（High-leverage Points）"></a>问题4：高杠杆率点（High-leverage Points）</h2><p>离群值是不寻常的响应值实际值yi，而高杠杆率点是变量实际值xi. 高杠杆率点出现的原因基本上与离群值出现的原因大同小异，通常也是由于数据录入时产生错误造成的。高杠杆率点问题通常也会对模型拟合造成麻烦，所以检测出高杠杆率点并对其做出相应的处理非常重要。一般来讲，给出一个样本数据，当它的杠杆比率值（leverage statistic）大于(p + 1)/n时我们就可以确定该样本为高杠杆率点。通常我们可以通过观察Residuals-Vs-Leverage图来找出高杠杆率点。在模型lm.fit4的模型中，我们知道模型含有变量11个（p=11），样本为506（n=506），所以当一个样本的杠杆比率值大于0.024时（(11+1)/506），我们就可以确认该样本具有高的杠杆率。 在Residuals-Vs-Leverage图中，我们看到有不少值的杠杆比率值超过了0.024，但是只有样本365,369和373被标记了出来。这是因为这三个值是最危险的，因为他们即具有高的杠杆率值，同时还具有较高的标准化残差（standardized residual）值（一般变量的标准化残差值大于3就可以被可能被确定为离群值）。换句话说，这三个变量可能同时是离群值和高杠杆率点，所以他们对模型产生的影响比单纯的一个仅仅是离群值或仅仅是高杠杆率点的情况要大很多。</p>
 <p><strong>解决办法：</strong>一般我们选择去除这些在Residuals-Vs-Leverage图中被数字标记的样本。</p>
 <p>接下来所介绍的这两个问题在我们的Boston例子中均没有出现，但是这两个问题也是线性回归经常会遇到的问题，我认为在这里有必要指出。</p>
@@ -91,11 +86,10 @@ summary(lm.fit5)
 <p><img src="http://mingju.net/uploads/images/Ch3.14-1.png" alt=""><br>图片来源：<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter3/3.11.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter3/3.11.pdf</a></p>
 <p><strong>解决办法：</strong>通常我们通过转换响应值Y的方法来解决异方差性，如，LogY或者√Y.</p>
 <h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><p>还记得在第一部分当中，我们在浏览数据的第四步（观察响应值分布）中提到，当数据响应值存在右偏态的时候，通常我们需要对其进行log转换。我们通过以下代码对模型进行了修改</p>
-<pre><code>lm.fit6 &lt;- lm(log(medv) ~.-age-indus+I(lstat^2)-tax, data = df_outlierfree)
-summary(lm.fit6)
-</code></pre><p>结果发现模型的拟合程度并没有提升，所以这时我们选择不对响应值进行转换，因为每对样本数据的一次转换都会增加模型的复杂程度，减低模型可述性，这一点我们在模型预测精确度与可解释性之间的权衡一节中有提到。同时细心的朋友可能发现在我们拟合了模型lm.fit5之后其中一个变量zn变得不显著了，这时我为了简化模型可以选择去除zn变量。</p>
-<pre><code>lm.fit5 &lt;- lm(medv ~.-age-indus+I(lstat^2)-tax-zn, data = df_outlierfree)
-</code></pre><p>去除变量zn之后的模型lm.fit5到目前为止就被我们确认为最佳模型。我将在接下来的学习中详细阐述如何使用更高级的方法来选择最佳变量和其他的一些方法来验证和改进模型。但是到目前为止，我们使用简单的模型改善方法已经获取了一个拟合程度不错的模型lm.fit5了。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit6 &lt;- lm(log(medv) ~.-age-indus+I(lstat^<span class="number">2</span>)-tax, data = df_outlierfree)</div><div class="line">summary(lm.fit6)</div></pre></td></tr></table></figure>
+<p>结果发现模型的拟合程度并没有提升，所以这时我们选择不对响应值进行转换，因为每对样本数据的一次转换都会增加模型的复杂程度，减低模型可述性，这一点我们在模型预测精确度与可解释性之间的权衡一节中有提到。同时细心的朋友可能发现在我们拟合了模型lm.fit5之后其中一个变量zn变得不显著了，这时我为了简化模型可以选择去除zn变量。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lm.fit5 &lt;- lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>)-tax-zn, data = df_outlierfree)</div></pre></td></tr></table></figure>
+<p>去除变量zn之后的模型lm.fit5到目前为止就被我们确认为最佳模型。我将在接下来的学习中详细阐述如何使用更高级的方法来选择最佳变量和其他的一些方法来验证和改进模型。但是到目前为止，我们使用简单的模型改善方法已经获取了一个拟合程度不错的模型lm.fit5了。</p>
 ]]></content>
       
         <categories>
@@ -144,31 +138,30 @@ summary(lm.fit6)
 <h1 id="问题1：响应值与变量之间的关系"><a href="#问题1：响应值与变量之间的关系" class="headerlink" title="问题1：响应值与变量之间的关系"></a>问题1：响应值与变量之间的关系</h1><h2 id="第一步，分析目的"><a href="#第一步，分析目的" class="headerlink" title="第一步，分析目的"></a>第一步，分析目的</h2><p>在做具体的分析之前，我们首先要了解我们此次分析的目的是什么？是推理，预测还是两者都有。显然，我们这次的分析目的是想知道是什么因素影响了房屋的价值（medv），同时我们也希望通过建立模型达到预测房屋价值的目的。所以此次分析目的为推理和预测两者都有。</p>
 <h2 id="第二步，数据直觉"><a href="#第二步，数据直觉" class="headerlink" title="第二步，数据直觉"></a>第二步，数据直觉</h2><p>当一位有经验的数据分析师拿到数据并且浏览数据之后，会有一个直觉从而对数据进行初步的判断。当我们拿到Boston数据之后，浏览完每一个变量之后，我们直觉基本就会告诉我们每个变量可能会对响应值产生什么影响。例如，变量crim，该地区的人均犯罪率，我们的直觉告诉我们犯罪率越高的地区可能房屋的价值就会越低，那么到底是不是这样呢？我们还需要进行下一步更详细的分析。初级的数据分析师刚开始可能由于不熟悉数据变量或者不熟悉公司业务，拿到数据之后没有一点头绪，这时并不需要担心。当你对一个行业领域或者一个消费群体了解越来越深入的时候，这种数据直觉就慢慢的建立起来了。</p>
 <h2 id="第三步，浏览数据"><a href="#第三步，浏览数据" class="headerlink" title="第三步，浏览数据"></a>第三步，浏览数据</h2><p>首先我们需要导入数据。</p>
-<pre><code>df &lt;- read.csv(&quot;Boston.csv&quot;, header = TRUE)
-</code></pre><p>接下来用str()方法浏览数据的结构</p>
-<pre><code>str(df)
-</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.1.png" alt=""></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df &lt;- read.csv(<span class="string">"Boston.csv"</span>, header = <span class="literal">TRUE</span>)</div></pre></td></tr></table></figure>
+<p>接下来用str()方法浏览数据的结构</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">str(df)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.1.png" alt=""></p>
 <p>通过浏览数据结构我们可以看到该数据组有506条数据和14个变量。</p>
 <p>然后用summary()总结数据</p>
-<pre><code>summary(df)
-</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.3.png" alt=""></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">summary(df)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.3.png" alt=""></p>
 <p>我个人强烈建议大家在进行任何数据分析之前，一定要进行这两个步骤，这样可以让你对数据有一个初步的理解。如果这里想要像在Excel里面那样浏览数据可以使用一个方法</p>
-<pre><code>fix(df)
-</code></pre><p>这个方法可以打开一个像spreadsheet一样的表格，当浏览结束之后记得把该窗口关掉，否则以下命令将不能继续执行。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fix(df)</div></pre></td></tr></table></figure>
+<p>这个方法可以打开一个像spreadsheet一样的表格，当浏览结束之后记得把该窗口关掉，否则以下命令将不能继续执行。</p>
 <p>接下来我们就要看每个变量与响应值的关系了。这时我们可以通过相关性矩阵图（correlation matrix）来浏览不同变量与相应值的关系。</p>
-<pre><code>plot(df, pch = &quot;.&quot;, col = &quot;blue&quot;)
-</code></pre><p><img src="http://mingju.net/uploads/images/ch3.2.png" alt=""></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plot(df, pch = <span class="string">"."</span>, col = <span class="string">"blue"</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/ch3.2.png" alt=""></p>
 <p>当然除了使用最直观的相关性矩阵图来观察相关性，我们还可以使用cor()来了解变量之间的具体相关值</p>
-<pre><code>cor(df)
-</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.4.png" alt=""></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cor(df)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.4.png" alt=""></p>
 <p>当我们对数据进行了基本的分析之后，可以发现房屋价值（medv）跟房间数量（rm）还有底层人群的百分比（lstat）具有最强的相关性。相关指数分别为0.695和－0.738. 同时我们从相关性矩阵图中可以看出底层人群的百分比（lstat）与房屋价值（medv）之间虽然存在较强的负相关性，但是他们的关系并不是线性（liner）的。这里我们就遇到了处理线性回归的第一个常见问题－变量与响应值之间的非线性（non-linearity）关系。我们还发现某些变量之间也具有较强的相关性。比如非零售商业化面积的比率（indus）与一氧化氮浓度（nox）的相关性为0.764，非零售商业化面积的比率（indus）与财产税税率（tax）的相关性为0.721.另外距离高数公路的指数（rad）和财产税税率（tax）的相关性为0.91. 这里如果我们把这些具有相关性较强的变量同时放在模型中的时候就有可能会遇到我们处理线性回归分析的第二个常见问题－共线性（Collinearity）。在该总结的第二部分模型改善中，我会详细的介绍如何通过解决这两个常见问题以及另外其他的四个常见问题（异方差性，离群值，高杠杆率点和误差项相关）来改善模型。</p>
 <h2 id="第四步，观察响应值分布"><a href="#第四步，观察响应值分布" class="headerlink" title="第四步，观察响应值分布"></a>第四步，观察响应值分布</h2><p>理论上，当我们要进行线性回归分析时，我们希望响应值（Y）是成正态分布（Normal Distribution）。但是在处理实际生活中的案例时，很少会出现响应值是正态分布的情况。最直观去观察响应值的分布就是使用直方图（histogram）。</p>
-<pre><code>hist(df$medv)
-</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.5.png" alt=""></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hist(df$medv)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.5.png" alt=""></p>
 <p>从对房屋价值（medv）的直方图中，我们可以看出数据称右偏态分布（right skewed distribution）通常我们处理右偏态分布的方法是使用对数转换法（log transformation）。如果数据称左偏态分布（left skewed）的话，通常的处理方法为平方转换法（squaring）。在这里我们首先不对任何数据进行转换，直接建立模型，然后在接下来的分析中我会介绍如何通过转换数据来改善模型。</p>
-<h2 id="第五步，建立初步模型lm-fit"><a href="#第五步，建立初步模型lm-fit" class="headerlink" title="第五步，建立初步模型lm.fit"></a>第五步，建立初步模型lm.fit</h2><pre><code>lm.fit &lt;- lm(medv ~., data = Boston)
-summary(lm.fit)
-</code></pre><p>我们通过lm()方法拟合了一个多变量线性模型，其中“medv ~.”这个语法表示把所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
+<h2 id="第五步，建立初步模型lm-fit"><a href="#第五步，建立初步模型lm-fit" class="headerlink" title="第五步，建立初步模型lm.fit"></a>第五步，建立初步模型lm.fit</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit &lt;- lm(medv ~., data = Boston)</div><div class="line">summary(lm.fit)</div></pre></td></tr></table></figure>
+<p>我们通过lm()方法拟合了一个多变量线性模型，其中“medv ~.”这个语法表示把所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
 <p><img src="http://mingju.net/uploads/images/Ch3.6.png" alt=""></p>
 <p>通常我们在建立线性回归模型之后，首先需要检查的是F值。通常情况下，如果F值大于1的话我们就基本有证据去否定零假设（null hypothesis, H0），也就是可以说明模型中至少一个变量（X）与响应值（Y）相关。如果没有任何变量与响应值有关系的话，我们一般期望F值接近于1。在上述例子中我们可以看到F值（F-statistic）为108.1，因为F值比1大很多，所以这里我们可以否定零假设H0. 那么如果F值如果只大于1一点，我们应该如何判断呢？这里请遵循以下两个基本原则：</p>
 <ol>
@@ -177,9 +170,8 @@ summary(lm.fit)
 </ol>
 <p>接下来我们需要检查的是与F值相关的p值（p-value），上述例子的p值为2.2e-16，是一个无限接近0的值，所以我们有很强的证据来证明至少有一个变量（X）是与响应值（Y）相关的。我们还注意到在上述例子中，每一个变量都会有一个对应的p值，这些变量的p值表示了每一个单独变量与响应值（Y）的关系。其中我们在每个单独变量对应的p值后面会看到“*”符号，这个符号表示了在某个显著水平（significance level）该变量是否与响应值相关。其中显著值水平在“Signif.codes”一栏有解释。这里我们看到了很多个变量的p值都很小，只有变量indus和age具有较大的p值。那么我们可以确定模型中存在单独的变量具有较小的p值，至少其中一个变量与响应值相关吗？其实这个结论是有问题的。这也就是为什么我建议大家首先验证F值的原因。因为当变量的个数相对较大的时候，我们遇到具有较小p值的变量的机会就会大大降低。也就是说当变量个数很大的时候，我们总会一不小心就会看到某几个（至少1个）变量的p值是较小的，那么这个时候我们说，这个变量肯定与响应值相关，我们的结论存在问题的可能性就相当大了。但是F值不会被这个问题所影响，因为F值会根据变量的数量作出自动调整。当然，这里需要注意的是，通过F值去验证变量与响应值之间是否存在相关性的方法只有在变量的数量相对样本来讲比较小的情况，有时候我们会遇到变量的数量远远大于样本的数量，当遇到这种情况的时候我们就没有办法继续使用F值取兖州变量与响应值之间的关系了。所以当这种情况出现的时候，我们需要使用其他办法来，比如说向前逐步回归（forward selection）来选择重要的变量来拟合模型。这种多维数据（high-dimensional）的问题我将在接下来的文章中做详细的解释。</p>
 <h1 id="问题2：选取重要变量"><a href="#问题2：选取重要变量" class="headerlink" title="问题2：选取重要变量"></a>问题2：选取重要变量</h1><p>在解决了问题1之后，我们需要观察的是哪些变量影响了响应值（Y）。通常，最简单的办法就似乎看每一个变量的p值。当然我们在问题1中也解释了这种方法在变量个数比较大时存在的危险性，所以一定记得检验F值。我们在进行对变量的p值观察之后，发现变量indus和age具有较大的p值，最简单的处理办法就是把这两个变量从模型中移除。然后把剩下统计显著的变量放入再次建立一个新的模型lm.fit2.</p>
-<pre><code>lm.fit2 &lt;- lm(medv ~.-age-indus, data = df)
-summary(lm.fit2)
-</code></pre><p>其中“medv ~.-age-indus”这个语法表示把除了age和indus之外的所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit2 &lt;- lm(medv ~.-age-indus, data = df)</div><div class="line">summary(lm.fit2)</div></pre></td></tr></table></figure>
+<p>其中“medv ~.-age-indus”这个语法表示把除了age和indus之外的所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
 <p><img src="http://mingju.net/uploads/images/Ch3.7.png" alt=""></p>
 <p>选择重要变量的方法有很多，我们这里采取的是一种最普通的处理方法。当我们拥有更多数量的变量供我们选择的时候，这种简单的方法就不适用了。通常当我们遇到大量变量时，我们会使用向前逐步回归（forward selection），向后逐步回归（backward selection）或者合并（mixed selection）这两种方法。这里我们只对这三种方法进行简单的介绍，在接下来的文章中我会对这三种方法的使用做详细的解释。</p>
 <p><strong>向前逐步回归：</strong>开始于一个只有截距（intercept）没有任何变量的空模型（null model），然后向模型中不断的加入变量，然后看哪些变量可以带来最低的残差平方和（RSS）。</p>
@@ -191,13 +183,12 @@ summary(lm.fit2)
 <h1 id="问题4：模型预测"><a href="#问题4：模型预测" class="headerlink" title="问题4：模型预测"></a>问题4：模型预测</h1><p>当我们用样本数据建立好了模型之后。当我们有变量X1，X2，…，Xp的值得时候，我们就可以使用模型去预测响应值Y。但是这里有大致三种不确定性与预测有关。</p>
 <p>模型的系数（coefficient）是估值（estimate），因为我们在Ch2.1.2 为什么要建立ƒ与如何建立ƒ，中知道数据拟合模型（least squares）为ˆY = ˆ?0+ˆ?1X1+ˆ?2X2+…+ˆ?pXp. 而真正的模型（true population regression）应该为ƒ(X) = ?0+?1X1+?2X2+…+?pXp. 所以Y是约等于 ?0+?1X1+?2X2+…+?pXp的。我们还在Ch2.1.2. 还学习到了由于估值系数产生的误差是与可降误差（reducible error）相关的。因此我们可以在这里去计算可靠区间（confidence interval）去检测ˆY和ƒ(X) 之间到底有多么接近。<br>当然当我们假设线性模型符合我们的样本数据的时候，这里也会可能产生其他的可降误差，一般我们称这种误差为模型偏差（model bias）。在Ch2.2.2 方差与偏差之间的权衡有提到过。<br>通常情况下，我们不可能知道真正的ƒ(X) 。就算我们知道，那么模型还是无法完美的去做出预测，因为我们知道模型里还存在着随机的不可降误差ε. 那么Y与ˆY到底有多接近呢？我们一般可以使用计算预测区间（prediction interval）的方法去检测。<br>这里值得注意的是，预测区间永远大于可靠区间。因为预测区间包含了两种误差。</p>
 <p>在我们的Boston例子中，如何进行可靠区间的计算呢？如果我们想要获得估值系数（coefficient estimates）的可靠区间，可以使用：</p>
-<pre><code>confint(lm.fit2)
-</code></pre><p>得到了以下的结果：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">confint(lm.fit2)</div></pre></td></tr></table></figure>
+<p>得到了以下的结果：</p>
 <p><img src="http://mingju.net/uploads/images/Ch3.8.png" alt=""></p>
 <p>这个结果告诉了我们每一个变量系数的可靠区间。比如变量rm的95%的可靠区间为[3.003258393, 4.59989929]. 换言之，这个可靠区间[3.003258393, 4.59989929], 包含了95%的该变量所预估的实际值。这时，我们可能更感兴趣的是观察模型预测之后的区间范围。我们可以使用：</p>
-<pre><code>predict(lm.fit2, interval = &quot;confidence&quot;)
-predict(lm.fit2, interval = &quot;prediction&quot;)
-</code></pre><p>来计算整个样本数据的可靠区间和预测区间。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">predict(lm.fit2, interval = <span class="string">"confidence"</span>)</div><div class="line">predict(lm.fit2, interval = <span class="string">"prediction"</span>)</div></pre></td></tr></table></figure>
+<p>来计算整个样本数据的可靠区间和预测区间。</p>
 ]]></content>
       
         <categories>

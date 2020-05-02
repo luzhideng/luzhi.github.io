@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://mingju.net/uploads/images/Ch3.14.png">
 <meta property="og:image" content="http://mingju.net/uploads/images/Ch3.13.png">
 <meta property="og:image" content="http://mingju.net/uploads/images/Ch3.14-1.png">
-<meta property="og:updated_time" content="2020-05-02T00:09:35.725Z">
+<meta property="og:updated_time" content="2020-05-02T00:16:42.972Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ch3 线性回归分析（改善模型）">
 <meta name="twitter:description" content="在线性回归第一部分模型建立当中，我们在浏览数据（第三步），观察相应值分布（第四步）以及建立模型（第五步）的过程中发现了一些数据的常见问题。其中在第三步中我们发现了常见问题1：变量与响应值之间的非线性（non-linearity）关系和常见问题2：共线性（Collinearity）。其中在模型的建立过程中经常遇到的问题还会有问题3：离群值（outlier），问题4：高杠杆率点（high-levera">
@@ -415,25 +415,20 @@
 </ol>
 <p>第一种办法是最常用的一种办法，因为模型中两个或多个存在高度相关的变量，只保留其中一个变量相当于简化了模型，降低了模型的冗余，又不会对模型拟合造成大的影响。第二种办法比如可以结合两个变量并且取两个变量的平均值作为一个新的变量再加入模型中。</p>
 <p>在模型lm.fit3中，我们选择第一种办法来去除共线性问题。在该模型中我们选择去除VIF值相对较高的tax变量，然后再次对模型进行拟合得到模型lm.fit4：</p>
-<pre><code>lm.fit4 &lt;- lm(medv ~.-age-indus+I(lstat^2)-tax, data = df)
-summary(lm.fit4)
-</code></pre><p>通过summary我们可以看到Adjusted R-squared相比lm.fit3由0.7816降到了0.7778，只降低了0.0038. 标准化残差（Residual standard error）从4.298上升到了4.336，只上升了0.038. 所以，我们新的模型lm.fit4虽然相对lm.fit3，这两项指数都带来了不理想的信息，但是我们的模型拟合程度和误差程度非常非常的低，所以为了简化模型和去除共线性问题，我们决定采用新的模型lm.fit4. 可能你会有疑问说，变量lstat和lstat^2存在更大的共线性问题，我们是否可以需要除变量lstat呢？这里我并不建议你去除变量lstat，因为当使用</p>
-<pre><code>summary(lm(medv ~.-age-indus+I(lstat^2)-tax-lstat, data = df))
-</code></pre><p>把变量lstat从模型lm.fit4中去除时，模型的整体拟合程度有了相对较大的下降Adjusted R-squared从0.7778降低到了0.6878. 标准化残差也又4.336上升到了5.139. 这些指标的上升都说明了我们模型中去除了一个重要的变量。可能这时，你会搞不清楚什么时候去除产生共线性的变量，什么时候又不去除呢？很可惜，答案是根据情况而论。这时，这种决策通常更像是一种艺术而不是一种科学。比如在上述处理变量lstat和lstat^2的情况中，即使我们知道这两个变量的VIF值很高，但是我们还是为了保证模型的拟合程度选择了保留这两个变量。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit4 &lt;- lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>)-tax, data = df)</div><div class="line">summary(lm.fit4)</div></pre></td></tr></table></figure>
+<p>通过summary我们可以看到Adjusted R-squared相比lm.fit3由0.7816降到了0.7778，只降低了0.0038. 标准化残差（Residual standard error）从4.298上升到了4.336，只上升了0.038. 所以，我们新的模型lm.fit4虽然相对lm.fit3，这两项指数都带来了不理想的信息，但是我们的模型拟合程度和误差程度非常非常的低，所以为了简化模型和去除共线性问题，我们决定采用新的模型lm.fit4. 可能你会有疑问说，变量lstat和lstat^2存在更大的共线性问题，我们是否可以需要除变量lstat呢？这里我并不建议你去除变量lstat，因为当使用</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">summary(lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>)-tax-lstat, data = df))</div></pre></td></tr></table></figure>
+<p>把变量lstat从模型lm.fit4中去除时，模型的整体拟合程度有了相对较大的下降Adjusted R-squared从0.7778降低到了0.6878. 标准化残差也又4.336上升到了5.139. 这些指标的上升都说明了我们模型中去除了一个重要的变量。可能这时，你会搞不清楚什么时候去除产生共线性的变量，什么时候又不去除呢？很可惜，答案是根据情况而论。这时，这种决策通常更像是一种艺术而不是一种科学。比如在上述处理变量lstat和lstat^2的情况中，即使我们知道这两个变量的VIF值很高，但是我们还是为了保证模型的拟合程度选择了保留这两个变量。</p>
 <h2 id="问题3：离群值（Outlier）"><a href="#问题3：离群值（Outlier）" class="headerlink" title="问题3：离群值（Outlier）"></a>问题3：离群值（Outlier）</h2><p>离群值是数据中的模型预测出结果与实际值（yi）相差太多的一种情形。离群值的出现一般会有多种原因，其中最常见的一种可能是在收集数据的过程中出现了纪录错误。一般来讲样本数据中的一个或者多个离群值可能会对模型的拟合带来一些严重的影响。比如说会造成标准化残差（RSE or Residual standard error）的升高，P值的升高或者R2的降低等不理想结果。通常我们可以使用残差图来发现离群值。R语言会把可能存在问题的数据用数字标记出来。在模型lm.fit4中的残差图中我们发现样本372, 373, 369被标记了出来，这些值需要值得我们特别注意，因为他们很可能是离群值。在是在实际应用当中，我们去根据残差去确定离群值并不是那么容易，到底需要多大的残差我们才能确定一个样本为离群值呢？所以我们可以根据观察Normal QQ图，Scale-Location图和Residuals-Vs-Leverage图来确定离群值。通过以下代码，我们可以获得出了残差图之外的另外三幅图：</p>
-<pre><code>par(mfrow=c(2,2))
-plot(lm.fit4)
-</code></pre><p><img src="http://mingju.net/uploads/images/Ch3.13.png" alt=""></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">par(mfrow=c(<span class="number">2</span>,<span class="number">2</span>))</div><div class="line">plot(lm.fit4)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.13.png" alt=""></p>
 <p>通过观察这四副图，我们看到了被数字标记出来的样本有365, 369, 372和373. 在此我们基本可以确定这几个值有极大的可能是离群值。另外car包中也提供了一些验证离群值的方法：</p>
-<pre><code>library(car)
-outlierTest(lm.fit4)
-</code></pre><p>该方法同样给出了样本365, 369, 372和373存在着是离群值的可能。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">library</span>(car)</div><div class="line">outlierTest(lm.fit4)</div></pre></td></tr></table></figure>
+<p>该方法同样给出了样本365, 369, 372和373存在着是离群值的可能。</p>
 <p><strong>解决办法：</strong>通常解决离群值的方法要根据离群值产生的原因来决定。如果我们认为离群值是由于数据录入错误产生的，我们可以去除这些离群值来解决该问题。但是有时，离群值的出现可能表明了一些特殊的意义，比如，假设我们发现了在Boston数据中，离群值只出现在了某一个特定区域的房屋（这里只是假设），这时我们可能需要更多深入的研究为什么该特定区域会出现这种情况。当遇到这种情况带来的离群值问题时，我们就不能简简单单的把离群值从模型当中去除，可能我们需要通过引入一个新的哑变量来控制这一特定地区出现的特殊情况。</p>
 <p>在Boston数据中，我们在这里假设（这里只是假设）样本数据365, 369, 372和373是由于数据录入错误产生的。我们来看一下，当我们去除这四个样本时我们的新模型有什么改变。</p>
-<pre><code>df_outlierfree &lt;- df[-c(365,369,372,373), ]
-lm.fit5 &lt;- lm(medv ~.-age-indus+I(lstat^2)-tax, data = df_outlierfree)
-summary(lm.fit5)
-</code></pre><p>新模型lm.fit5是去除了4个潜在离群值样本数据之后对模型进行重新拟合的得到的新模型。通过summary新模型，我们发现Adjusted R-squared由0.7778提升到了0.8172，Residual standard error由4.336降低到了3.841. 我们可以看到模型得到了一定的改善。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_outlierfree &lt;- df[-c(<span class="number">365</span>,<span class="number">369</span>,<span class="number">372</span>,<span class="number">373</span>), ]</div><div class="line">lm.fit5 &lt;- lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>)-tax, data = df_outlierfree)</div><div class="line">summary(lm.fit5)</div></pre></td></tr></table></figure>
+<p>新模型lm.fit5是去除了4个潜在离群值样本数据之后对模型进行重新拟合的得到的新模型。通过summary新模型，我们发现Adjusted R-squared由0.7778提升到了0.8172，Residual standard error由4.336降低到了3.841. 我们可以看到模型得到了一定的改善。</p>
 <h2 id="问题4：高杠杆率点（High-leverage-Points）"><a href="#问题4：高杠杆率点（High-leverage-Points）" class="headerlink" title="问题4：高杠杆率点（High-leverage Points）"></a>问题4：高杠杆率点（High-leverage Points）</h2><p>离群值是不寻常的响应值实际值yi，而高杠杆率点是变量实际值xi. 高杠杆率点出现的原因基本上与离群值出现的原因大同小异，通常也是由于数据录入时产生错误造成的。高杠杆率点问题通常也会对模型拟合造成麻烦，所以检测出高杠杆率点并对其做出相应的处理非常重要。一般来讲，给出一个样本数据，当它的杠杆比率值（leverage statistic）大于(p + 1)/n时我们就可以确定该样本为高杠杆率点。通常我们可以通过观察Residuals-Vs-Leverage图来找出高杠杆率点。在模型lm.fit4的模型中，我们知道模型含有变量11个（p=11），样本为506（n=506），所以当一个样本的杠杆比率值大于0.024时（(11+1)/506），我们就可以确认该样本具有高的杠杆率。 在Residuals-Vs-Leverage图中，我们看到有不少值的杠杆比率值超过了0.024，但是只有样本365,369和373被标记了出来。这是因为这三个值是最危险的，因为他们即具有高的杠杆率值，同时还具有较高的标准化残差（standardized residual）值（一般变量的标准化残差值大于3就可以被可能被确定为离群值）。换句话说，这三个变量可能同时是离群值和高杠杆率点，所以他们对模型产生的影响比单纯的一个仅仅是离群值或仅仅是高杠杆率点的情况要大很多。</p>
 <p><strong>解决办法：</strong>一般我们选择去除这些在Residuals-Vs-Leverage图中被数字标记的样本。</p>
 <p>接下来所介绍的这两个问题在我们的Boston例子中均没有出现，但是这两个问题也是线性回归经常会遇到的问题，我认为在这里有必要指出。</p>
@@ -449,11 +444,10 @@ summary(lm.fit5)
 <p><img src="http://mingju.net/uploads/images/Ch3.14-1.png" alt=""><br>图片来源：<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter3/3.11.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter3/3.11.pdf</a></p>
 <p><strong>解决办法：</strong>通常我们通过转换响应值Y的方法来解决异方差性，如，LogY或者√Y.</p>
 <h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><p>还记得在第一部分当中，我们在浏览数据的第四步（观察响应值分布）中提到，当数据响应值存在右偏态的时候，通常我们需要对其进行log转换。我们通过以下代码对模型进行了修改</p>
-<pre><code>lm.fit6 &lt;- lm(log(medv) ~.-age-indus+I(lstat^2)-tax, data = df_outlierfree)
-summary(lm.fit6)
-</code></pre><p>结果发现模型的拟合程度并没有提升，所以这时我们选择不对响应值进行转换，因为每对样本数据的一次转换都会增加模型的复杂程度，减低模型可述性，这一点我们在模型预测精确度与可解释性之间的权衡一节中有提到。同时细心的朋友可能发现在我们拟合了模型lm.fit5之后其中一个变量zn变得不显著了，这时我为了简化模型可以选择去除zn变量。</p>
-<pre><code>lm.fit5 &lt;- lm(medv ~.-age-indus+I(lstat^2)-tax-zn, data = df_outlierfree)
-</code></pre><p>去除变量zn之后的模型lm.fit5到目前为止就被我们确认为最佳模型。我将在接下来的学习中详细阐述如何使用更高级的方法来选择最佳变量和其他的一些方法来验证和改进模型。但是到目前为止，我们使用简单的模型改善方法已经获取了一个拟合程度不错的模型lm.fit5了。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit6 &lt;- lm(log(medv) ~.-age-indus+I(lstat^<span class="number">2</span>)-tax, data = df_outlierfree)</div><div class="line">summary(lm.fit6)</div></pre></td></tr></table></figure>
+<p>结果发现模型的拟合程度并没有提升，所以这时我们选择不对响应值进行转换，因为每对样本数据的一次转换都会增加模型的复杂程度，减低模型可述性，这一点我们在模型预测精确度与可解释性之间的权衡一节中有提到。同时细心的朋友可能发现在我们拟合了模型lm.fit5之后其中一个变量zn变得不显著了，这时我为了简化模型可以选择去除zn变量。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lm.fit5 &lt;- lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>)-tax-zn, data = df_outlierfree)</div></pre></td></tr></table></figure>
+<p>去除变量zn之后的模型lm.fit5到目前为止就被我们确认为最佳模型。我将在接下来的学习中详细阐述如何使用更高级的方法来选择最佳变量和其他的一些方法来验证和改进模型。但是到目前为止，我们使用简单的模型改善方法已经获取了一个拟合程度不错的模型lm.fit5了。</p>
 
       
     </div>
