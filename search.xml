@@ -6,11 +6,17 @@
     <entry>
       <title><![CDATA[Pandas基础笔记]]></title>
       <url>http://mingju.net/2020/04/notes/</url>
-      <content type="html"><![CDATA[<p>Pandas中的<code>pd.to_numeric()</code>可以把一系列的值转变为float浮点类型，同时可以通过参数|<code>errors=&#39;coerce&#39;</code>可以把其中的strings强制转换为NaN空值以便于后续的数据清理。</p>
+      <content type="html"><![CDATA[<p>这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。</p>
+<p>Pandas中的<code>pd.to_numeric()</code>可以把一系列的值转变为float浮点类型，同时可以通过参数|<code>errors=&#39;coerce&#39;</code>可以把其中的strings强制转换为NaN空值以便于后续的数据清理。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.to_numeric(df, errors=<span class="string">'coerce'</span>)</div></pre></td></tr></table></figure>
-<p>这部分总结</p>
 ]]></content>
       
+        <categories>
+            
+            <category> Python </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -947,9 +953,9 @@ library (&quot;xlsx&quot;)
         
         <tags>
             
-            <tag> Ted </tag>
-            
             <tag> 消费者行为学 </tag>
+            
+            <tag> Ted </tag>
             
         </tags>
         

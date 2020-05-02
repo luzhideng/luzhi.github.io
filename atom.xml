@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://mingju.net/"/>
-  <updated>2020-05-01T23:59:52.492Z</updated>
+  <updated>2020-05-02T00:03:54.650Z</updated>
   <id>http://mingju.net/</id>
   
   <author>
@@ -20,18 +20,21 @@
     <link href="http://mingju.net/2020/04/notes/"/>
     <id>http://mingju.net/2020/04/notes/</id>
     <published>2020-04-28T17:22:40.000Z</published>
-    <updated>2020-05-01T23:59:52.492Z</updated>
+    <updated>2020-05-02T00:03:54.650Z</updated>
     
-    <content type="html"><![CDATA[<p>Pandas中的<code>pd.to_numeric()</code>可以把一系列的值转变为float浮点类型，同时可以通过参数|<code>errors=&#39;coerce&#39;</code>可以把其中的strings强制转换为NaN空值以便于后续的数据清理。</p>
+    <content type="html"><![CDATA[<p>这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。</p>
+<p>Pandas中的<code>pd.to_numeric()</code>可以把一系列的值转变为float浮点类型，同时可以通过参数|<code>errors=&#39;coerce&#39;</code>可以把其中的strings强制转换为NaN空值以便于后续的数据清理。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.to_numeric(df, errors=<span class="string">'coerce'</span>)</div></pre></td></tr></table></figure>
-<p>这部分总结</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;Pandas中的&lt;code&gt;pd.to_numeric()&lt;/code&gt;可以把一系列的值转变为float浮点类型，同时可以通过参数|&lt;code&gt;errors=&amp;#39;coerce&amp;#39;&lt;/code&gt;可以把其中的strings强制转换为NaN空值以便于后续的数据清理。&lt;
+      &lt;p&gt;这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。&lt;/p&gt;
+&lt;p&gt;Pandas中的&lt;code&gt;pd.to_numeric()&lt;/code&gt;可以把一系列的值转变为float浮点类型，同时可以通过参数|&lt;code&gt;errors=&amp;#3
     
     </summary>
+    
+      <category term="Python" scheme="http://mingju.net/categories/Python/"/>
     
     
       <category term="Pandas" scheme="http://mingju.net/tags/Pandas/"/>
