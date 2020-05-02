@@ -45,9 +45,8 @@
 <p>相比lm.fit2的残差图，lm.fit3的残差图并没有出现显而易见的趋势，这说明我们通过转换变量lstat加入了lstat^2之后，模型得到了改善。这也是我们想要的结果。</p>
 <h2 id="问题2：共线性（Collinearity）"><a href="#问题2：共线性（Collinearity）" class="headerlink" title="问题2：共线性（Collinearity）"></a>问题2：共线性（Collinearity）</h2><p>共线性是指两个或者多个变量之间存在较强的相关性。变量之间的强相关性会在回归模型当中造成一些问题。如果模型中存在两个或者多个强相关性变量，那么我们的模型是没有办法分辨到底是哪些个变量真正对响应值造成了影响。换句话说，我们通过在《建立模型》部分的相关性矩阵图中发现了变量距离高数公路的指数（rad）和财产税税率（tax）之间存在着很强的正相关性（0.91），也就是说，变量rad和变量tax通常会同时增长或者同时下降。这时，我们对于到底是rad的变化对medv造成了影响还是tax的变化对medv造成了影响的判别就变得非常模糊了。一般来说，我们可以通过使用相关性矩阵图（correlation matrix）或者变量相关值来判断变量之间是否存在共线性的问题。但是，并不是所有的共线性问题都可以通过观察相关矩阵图或者变量相关值来判断的。有时，共线性的问题还有可能在三个或者多个变量中发生，有时甚至这些变量之间没有很高的相关值，我们把这种情况叫做多共线性（multicollinearity）。所以，更实用的一种检验共线性的方法就是计算方差膨胀因子(Variance Inflation Factor,VIF)。VIF最小的值为1，代表该变量完全没有共线性问题。通常在实际应用当中，只会有一小部分的变量会有较小的VIF值。一般来讲，当VIF值大于5或者10的时候我们就可以判断该变量存在共线性问题。</p>
 <p>让我们来验证一下我们Boston模型lm.fit3是否存在共线性问题。在R中car包提供了计算VIF值的功能，如果第一次使用请记得安装car包。</p>
-<pre><code>library(car)
-vif(lm.fit3)
-</code></pre><p>我们得到了以下结果：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">library</span>(car)</div><div class="line">vif(lm.fit3)</div></pre></td></tr></table></figure>
+<p>我们得到了以下结果：</p>
 <p><img src="http://mingju.net/uploads/images/Ch3.12.png" alt=""></p>
 <p>其中我们发现变了rad的VIF值为6.876185，变量tax的VIF值为7.308601。可以看出这两个变量的VIF值超过了5，根据当VIF值大于5或者10的时候我们就可以判断该变量存在共线性问题这一规则，我们可以说这两个变量在模型中存在一定的共线性问题。这也验证了我们前面通过观察相关性矩阵图和变量相关值的结论。另外我们发现，变量lstat和新加入的变量lstat^2 （模型中用I(lstat^2)表示）也具有相当高的VIF值，分别达到了19.744844和15.575471，这是因为变量lstat^2是lstat的二次方形式，他们之间必然存在着高度相关性，所以这两个变量出现较高的VIF值也就显而易见了。通过下图我们可以看出lstat和lstat^2之间的关系，可以看出这两个变量之间的高度相关性。</p>
 <p><img src="http://mingju.net/uploads/images/Ch3.14.png" alt=""></p>
