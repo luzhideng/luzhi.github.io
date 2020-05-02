@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://mingju.net/"/>
-  <updated>2020-05-02T00:12:48.492Z</updated>
+  <updated>2020-05-02T00:57:57.192Z</updated>
   <id>http://mingju.net/</id>
   
   <author>
@@ -20,9 +20,31 @@
     <link href="http://mingju.net/2020/04/notes/"/>
     <id>http://mingju.net/2020/04/notes/</id>
     <published>2020-04-28T17:22:40.000Z</published>
-    <updated>2020-05-02T00:12:48.492Z</updated>
+    <updated>2020-05-02T00:57:57.192Z</updated>
     
     <content type="html"><![CDATA[<p>这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。</p>
+<h1 id="选取DataFrame中的元素值"><a href="#选取DataFrame中的元素值" class="headerlink" title="选取DataFrame中的元素值"></a>选取DataFrame中的元素值</h1><p>选取Python中DataFrame中元素的值一般分为三种方法：</p>
+<h2 id="两个方括号方法-‘列名’-‘行名’"><a href="#两个方括号方法-‘列名’-‘行名’" class="headerlink" title="两个方括号方法[‘列名’][‘行名’]"></a>两个方括号方法[‘列名’][‘行名’]</h2><table>
+<thead>
+<tr>
+<th>eggs</th>
+<th>salt</th>
+<th>spam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单元格</td>
+<td>单元格</td>
+<td>单元格</td>
+</tr>
+<tr>
+<td>单元格</td>
+<td>单元格</td>
+<td>单元格</td>
+</tr>
+</tbody>
+</table>
 <p>Pandas中的<code>pd.to_numeric()</code>可以把一系列的值转变为float浮点类型，同时可以通过参数<code>errors=&#39;coerce&#39;</code>可以把其中的strings强制转换为NaN空值以便于后续的数据清理。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.to_numeric(df, errors=<span class="string">'coerce'</span>)</div></pre></td></tr></table></figure>
 ]]></content>
@@ -30,7 +52,7 @@
     <summary type="html">
     
       &lt;p&gt;这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。&lt;/p&gt;
-&lt;p&gt;Pandas中的&lt;code&gt;pd.to_numeric()&lt;/code&gt;可以把一系列的值转变为float浮点类型，同时可以通过参数&lt;code&gt;errors=&amp;#39
+&lt;h1 id=&quot;选取DataFrame中的元素值&quot;&gt;&lt;a href=&quot;#选取DataFrame中的元素值&quot; class=&quot;headerlink&quot; title=&quot;选取Dat
     
     </summary>
     

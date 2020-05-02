@@ -7,6 +7,28 @@
       <title><![CDATA[Pandas基础笔记]]></title>
       <url>http://mingju.net/2020/04/notes/</url>
       <content type="html"><![CDATA[<p>这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。</p>
+<h1 id="选取DataFrame中的元素值"><a href="#选取DataFrame中的元素值" class="headerlink" title="选取DataFrame中的元素值"></a>选取DataFrame中的元素值</h1><p>选取Python中DataFrame中元素的值一般分为三种方法：</p>
+<h2 id="两个方括号方法-‘列名’-‘行名’"><a href="#两个方括号方法-‘列名’-‘行名’" class="headerlink" title="两个方括号方法[‘列名’][‘行名’]"></a>两个方括号方法[‘列名’][‘行名’]</h2><table>
+<thead>
+<tr>
+<th>eggs</th>
+<th>salt</th>
+<th>spam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单元格</td>
+<td>单元格</td>
+<td>单元格</td>
+</tr>
+<tr>
+<td>单元格</td>
+<td>单元格</td>
+<td>单元格</td>
+</tr>
+</tbody>
+</table>
 <p>Pandas中的<code>pd.to_numeric()</code>可以把一系列的值转变为float浮点类型，同时可以通过参数<code>errors=&#39;coerce&#39;</code>可以把其中的strings强制转换为NaN空值以便于后续的数据清理。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.to_numeric(df, errors=<span class="string">'coerce'</span>)</div></pre></td></tr></table></figure>
 ]]></content>
