@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://mingju.net/uploads/images/Ch3.14.png">
 <meta property="og:image" content="http://mingju.net/uploads/images/Ch3.13.png">
 <meta property="og:image" content="http://mingju.net/uploads/images/Ch3.14-1.png">
-<meta property="og:updated_time" content="2020-04-29T04:51:33.388Z">
+<meta property="og:updated_time" content="2020-05-02T00:07:42.693Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ch3 线性回归分析（改善模型）">
 <meta name="twitter:description" content="在线性回归第一部分模型建立当中，我们在浏览数据（第三步），观察相应值分布（第四步）以及建立模型（第五步）的过程中发现了一些数据的常见问题。其中在第三步中我们发现了常见问题1：变量与响应值之间的非线性（non-linearity）关系和常见问题2：共线性（Collinearity）。其中在模型的建立过程中经常遇到的问题还会有问题3：离群值（outlier），问题4：高杠杆率点（high-levera">
@@ -396,9 +396,8 @@
 <p>在理想的模型状态下，我们期望残差图是没有可识别的图形（discernible pattern），也就是说，我们不希望在残差图中看出什么规律来。但是上图中我们明显的看到了residuals和fitted values之间的关系（红线表示的趋势中可以看出明显的图形）。</p>
 <p><strong>解决办法：</strong>通常我们解决模型中的非线性使用的方法是转换变量，比如Log X， X，X2等。在接下来的学习中我们还会学到更高级的一些对于此问题的处理办法。但是在这里，我们先使用最常见也是最基本的方法去处理我们的变量。</p>
 <p>在上面我们通过图案观察出了变量lstat与medv之间是二次方的关系，所以在改善过后的模型lm.fit3中，我们加入了lstat的二次方变量。</p>
-<pre><code>lm.fit3 &lt;- lm(medv ~.-age-indus+I(lstat^2), data = df)
-summary(lm.fit3)
-</code></pre><p>在summary该模型之后，比较模型lm.fit2，我们发现Adjusted R-squared 由0.7348提升到了0.7816, 这个提升说明了模型lm.fit3相比lm.fit2可以解释更多的样本数据。同时我们发现Residual standard error由4.736降低到了4.298，F值从128.2提升到了151.6. 改善都说明我们的lm.fit3相对lm.fit2得到了不错的改善。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit3 &lt;- lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>), data = df)</div><div class="line">summary(lm.fit3)</div></pre></td></tr></table></figure>
+<p>在summary该模型之后，比较模型lm.fit2，我们发现Adjusted R-squared 由0.7348提升到了0.7816, 这个提升说明了模型lm.fit3相比lm.fit2可以解释更多的样本数据。同时我们发现Residual standard error由4.736降低到了4.298，F值从128.2提升到了151.6. 改善都说明我们的lm.fit3相对lm.fit2得到了不错的改善。</p>
 <p>在完成上述步骤之后，我们还需要继续检验新模型lm.fit3的残差图：</p>
 <p><img src="http://mingju.net/uploads/images/Ch3.11.png" alt=""></p>
 <p>相比lm.fit2的残差图，lm.fit3的残差图并没有出现显而易见的趋势，这说明我们通过转换变量lstat加入了lstat^2之后，模型得到了改善。这也是我们想要的结果。</p>
