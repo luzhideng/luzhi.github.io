@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Lüzhi&#39;s Notebook</title>
+  <subtitle>Harnessing Data to Drive Marketing</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://mingju.net/"/>
+  <updated>2020-05-02T22:51:10.798Z</updated>
+  <id>http://mingju.net/</id>
+  
+  <author>
+    <name>Lüzhi Deng</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Pandas及Numpy基础笔记</title>
+    <link href="http://mingju.net/2020/04/Pandas-foundation-notes/"/>
+    <id>http://mingju.net/2020/04/Pandas-foundation-notes/</id>
+    <published>2020-04-28T17:22:40.000Z</published>
+    <updated>2020-05-02T22:51:10.798Z</updated>
+    
+    <content type="html"><![CDATA[<p>这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。</p>
+<h1 id="DataFrame索引"><a href="#DataFrame索引" class="headerlink" title="DataFrame索引"></a>DataFrame索引</h1><p>选取Python中DataFrame中元素的值一般分为三种方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: <span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line">In [<span class="number">2</span>]: df = pd.read_csv(<span class="string">'sales.csv'</span>, index_col=<span class="string">'month'</span>)</div><div class="line">In [<span class="number">3</span>]: df</div><div class="line">Out[<span class="number">3</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |</div></pre></td></tr></table></figure>
+<h2 id="两个方括号方法df-‘列名’-‘行名’"><a href="#两个方括号方法df-‘列名’-‘行名’" class="headerlink" title="两个方括号方法df[‘列名’][‘行名’]"></a>两个方括号方法df[‘列名’][‘行名’]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">4</span>]: df</div><div class="line">Out[<span class="number">4</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |</div><div class="line"></div><div class="line">In [<span class="number">5</span>]: df[<span class="string">'salt'</span>][<span class="string">'Jan'</span>]</div><div class="line">Out[<span class="number">5</span>]: <span class="number">12.0</span></div></pre></td></tr></table></figure>
+<h2 id="使用列属性和行标签df-列属性-‘行标签’"><a href="#使用列属性和行标签df-列属性-‘行标签’" class="headerlink" title="使用列属性和行标签df.列属性[‘行标签’]"></a>使用列属性和行标签df.列属性[‘行标签’]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">6</span>]: df</div><div class="line">Out[<span class="number">6</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |</div><div class="line"></div><div class="line">In [<span class="number">7</span>]: df.eggs[<span class="string">'Mar'</span>]</div><div class="line">Out[<span class="number">7</span>]: <span class="number">221</span></div></pre></td></tr></table></figure>
+<h2 id="使用-loc-存取器或者-iloc-存取器"><a href="#使用-loc-存取器或者-iloc-存取器" class="headerlink" title="使用.loc[]存取器或者.iloc[]存取器"></a>使用.loc[]存取器或者.iloc[]存取器</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">8</span>]: df</div><div class="line">Out[<span class="number">8</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |</div><div class="line"></div><div class="line">In [<span class="number">9</span>]: df.loc[<span class="string">'May'</span>, <span class="string">'spam'</span>]</div><div class="line">Out[<span class="number">9</span>]: <span class="number">52.0</span></div><div class="line"></div><div class="line">In [<span class="number">10</span>]: df</div><div class="line">Out[<span class="number">10</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |</div><div class="line"></div><div class="line">In [<span class="number">11</span>]: df.iloc[<span class="number">4</span>, <span class="number">2</span>]</div><div class="line">Out[<span class="number">11</span>]: <span class="number">52.0</span></div></pre></td></tr></table></figure>
+<h1 id="DataFrame切片"><a href="#DataFrame切片" class="headerlink" title="DataFrame切片"></a>DataFrame切片</h1><p>对DataFrame切片通常有几种方式，其中有一些方式会把切出来的数据类型变为Series而有一些方法会把切出来的数据类型依然保留为DataFrame。<br>如果使用<code>df[&#39;&#39;]</code>，切出来的是一个一维的Series，如果使用df<code>[&#39;&#39;,&#39;&#39;]</code>想切出一个二维的数据集合就会出现Key error错误，因为我们知道Series是一维的。想要获取二维的DataFrame就必须使用<code>df[[&#39;&#39;,&#39;&#39;]]</code>，也就是说在df中放入了一个list，相当于<code>df[list]</code>。</p>
+<h2 id="索引、切片、选取Series"><a href="#索引、切片、选取Series" class="headerlink" title="索引、切片、选取Series"></a>索引、切片、选取Series</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: df</div><div class="line">Out[<span class="number">1</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |</div></pre></td></tr></table></figure>
+<h3 id="选取其中一列Series"><a href="#选取其中一列Series" class="headerlink" title="选取其中一列Series"></a>选取其中一列Series</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">2</span>]: df[<span class="string">'eggs'</span>]</div><div class="line">Out[<span class="number">2</span>]:</div><div class="line">|       | 没有eggs列名 |</div><div class="line">|-------|------|</div><div class="line">| month |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | </div><div class="line">|  Feb  |  <span class="number">110</span> | </div><div class="line">|  Mar  |  <span class="number">211</span> |</div><div class="line">|  Apr  |  <span class="number">77</span>  | </div><div class="line">|  May  |  <span class="number">132</span> |</div><div class="line">|  Jun  |  <span class="number">205</span> |</div><div class="line">Name: eggs, dtype: int64</div><div class="line"></div><div class="line">In [<span class="number">3</span>]: type(df[<span class="string">'eggs'</span>])</div><div class="line">Out[<span class="number">3</span>]: pandas.core.series.Series <span class="comment">#这里type类型为series</span></div></pre></td></tr></table></figure>
+<h3 id="切片与索引Series"><a href="#切片与索引Series" class="headerlink" title="切片与索引Series"></a>切片与索引Series</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">4</span>]: df[<span class="string">'eggs'</span>][<span class="number">1</span>:<span class="number">4</span>] <span class="comment"># 一部分eggs列</span></div><div class="line">Out[<span class="number">4</span>]:</div><div class="line">|       | 没有eggs列名 |</div><div class="line">|-------|------|</div><div class="line">| month |      |</div><div class="line">|  Feb  |  <span class="number">110</span> | </div><div class="line">|  Mar  |  <span class="number">211</span> |</div><div class="line">|  Apr  |  <span class="number">77</span>  | </div><div class="line">Name: eggs, dtype: int64</div><div class="line"></div><div class="line">In [<span class="number">5</span>]: df[<span class="string">'eggs'</span>][<span class="number">4</span>] <span class="comment"># 5月的eggs的值</span></div><div class="line">Out[<span class="number">5</span>]: <span class="number">132</span></div></pre></td></tr></table></figure>
+<h2 id="索引、切片、选取DataFrame"><a href="#索引、切片、选取DataFrame" class="headerlink" title="索引、切片、选取DataFrame"></a>索引、切片、选取DataFrame</h2><p>这里有三种方法可以选取DataFrame中的一些行或者列。获取DataFrame中的一列或多列可以使用<code>df[[&#39;&#39;,&#39;&#39;]]</code>。如果想要既获取DataFrame中的行又要获得列可以使用<code>df.loc[]</code>或者<code>df.iloc[]</code>。</p>
+<p><strong>注意：这里是不能使用<code>df[[]]</code>的方式获取行和列，如果想获取DataFrame中的行和列需要使用<code>df.loc[]</code></strong></p>
+<h3 id="使用df-‘’-’’-获取指定列"><a href="#使用df-‘’-’’-获取指定列" class="headerlink" title="使用df[[‘’,’’]]获取指定列"></a>使用df[[‘’,’’]]获取指定列</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: df</div><div class="line">Out[<span class="number">1</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |</div><div class="line"></div><div class="line">In [<span class="number">2</span>]: df_new = df[[<span class="string">'salt'</span>,<span class="string">'eggs'</span>]]</div><div class="line">In [<span class="number">3</span>]: df_new</div><div class="line">Out[<span class="number">3</span>]:</div><div class="line">|       | eggs | salt |</div><div class="line">|-------|------|------|</div><div class="line">| month |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |</div></pre></td></tr></table></figure>
+<h3 id="使用df-loc-或者指定行和（或）列"><a href="#使用df-loc-或者指定行和（或）列" class="headerlink" title="使用df.loc[]或者指定行和（或）列"></a>使用df.loc[]或者指定行和（或）列</h3><p>这里省略了<code>df.iloc[]</code>的例子，因为<code>df.loc[]</code>和<code>df.iloc[]</code>本质没有差别。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">4</span>]: df.loc[:, <span class="string">'eggs'</span>:<span class="string">'salt'</span>] <span class="comment"># 所有行，指定列</span></div><div class="line">Out[<span class="number">4</span>]:</div><div class="line">|       | eggs | salt |</div><div class="line">|-------|------|------|</div><div class="line">| month |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |</div><div class="line"></div><div class="line">In [<span class="number">5</span>]: df.loc[<span class="string">'Jan'</span>:<span class="string">'Apr'</span>,:] <span class="comment"># 指定行，所有列</span></div><div class="line">Out[<span class="number">5</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line"></div><div class="line">In [<span class="number">6</span>]: df.loc[<span class="string">'Mar'</span>:<span class="string">'May'</span>, <span class="string">'salt'</span>:<span class="string">'spam'</span>]</div><div class="line">Out[<span class="number">6</span>]:</div><div class="line">|       | salt | spam |</div><div class="line">|-------|------|------|</div><div class="line">| month |      |      |</div><div class="line">|  Mar  | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  NaN |  <span class="number">52</span>  |</div></pre></td></tr></table></figure>
+<p>同时<code>df.loc[]</code>混合list的方式来选取指定行或列，比如我们可以使用<code>df.loc[&#39;Mar&#39;:&#39;May&#39;, [&#39;eggs&#39;, &#39;spam&#39;]]</code>或者<code>df.loc[[&#39;Mar&#39;, &#39;May&#39;], [&#39;eggs&#39;, &#39;spam&#39;]]</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">7</span>]: df.loc[<span class="string">'Jan'</span>:<span class="string">'May'</span>, [<span class="string">'eggs'</span>, <span class="string">'spam'</span>]]</div><div class="line">Out[<span class="number">7</span>]:</div><div class="line">|       | eggs | spam |</div><div class="line">|-------|------|------|</div><div class="line">| month |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  <span class="number">52</span>  |</div></pre></td></tr></table></figure>
+<h1 id="一些数据处理函数整理"><a href="#一些数据处理函数整理" class="headerlink" title="一些数据处理函数整理"></a>一些数据处理函数整理</h1><h2 id="map-函数"><a href="#map-函数" class="headerlink" title=".map()函数"></a>.map()函数</h2><p>.map()函数是通过Python字典查找来转换值的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: df</div><div class="line">Out[<span class="number">1</span>]:</div><div class="line">| ﻿          | state | total  | Obama     | Romney    | winner | voters |</div><div class="line">|-----------|-------|--------|-----------|-----------|--------|--------|</div><div class="line">| county    |       |        |           |           |        |        |</div><div class="line">| Adams     | PA    | <span class="number">41973</span>  | <span class="number">35.482334</span> | <span class="number">63.112001</span> | Romney | <span class="number">61156</span>  |</div><div class="line">| Allegheny | PA    | <span class="number">614671</span> | <span class="number">56.640219</span> | <span class="number">42.18582</span>  | Obama  | <span class="number">924351</span> |</div><div class="line">| Armstrong | PA    | <span class="number">28322</span>  | <span class="number">30.696985</span> | <span class="number">67.901278</span> | Romney | <span class="number">42147</span>  |</div><div class="line">| Beaver    | PA    | <span class="number">80015</span>  | <span class="number">46.032619</span> | <span class="number">52.63763</span>  | Romney | <span class="number">115157</span> |</div><div class="line">| Bucks     | PA    | <span class="number">319407</span> | <span class="number">49.96697</span>  | <span class="number">48.801686</span> | Obama  | <span class="number">435606</span> |</div></pre></td></tr></table></figure>
+<p>在这个df中，我们想要通过’winner’的值分别为’Obama’和’Romney’在新的一列当中标记不同的颜色值。为’Obama’标记蓝色’blue’和’Romeny’标记红色’red’。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#创建一个'Obama'对应'blue'和'Romeny'对应'red'的字典</span></div><div class="line"></div><div class="line">In [<span class="number">1</span>]: red_vs_blue = &#123;</div><div class="line">    	<span class="string">'Obama'</span>:<span class="string">'blue'</span>,</div><div class="line">    	<span class="string">'Romney'</span>:<span class="string">'red'</span>,</div><div class="line">	&#125;</div><div class="line"></div><div class="line"><span class="comment">#用字典去map那个'winner'列,并且回传给新的列df['color']</span></div><div class="line"></div><div class="line">In [<span class="number">2</span>]: df[<span class="string">'color'</span>] = df[<span class="string">'winner'</span>].map(red_vs_blue)</div><div class="line"></div><div class="line">In [<span class="number">3</span>]: print(election.head())</div><div class="line">Out[<span class="number">3</span>]: </div><div class="line">| ﻿          | state | total  | Obama     | Romney    | winner | voters | color |</div><div class="line">|-----------|-------|--------|-----------|-----------|--------|--------|-------|</div><div class="line">| county    |       |        |           |           |        |        |       |</div><div class="line">| Adams     | PA    | <span class="number">41973</span>  | <span class="number">35.482334</span> | <span class="number">63.112001</span> | Romney | <span class="number">61156</span>  | red   |</div><div class="line">| Allegheny | PA    | <span class="number">614671</span> | <span class="number">56.640219</span> | <span class="number">42.18582</span>  | Obama  | <span class="number">924351</span> | blue  |</div><div class="line">| Armstrong | PA    | <span class="number">28322</span>  | <span class="number">30.696985</span> | <span class="number">67.901278</span> | Romney | <span class="number">42147</span>  | red   |</div><div class="line">| Beaver    | PA    | <span class="number">80015</span>  | <span class="number">46.032619</span> | <span class="number">52.63763</span>  | Romney | <span class="number">115157</span> | red   |</div><div class="line">| Bucks     | PA    | <span class="number">319407</span> | <span class="number">49.96697</span>  | <span class="number">48.801686</span> | Obama  | <span class="number">435606</span> | blue  |</div></pre></td></tr></table></figure>
+<h2 id="floor-divide-函数"><a href="#floor-divide-函数" class="headerlink" title=".floor_divide()函数"></a>.floor_divide()函数</h2><p>Numpy中的<code>np.floor_divide()</code>函数可以对DataFrame中的数据进行÷法运算。具体使用方法如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: df</div><div class="line">Out[<span class="number">1</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |</div><div class="line"></div><div class="line">In [<span class="number">2</span>]: <span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line">In [<span class="number">3</span>]: np.floor_divide(df, <span class="number">12</span>) <span class="comment"># 把df里所有数据变为以'打'为单位</span></div><div class="line">Out[<span class="number">3</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  | <span class="number">3.0</span>  |  <span class="number">1.0</span> |  <span class="number">1.0</span> |</div><div class="line">|  Feb  | <span class="number">9.0</span>  |  <span class="number">4.0</span> |  <span class="number">2.0</span> |</div><div class="line">|  Mar  | <span class="number">18.0</span> |  <span class="number">7.0</span> |  <span class="number">6.0</span> |</div><div class="line">|  Apr  | <span class="number">6.0</span>  |  <span class="number">7.0</span> |  <span class="number">1.0</span> |</div><div class="line">|  May  | <span class="number">11.0</span> |  NaN |  <span class="number">4.0</span> |</div><div class="line">|  Jun  | <span class="number">17.0</span> |  <span class="number">5.0</span> |  <span class="number">4.0</span> |</div></pre></td></tr></table></figure>
+<p>储存转变后的值到新的一列：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">7</span>]: df[<span class="string">'dozens_of_eggs'</span>] = df.eggs.floordiv(<span class="number">12</span>)</div><div class="line">In [<span class="number">8</span>]: df</div><div class="line">Out[<span class="number">8</span>]:</div><div class="line">|       | eggs | salt | spam | dozens_of_eggs |</div><div class="line">|-------|------|------|------|----------------|</div><div class="line">| month |      |      |      |                |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |               <span class="number">3</span>|</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |               <span class="number">9</span>|</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |              <span class="number">18</span>|</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |               <span class="number">6</span>|</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |              <span class="number">11</span>|</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |              <span class="number">17</span>|</div></pre></td></tr></table></figure>
+<h2 id="stack-amp-unstack"><a href="#stack-amp-unstack" class="headerlink" title=".stack() &amp; .unstack()"></a>.stack() &amp; .unstack()</h2><p><code>df.stack(level=&#39;&#39;)</code>和<code>df.unstack(level=&#39;&#39;)</code>函数用来处理多维度索引的DataFrame。</p>
+<h2 id="to-numeric-函数"><a href="#to-numeric-函数" class="headerlink" title=".to_numeric()函数"></a>.to_numeric()函数</h2><p>Pandas中的<code>pd.to_numeric()</code>可以把一系列的值转变为float浮点类型，同时可以通过参数<code>errors=&#39;coerce&#39;</code>可以把其中的strings强制转换为NaN空值以便于后续的数据清理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pd.to_numeric(df, errors=<span class="string">'coerce'</span>)</div></pre></td></tr></table></figure>
+<p>附：<a href="https://datacamp-community-prod.s3.amazonaws.com/9f0f2ae1-8bd8-4302-a67b-e17f3059d9e8" title="Pandas Cheat Sheet" target="_blank" rel="external">Pandas Cheat Sheet</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。&lt;/p&gt;
+&lt;h1 id=&quot;DataFrame索引&quot;&gt;&lt;a href=&quot;#DataFrame索引&quot; class=&quot;headerlink&quot; title=&quot;DataFrame索引&quot;&gt;&lt;/
+    
+    </summary>
+    
+      <category term="Python" scheme="http://mingju.net/categories/Python/"/>
+    
+    
+      <category term="Pandas" scheme="http://mingju.net/tags/Pandas/"/>
+    
+      <category term="Numpy" scheme="http://mingju.net/tags/Numpy/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ch3 线性回归分析（改善模型）</title>
+    <link href="http://mingju.net/2016/05/ch3-linear-regression-part2-model-improvement/"/>
+    <id>http://mingju.net/2016/05/ch3-linear-regression-part2-model-improvement/</id>
+    <published>2016-05-16T20:42:19.000Z</published>
+    <updated>2020-05-02T00:16:42.973Z</updated>
+    
+    <content type="html"><![CDATA[<p>在<a href="http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/">线性回归第一部分模型建立当</a>中，我们在<a href="http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/#第三步，浏览数据">浏览数据（第三步）</a>，<a href="http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/#第四步，观察响应值分布">观察相应值分布（第四步）</a>以及<a href="http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/#第五步，建立初步模型lm-fit">建立模型（第五步）</a>的过程中发现了一些数据的常见问题。其中在第三步中我们发现了常见问题1：变量与响应值之间的非线性（non-linearity）关系和常见问题2：共线性（Collinearity）。其中在模型的建立过程中经常遇到的问题还会有问题3：离群值（outlier），问题4：高杠杆率点（high-leverage points），问题5：误差项相关（correlation of error terms）和问题6：异方差性（non-constant variance of error terms）。</p>
+<p>接下来，我们将会通过在改善Boston数据模型的过程中逐一介绍如何通过检验与改善这6个问题从而达到改善回归模型的目的。</p>
+<h2 id="问题1：非线性（non-linearity）"><a href="#问题1：非线性（non-linearity）" class="headerlink" title="问题1：非线性（non-linearity）"></a>问题1：非线性（non-linearity）</h2><p>因为在线性回归模型当中，我们假设变量与响应值之间的关系是一条直线。但是如果样本数据的真实关系并非是线性的时候，那么模型的预测能力将会大打折扣。比如在Ch3 线性回归分析（建立模型）数据浏览的步骤当中，我们通过相关性矩阵图就发现了底层人群的百分比（lstat）与房屋价值（medv）之间存在着非线性关系。为了更直观的展示这两个变量的关系，我把该关系用图表示出来如下：</p>
+<p><img src="http://mingju.net/uploads/images/Ch3.9.png" alt=""></p>
+<p>我们可以看出lstat与medv之间的关系更像是二次方的关系（quadratic），所以当我们使用参数法（parametric）假设样本数据符合线性模型（linear model）的时候，就出现了拟合程度较低的模型。通常我们会使用残差图（residual plot）去检验线性模型当中的非线性关系。以下为模型lm.fit2的残差图：</p>
+<p><img src="http://mingju.net/uploads/images/Ch3.10.png" alt=""></p>
+<p>在理想的模型状态下，我们期望残差图是没有可识别的图形（discernible pattern），也就是说，我们不希望在残差图中看出什么规律来。但是上图中我们明显的看到了residuals和fitted values之间的关系（红线表示的趋势中可以看出明显的图形）。</p>
+<p><strong>解决办法：</strong>通常我们解决模型中的非线性使用的方法是转换变量，比如Log X， X，X2等。在接下来的学习中我们还会学到更高级的一些对于此问题的处理办法。但是在这里，我们先使用最常见也是最基本的方法去处理我们的变量。</p>
+<p>在上面我们通过图案观察出了变量lstat与medv之间是二次方的关系，所以在改善过后的模型lm.fit3中，我们加入了lstat的二次方变量。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit3 &lt;- lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>), data = df)</div><div class="line">summary(lm.fit3)</div></pre></td></tr></table></figure>
+<p>在summary该模型之后，比较模型lm.fit2，我们发现Adjusted R-squared 由0.7348提升到了0.7816, 这个提升说明了模型lm.fit3相比lm.fit2可以解释更多的样本数据。同时我们发现Residual standard error由4.736降低到了4.298，F值从128.2提升到了151.6. 改善都说明我们的lm.fit3相对lm.fit2得到了不错的改善。</p>
+<p>在完成上述步骤之后，我们还需要继续检验新模型lm.fit3的残差图：</p>
+<p><img src="http://mingju.net/uploads/images/Ch3.11.png" alt=""></p>
+<p>相比lm.fit2的残差图，lm.fit3的残差图并没有出现显而易见的趋势，这说明我们通过转换变量lstat加入了lstat^2之后，模型得到了改善。这也是我们想要的结果。</p>
+<h2 id="问题2：共线性（Collinearity）"><a href="#问题2：共线性（Collinearity）" class="headerlink" title="问题2：共线性（Collinearity）"></a>问题2：共线性（Collinearity）</h2><p>共线性是指两个或者多个变量之间存在较强的相关性。变量之间的强相关性会在回归模型当中造成一些问题。如果模型中存在两个或者多个强相关性变量，那么我们的模型是没有办法分辨到底是哪些个变量真正对响应值造成了影响。换句话说，我们通过在《建立模型》部分的相关性矩阵图中发现了变量距离高数公路的指数（rad）和财产税税率（tax）之间存在着很强的正相关性（0.91），也就是说，变量rad和变量tax通常会同时增长或者同时下降。这时，我们对于到底是rad的变化对medv造成了影响还是tax的变化对medv造成了影响的判别就变得非常模糊了。一般来说，我们可以通过使用相关性矩阵图（correlation matrix）或者变量相关值来判断变量之间是否存在共线性的问题。但是，并不是所有的共线性问题都可以通过观察相关矩阵图或者变量相关值来判断的。有时，共线性的问题还有可能在三个或者多个变量中发生，有时甚至这些变量之间没有很高的相关值，我们把这种情况叫做多共线性（multicollinearity）。所以，更实用的一种检验共线性的方法就是计算方差膨胀因子(Variance Inflation Factor,VIF)。VIF最小的值为1，代表该变量完全没有共线性问题。通常在实际应用当中，只会有一小部分的变量会有较小的VIF值。一般来讲，当VIF值大于5或者10的时候我们就可以判断该变量存在共线性问题。</p>
+<p>让我们来验证一下我们Boston模型lm.fit3是否存在共线性问题。在R中car包提供了计算VIF值的功能，如果第一次使用请记得安装car包。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">library</span>(car)</div><div class="line">vif(lm.fit3)</div></pre></td></tr></table></figure>
+<p>我们得到了以下结果：</p>
+<p><img src="http://mingju.net/uploads/images/Ch3.12.png" alt=""></p>
+<p>其中我们发现变了rad的VIF值为6.876185，变量tax的VIF值为7.308601。可以看出这两个变量的VIF值超过了5，根据当VIF值大于5或者10的时候我们就可以判断该变量存在共线性问题这一规则，我们可以说这两个变量在模型中存在一定的共线性问题。这也验证了我们前面通过观察相关性矩阵图和变量相关值的结论。另外我们发现，变量lstat和新加入的变量lstat^2 （模型中用I(lstat^2)表示）也具有相当高的VIF值，分别达到了19.744844和15.575471，这是因为变量lstat^2是lstat的二次方形式，他们之间必然存在着高度相关性，所以这两个变量出现较高的VIF值也就显而易见了。通过下图我们可以看出lstat和lstat^2之间的关系，可以看出这两个变量之间的高度相关性。</p>
+<p><img src="http://mingju.net/uploads/images/Ch3.14.png" alt=""></p>
+<p><strong>解决办法：</strong>解决共线性问题的方法一般有两种：</p>
+<ol>
+<li>第一种是从模型中去除其中一个造成共线性问题的变量</li>
+<li>第二种是结合造成共线性问题的所有变量</li>
+</ol>
+<p>第一种办法是最常用的一种办法，因为模型中两个或多个存在高度相关的变量，只保留其中一个变量相当于简化了模型，降低了模型的冗余，又不会对模型拟合造成大的影响。第二种办法比如可以结合两个变量并且取两个变量的平均值作为一个新的变量再加入模型中。</p>
+<p>在模型lm.fit3中，我们选择第一种办法来去除共线性问题。在该模型中我们选择去除VIF值相对较高的tax变量，然后再次对模型进行拟合得到模型lm.fit4：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit4 &lt;- lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>)-tax, data = df)</div><div class="line">summary(lm.fit4)</div></pre></td></tr></table></figure>
+<p>通过summary我们可以看到Adjusted R-squared相比lm.fit3由0.7816降到了0.7778，只降低了0.0038. 标准化残差（Residual standard error）从4.298上升到了4.336，只上升了0.038. 所以，我们新的模型lm.fit4虽然相对lm.fit3，这两项指数都带来了不理想的信息，但是我们的模型拟合程度和误差程度非常非常的低，所以为了简化模型和去除共线性问题，我们决定采用新的模型lm.fit4. 可能你会有疑问说，变量lstat和lstat^2存在更大的共线性问题，我们是否可以需要除变量lstat呢？这里我并不建议你去除变量lstat，因为当使用</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">summary(lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>)-tax-lstat, data = df))</div></pre></td></tr></table></figure>
+<p>把变量lstat从模型lm.fit4中去除时，模型的整体拟合程度有了相对较大的下降Adjusted R-squared从0.7778降低到了0.6878. 标准化残差也又4.336上升到了5.139. 这些指标的上升都说明了我们模型中去除了一个重要的变量。可能这时，你会搞不清楚什么时候去除产生共线性的变量，什么时候又不去除呢？很可惜，答案是根据情况而论。这时，这种决策通常更像是一种艺术而不是一种科学。比如在上述处理变量lstat和lstat^2的情况中，即使我们知道这两个变量的VIF值很高，但是我们还是为了保证模型的拟合程度选择了保留这两个变量。</p>
+<h2 id="问题3：离群值（Outlier）"><a href="#问题3：离群值（Outlier）" class="headerlink" title="问题3：离群值（Outlier）"></a>问题3：离群值（Outlier）</h2><p>离群值是数据中的模型预测出结果与实际值（yi）相差太多的一种情形。离群值的出现一般会有多种原因，其中最常见的一种可能是在收集数据的过程中出现了纪录错误。一般来讲样本数据中的一个或者多个离群值可能会对模型的拟合带来一些严重的影响。比如说会造成标准化残差（RSE or Residual standard error）的升高，P值的升高或者R2的降低等不理想结果。通常我们可以使用残差图来发现离群值。R语言会把可能存在问题的数据用数字标记出来。在模型lm.fit4中的残差图中我们发现样本372, 373, 369被标记了出来，这些值需要值得我们特别注意，因为他们很可能是离群值。在是在实际应用当中，我们去根据残差去确定离群值并不是那么容易，到底需要多大的残差我们才能确定一个样本为离群值呢？所以我们可以根据观察Normal QQ图，Scale-Location图和Residuals-Vs-Leverage图来确定离群值。通过以下代码，我们可以获得出了残差图之外的另外三幅图：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">par(mfrow=c(<span class="number">2</span>,<span class="number">2</span>))</div><div class="line">plot(lm.fit4)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.13.png" alt=""></p>
+<p>通过观察这四副图，我们看到了被数字标记出来的样本有365, 369, 372和373. 在此我们基本可以确定这几个值有极大的可能是离群值。另外car包中也提供了一些验证离群值的方法：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">library</span>(car)</div><div class="line">outlierTest(lm.fit4)</div></pre></td></tr></table></figure>
+<p>该方法同样给出了样本365, 369, 372和373存在着是离群值的可能。</p>
+<p><strong>解决办法：</strong>通常解决离群值的方法要根据离群值产生的原因来决定。如果我们认为离群值是由于数据录入错误产生的，我们可以去除这些离群值来解决该问题。但是有时，离群值的出现可能表明了一些特殊的意义，比如，假设我们发现了在Boston数据中，离群值只出现在了某一个特定区域的房屋（这里只是假设），这时我们可能需要更多深入的研究为什么该特定区域会出现这种情况。当遇到这种情况带来的离群值问题时，我们就不能简简单单的把离群值从模型当中去除，可能我们需要通过引入一个新的哑变量来控制这一特定地区出现的特殊情况。</p>
+<p>在Boston数据中，我们在这里假设（这里只是假设）样本数据365, 369, 372和373是由于数据录入错误产生的。我们来看一下，当我们去除这四个样本时我们的新模型有什么改变。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_outlierfree &lt;- df[-c(<span class="number">365</span>,<span class="number">369</span>,<span class="number">372</span>,<span class="number">373</span>), ]</div><div class="line">lm.fit5 &lt;- lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>)-tax, data = df_outlierfree)</div><div class="line">summary(lm.fit5)</div></pre></td></tr></table></figure>
+<p>新模型lm.fit5是去除了4个潜在离群值样本数据之后对模型进行重新拟合的得到的新模型。通过summary新模型，我们发现Adjusted R-squared由0.7778提升到了0.8172，Residual standard error由4.336降低到了3.841. 我们可以看到模型得到了一定的改善。</p>
+<h2 id="问题4：高杠杆率点（High-leverage-Points）"><a href="#问题4：高杠杆率点（High-leverage-Points）" class="headerlink" title="问题4：高杠杆率点（High-leverage Points）"></a>问题4：高杠杆率点（High-leverage Points）</h2><p>离群值是不寻常的响应值实际值yi，而高杠杆率点是变量实际值xi. 高杠杆率点出现的原因基本上与离群值出现的原因大同小异，通常也是由于数据录入时产生错误造成的。高杠杆率点问题通常也会对模型拟合造成麻烦，所以检测出高杠杆率点并对其做出相应的处理非常重要。一般来讲，给出一个样本数据，当它的杠杆比率值（leverage statistic）大于(p + 1)/n时我们就可以确定该样本为高杠杆率点。通常我们可以通过观察Residuals-Vs-Leverage图来找出高杠杆率点。在模型lm.fit4的模型中，我们知道模型含有变量11个（p=11），样本为506（n=506），所以当一个样本的杠杆比率值大于0.024时（(11+1)/506），我们就可以确认该样本具有高的杠杆率。 在Residuals-Vs-Leverage图中，我们看到有不少值的杠杆比率值超过了0.024，但是只有样本365,369和373被标记了出来。这是因为这三个值是最危险的，因为他们即具有高的杠杆率值，同时还具有较高的标准化残差（standardized residual）值（一般变量的标准化残差值大于3就可以被可能被确定为离群值）。换句话说，这三个变量可能同时是离群值和高杠杆率点，所以他们对模型产生的影响比单纯的一个仅仅是离群值或仅仅是高杠杆率点的情况要大很多。</p>
+<p><strong>解决办法：</strong>一般我们选择去除这些在Residuals-Vs-Leverage图中被数字标记的样本。</p>
+<p>接下来所介绍的这两个问题在我们的Boston例子中均没有出现，但是这两个问题也是线性回归经常会遇到的问题，我认为在这里有必要指出。</p>
+<h2 id="问题5：误差项相关（correlation-of-error-terms）"><a href="#问题5：误差项相关（correlation-of-error-terms）" class="headerlink" title="问题5：误差项相关（correlation of error terms）"></a>问题5：误差项相关（correlation of error terms）</h2><p>在线性模型中，一个重要的假设就是线性模型假设所有误差项1,2,…,n是不相关的。换句话说就是i不会为你提供任何i+1的趋势或者信息，也就是说如果你知道i等于1的话，i+1可能是任何一个数字，你不可能根据i来判断得出i+1的任何信息。但是有时误差项可能存在着相关性，如果这种现象存在的话可能会造成两个基本的问题：</p>
+<ol>
+<li>低估了真正的标准差</li>
+<li>P值有可能比真实的P值要低</li>
+</ol>
+<p>可以看到当误差项相关的时候，这两个问题是非常严重的。一般来说，该问题比较在时间序列数据中常见。一般的检测方法为观察残差图，这里暂时不叙述。等我们在介绍时间序列数据分析时再详细讲述。</p>
+<p>值得注意的是，在非时间序列数据中误差项相关的问题也是存在的。比如说，当我们要研究使用身高去预测体重的时候，如果我们的样本数据中包含了比如说来自相同家庭的样本，具有相同饮食习惯的样本或者在相同环境相生活的样本时，误差项相关这一问题就极有可能出现。</p>
+<p><strong>解决办法：</strong>好的实验设计是避免该问题的关键。</p>
+<h2 id="问题6：异方差性（non-constant-variance-of-error-terms）"><a href="#问题6：异方差性（non-constant-variance-of-error-terms）" class="headerlink" title="问题6：异方差性（non-constant variance of error terms）"></a>问题6：异方差性（non-constant variance of error terms）</h2><p>在线性模型中另外一个重要的假设就是假设误差值具有持续一致的方差（constant variance），标准差的计算还有可靠区间的计算都依靠这一假设。但是不幸的是，很多时候方差是不持续一致的。检验异方差性（non-constatnt variance in error terms or heteroscedasicity）的方法可以通过观察残差图的形状来判断。如果你得到的残差图是一个漏斗形状（funnel shape），通常说明你的模型拟合存在了异方差性。下图展示了存在异方差性问题和处理解决问题之后的残差对比图：</p>
+<p><img src="http://mingju.net/uploads/images/Ch3.14-1.png" alt=""><br>图片来源：<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter3/3.11.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter3/3.11.pdf</a></p>
+<p><strong>解决办法：</strong>通常我们通过转换响应值Y的方法来解决异方差性，如，LogY或者√Y.</p>
+<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><p>还记得在第一部分当中，我们在浏览数据的第四步（观察响应值分布）中提到，当数据响应值存在右偏态的时候，通常我们需要对其进行log转换。我们通过以下代码对模型进行了修改</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit6 &lt;- lm(log(medv) ~.-age-indus+I(lstat^<span class="number">2</span>)-tax, data = df_outlierfree)</div><div class="line">summary(lm.fit6)</div></pre></td></tr></table></figure>
+<p>结果发现模型的拟合程度并没有提升，所以这时我们选择不对响应值进行转换，因为每对样本数据的一次转换都会增加模型的复杂程度，减低模型可述性，这一点我们在模型预测精确度与可解释性之间的权衡一节中有提到。同时细心的朋友可能发现在我们拟合了模型lm.fit5之后其中一个变量zn变得不显著了，这时我为了简化模型可以选择去除zn变量。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lm.fit5 &lt;- lm(medv ~.-age-indus+I(lstat^<span class="number">2</span>)-tax-zn, data = df_outlierfree)</div></pre></td></tr></table></figure>
+<p>去除变量zn之后的模型lm.fit5到目前为止就被我们确认为最佳模型。我将在接下来的学习中详细阐述如何使用更高级的方法来选择最佳变量和其他的一些方法来验证和改进模型。但是到目前为止，我们使用简单的模型改善方法已经获取了一个拟合程度不错的模型lm.fit5了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在&lt;a href=&quot;http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/&quot;&gt;线性回归第一部分模型建立当&lt;/a&gt;中，我们在&lt;a href=&quot;http://mingju.net/2016/04/ch3-l
+    
+    </summary>
+    
+      <category term="定量学" scheme="http://mingju.net/categories/%E5%AE%9A%E9%87%8F%E5%AD%A6/"/>
+    
+    
+      <category term="机器学习" scheme="http://mingju.net/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ch3 线性回归分析（建立模型）</title>
+    <link href="http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/"/>
+    <id>http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/</id>
+    <published>2016-04-20T18:30:19.000Z</published>
+    <updated>2020-05-02T00:19:03.529Z</updated>
+    
+    <content type="html"><![CDATA[<p>这一章介绍的是线性回归，是监督学习中最简单的一个模型。通常来讲，线性回归模型一般用于预测属量反应（quantitative response）的问题。线性回归在统计分析当中已经存在了很长的一段时间，虽然跟一些更现代的统计模型相比来说可能会看起来没有那么华丽，但是线性回归方法还是一种非常有效以及应用广泛的统计模型。并且在接下来将要学习到的那些更为华丽的模型当中很多都是又线性回归模型衍生出来的。所以学习并理解线性回归模型非常重要。本章在原著上大概有60多页的内容，对于没有扎实统计背景的人读起来可能有点枯燥。所以，我打算用一个实例来演示如何做线性回归分析，并且把其中会遇到的问题解释加以总结，同时给出解决这些问题的方法。这里需要声明的是，本章主要专注于线性回归分析，对于模型内的验证分析将在接下来的内容中详细讲述。本实例中使用的数据为经典的“Boston”数据。</p>
+<p>在我们进行数据分析之前，首先要了解4个主要问题：</p>
+<ol>
+<li><strong>响应值与变量之间的关系</strong>：数据组的变量中（X1, X2, …,Xp）是否存在至少一个是可以用来去预测响应值（Y）的？</li>
+<li><strong>选取重要变量</strong>：是所有的变量都可以用于取解释响应值（Y）？还是只有其中的某个或某几个变量可以用来解释响应值。</li>
+<li><strong>模型拟合</strong>：模型拟合数据的拟合程度有多好？</li>
+<li><strong>模型预测</strong>：当我们拥有新的变量值时，模型对预测的准确性如何？</li>
+</ol>
+<p>数据背景：该数据是Harrison和Rubinfeld在1978年为了研究空气质量对波士顿郊区房价的影响。研究结果被发表在Harrison, D. and Rubinfeld, D.L. ‘Hedonic prices and the demand for clean air’, J. Environ. Economics &amp; Management, vol.5, 81-102, 1978. 有兴趣的朋友可以研究一下。该数据组一共包含了506条值和14条变量。变量和解释：</p>
+<ol>
+<li>crim－该地区的人均犯罪率</li>
+<li>zn－该地区居民区面积超过25,000平方英尺的比率</li>
+<li>indus－该地区未被商业化面积的比率</li>
+<li>chas－该地区房屋是否靠近查尔斯河（1为靠近，0为不靠近）</li>
+<li>nox－一该地区氧化氮浓度</li>
+<li>rm－该地区房屋内平均房间数量</li>
+<li>age－该地区房屋在1940年建成的比率</li>
+<li>dis－该地区距离波士顿5个工作园区的平均距离（权重数据）</li>
+<li>rad－该地区距离高数公路的指数</li>
+<li>tax－ 该地区财产税税率（单位：每$10,000美金）</li>
+<li>ptratio－该地区师生比例（学生/教师，越高证明每位学生享有的教师资源越少，越低说明每位学生享有的教师资源越多）</li>
+<li>black－该地区非裔美国人比率（计算公式：1000*(BK－0.63)^2，这里可以忽略该公式，该变量表示了非裔美国人在该社区的比率）</li>
+<li>lstat－该地区底层人群的百分比</li>
+<li>medv－该地区房屋价值中位数（单位：$1,000）</li>
+</ol>
+<h1 id="问题1：响应值与变量之间的关系"><a href="#问题1：响应值与变量之间的关系" class="headerlink" title="问题1：响应值与变量之间的关系"></a>问题1：响应值与变量之间的关系</h1><h2 id="第一步，分析目的"><a href="#第一步，分析目的" class="headerlink" title="第一步，分析目的"></a>第一步，分析目的</h2><p>在做具体的分析之前，我们首先要了解我们此次分析的目的是什么？是推理，预测还是两者都有。显然，我们这次的分析目的是想知道是什么因素影响了房屋的价值（medv），同时我们也希望通过建立模型达到预测房屋价值的目的。所以此次分析目的为推理和预测两者都有。</p>
+<h2 id="第二步，数据直觉"><a href="#第二步，数据直觉" class="headerlink" title="第二步，数据直觉"></a>第二步，数据直觉</h2><p>当一位有经验的数据分析师拿到数据并且浏览数据之后，会有一个直觉从而对数据进行初步的判断。当我们拿到Boston数据之后，浏览完每一个变量之后，我们直觉基本就会告诉我们每个变量可能会对响应值产生什么影响。例如，变量crim，该地区的人均犯罪率，我们的直觉告诉我们犯罪率越高的地区可能房屋的价值就会越低，那么到底是不是这样呢？我们还需要进行下一步更详细的分析。初级的数据分析师刚开始可能由于不熟悉数据变量或者不熟悉公司业务，拿到数据之后没有一点头绪，这时并不需要担心。当你对一个行业领域或者一个消费群体了解越来越深入的时候，这种数据直觉就慢慢的建立起来了。</p>
+<h2 id="第三步，浏览数据"><a href="#第三步，浏览数据" class="headerlink" title="第三步，浏览数据"></a>第三步，浏览数据</h2><p>首先我们需要导入数据。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df &lt;- read.csv(<span class="string">"Boston.csv"</span>, header = <span class="literal">TRUE</span>)</div></pre></td></tr></table></figure>
+<p>接下来用str()方法浏览数据的结构</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">str(df)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.1.png" alt=""></p>
+<p>通过浏览数据结构我们可以看到该数据组有506条数据和14个变量。</p>
+<p>然后用summary()总结数据</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">summary(df)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.3.png" alt=""></p>
+<p>我个人强烈建议大家在进行任何数据分析之前，一定要进行这两个步骤，这样可以让你对数据有一个初步的理解。如果这里想要像在Excel里面那样浏览数据可以使用一个方法</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fix(df)</div></pre></td></tr></table></figure>
+<p>这个方法可以打开一个像spreadsheet一样的表格，当浏览结束之后记得把该窗口关掉，否则以下命令将不能继续执行。</p>
+<p>接下来我们就要看每个变量与响应值的关系了。这时我们可以通过相关性矩阵图（correlation matrix）来浏览不同变量与相应值的关系。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plot(df, pch = <span class="string">"."</span>, col = <span class="string">"blue"</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/ch3.2.png" alt=""></p>
+<p>当然除了使用最直观的相关性矩阵图来观察相关性，我们还可以使用cor()来了解变量之间的具体相关值</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cor(df)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.4.png" alt=""></p>
+<p>当我们对数据进行了基本的分析之后，可以发现房屋价值（medv）跟房间数量（rm）还有底层人群的百分比（lstat）具有最强的相关性。相关指数分别为0.695和－0.738. 同时我们从相关性矩阵图中可以看出底层人群的百分比（lstat）与房屋价值（medv）之间虽然存在较强的负相关性，但是他们的关系并不是线性（liner）的。这里我们就遇到了处理线性回归的第一个常见问题－变量与响应值之间的非线性（non-linearity）关系。我们还发现某些变量之间也具有较强的相关性。比如非零售商业化面积的比率（indus）与一氧化氮浓度（nox）的相关性为0.764，非零售商业化面积的比率（indus）与财产税税率（tax）的相关性为0.721.另外距离高数公路的指数（rad）和财产税税率（tax）的相关性为0.91. 这里如果我们把这些具有相关性较强的变量同时放在模型中的时候就有可能会遇到我们处理线性回归分析的第二个常见问题－共线性（Collinearity）。在该总结的第二部分模型改善中，我会详细的介绍如何通过解决这两个常见问题以及另外其他的四个常见问题（异方差性，离群值，高杠杆率点和误差项相关）来改善模型。</p>
+<h2 id="第四步，观察响应值分布"><a href="#第四步，观察响应值分布" class="headerlink" title="第四步，观察响应值分布"></a>第四步，观察响应值分布</h2><p>理论上，当我们要进行线性回归分析时，我们希望响应值（Y）是成正态分布（Normal Distribution）。但是在处理实际生活中的案例时，很少会出现响应值是正态分布的情况。最直观去观察响应值的分布就是使用直方图（histogram）。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hist(df$medv)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.5.png" alt=""></p>
+<p>从对房屋价值（medv）的直方图中，我们可以看出数据称右偏态分布（right skewed distribution）通常我们处理右偏态分布的方法是使用对数转换法（log transformation）。如果数据称左偏态分布（left skewed）的话，通常的处理方法为平方转换法（squaring）。在这里我们首先不对任何数据进行转换，直接建立模型，然后在接下来的分析中我会介绍如何通过转换数据来改善模型。</p>
+<h2 id="第五步，建立初步模型lm-fit"><a href="#第五步，建立初步模型lm-fit" class="headerlink" title="第五步，建立初步模型lm.fit"></a>第五步，建立初步模型lm.fit</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit &lt;- lm(medv ~., data = Boston)</div><div class="line">summary(lm.fit)</div></pre></td></tr></table></figure>
+<p>我们通过lm()方法拟合了一个多变量线性模型，其中“medv ~.”这个语法表示把所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
+<p><img src="http://mingju.net/uploads/images/Ch3.6.png" alt=""></p>
+<p>通常我们在建立线性回归模型之后，首先需要检查的是F值。通常情况下，如果F值大于1的话我们就基本有证据去否定零假设（null hypothesis, H0），也就是可以说明模型中至少一个变量（X）与响应值（Y）相关。如果没有任何变量与响应值有关系的话，我们一般期望F值接近于1。在上述例子中我们可以看到F值（F-statistic）为108.1，因为F值比1大很多，所以这里我们可以否定零假设H0. 那么如果F值如果只大于1一点，我们应该如何判断呢？这里请遵循以下两个基本原则：</p>
+<ol>
+<li>如果数据组中的样本（n）很大，即使F值稍微大于1一点，也为我们提供了去否定零假设H0的证据。</li>
+<li>如果数据组中的样本（n）很小，通常我们需要相对较大的F值来否定零假设H0.</li>
+</ol>
+<p>接下来我们需要检查的是与F值相关的p值（p-value），上述例子的p值为2.2e-16，是一个无限接近0的值，所以我们有很强的证据来证明至少有一个变量（X）是与响应值（Y）相关的。我们还注意到在上述例子中，每一个变量都会有一个对应的p值，这些变量的p值表示了每一个单独变量与响应值（Y）的关系。其中我们在每个单独变量对应的p值后面会看到“*”符号，这个符号表示了在某个显著水平（significance level）该变量是否与响应值相关。其中显著值水平在“Signif.codes”一栏有解释。这里我们看到了很多个变量的p值都很小，只有变量indus和age具有较大的p值。那么我们可以确定模型中存在单独的变量具有较小的p值，至少其中一个变量与响应值相关吗？其实这个结论是有问题的。这也就是为什么我建议大家首先验证F值的原因。因为当变量的个数相对较大的时候，我们遇到具有较小p值的变量的机会就会大大降低。也就是说当变量个数很大的时候，我们总会一不小心就会看到某几个（至少1个）变量的p值是较小的，那么这个时候我们说，这个变量肯定与响应值相关，我们的结论存在问题的可能性就相当大了。但是F值不会被这个问题所影响，因为F值会根据变量的数量作出自动调整。当然，这里需要注意的是，通过F值去验证变量与响应值之间是否存在相关性的方法只有在变量的数量相对样本来讲比较小的情况，有时候我们会遇到变量的数量远远大于样本的数量，当遇到这种情况的时候我们就没有办法继续使用F值取兖州变量与响应值之间的关系了。所以当这种情况出现的时候，我们需要使用其他办法来，比如说向前逐步回归（forward selection）来选择重要的变量来拟合模型。这种多维数据（high-dimensional）的问题我将在接下来的文章中做详细的解释。</p>
+<h1 id="问题2：选取重要变量"><a href="#问题2：选取重要变量" class="headerlink" title="问题2：选取重要变量"></a>问题2：选取重要变量</h1><p>在解决了问题1之后，我们需要观察的是哪些变量影响了响应值（Y）。通常，最简单的办法就似乎看每一个变量的p值。当然我们在问题1中也解释了这种方法在变量个数比较大时存在的危险性，所以一定记得检验F值。我们在进行对变量的p值观察之后，发现变量indus和age具有较大的p值，最简单的处理办法就是把这两个变量从模型中移除。然后把剩下统计显著的变量放入再次建立一个新的模型lm.fit2.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit2 &lt;- lm(medv ~.-age-indus, data = df)</div><div class="line">summary(lm.fit2)</div></pre></td></tr></table></figure>
+<p>其中“medv ~.-age-indus”这个语法表示把除了age和indus之外的所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
+<p><img src="http://mingju.net/uploads/images/Ch3.7.png" alt=""></p>
+<p>选择重要变量的方法有很多，我们这里采取的是一种最普通的处理方法。当我们拥有更多数量的变量供我们选择的时候，这种简单的方法就不适用了。通常当我们遇到大量变量时，我们会使用向前逐步回归（forward selection），向后逐步回归（backward selection）或者合并（mixed selection）这两种方法。这里我们只对这三种方法进行简单的介绍，在接下来的文章中我会对这三种方法的使用做详细的解释。</p>
+<p><strong>向前逐步回归：</strong>开始于一个只有截距（intercept）没有任何变量的空模型（null model），然后向模型中不断的加入变量，然后看哪些变量可以带来最低的残差平方和（RSS）。</p>
+<p><strong>向后逐步回归：</strong>把所有变量放入模型中，然后逐步移除p值比较大的变量。（我们上面运用的方法就是简化版的向后逐步法。</p>
+<p><strong>混合法：</strong>结合了向前逐步和向后逐步两种方法。开始使用空模型（向前逐步），然后逐渐向模型里一个接一个的加入变量。如果发现加入的变量的p值比较大，就移除该变量（向后逐步）。然后不断重复向前逐步，向后逐步直到模型里的变量都有较低的p值，模型外的变量都有较高的p值。<br>向后逐步法在变量数量大于样本数量的时候不能够被使用，但是向前逐步法始终可以使用。但是向前逐步法是一种比较贪婪的方法，它可能存在先前加入模型的变量在逐步法进行的过程中模型添加了其他的变量之后，这些先前在模型中的变量就变得冗余了。混合法可以解决向前逐步法的这一不足。</p>
+<h1 id="问题3：模型拟合"><a href="#问题3：模型拟合" class="headerlink" title="问题3：模型拟合"></a>问题3：模型拟合</h1><p>检验模型拟合的质量一般使用标准化残差（Residual Standard Error or RSE）或者R2去判断。标准化残差是标准差（Standard Deviation）的估值，其实就是响应值相对于真实回归方程的平均离散值。标准化残差用来检验一个模型是否缺乏拟合程度。使用标准化残差的判断模型拟合质量的一般规则是，小的标准化残差代表数据拟合模型程度质量较高，大的标准化残差代表数据拟合模型质量较低。在上图中我们可以看到我们的模型lm.fit2的标准化残差residual standard error为4.736.  这个值告诉我们，在Boston真正的房屋价值与回归方程线的平均离散值约为$4,736. 换句话说就是，即使模型是正确的，但是由于误差我们通过变量预测的Boston的房价依旧会有平均$4,736的误差。在Boston数据组当中，我们可以通过mean(df$medv)算出房屋价值的平均值为22.53281（单位：$1,000），所以误差的百分比约等于21%（4.736/22.53281*100）。这个误差是否能够被接受完全取决于你的分析目的。</p>
+<p>标准化残差提供了一个检验样本数据与模型拟合质量的硬性检测法。但是该方法用于检测响应值Y的偏差，所以通常不太容易决定什么是一个好的标准化残差，什么是一个差的标准化残差。R2提供了另外一种检验模型拟合质量的方法。R2是一个0到1的比率，它的值代表了Y被X的方差的解释能力。如果R2接近1的话说明一大部分的响应值方差被回归方程所解释。如果R2接近0的话说明了回归方程没有很好的解释模型的响应值方差。一般来讲，我们希望得到接近于1的R2值，因为R2越高也就越说明了数据拟合模型的程度越好。但是在实际应用中，由于误差或者数据与模型（例如，数据不是线性却使用了线性模型去拟合数据）不匹配造成R2接近0的情况比比皆是。所以说多大的R2是一个可以接受的R2很难讲，还是取决于你的研究课题。比如，如果你研究的科目是自然科学，可能你需要一个非常接近于1的R2，但是如果你研究的科目是社会科学，由于外在的其他影响因素太多，一个线性模型可能根本无法解释所有的因素带来的影响，所以R2等于0.1的情况在实际应用中也是很常见的情况。</p>
+<p>在我们的Boston模型的分析结果中，我们可以看到两个R2分别为：Multiple R-squared: 0.7406，和Adjusted R-squared: 0.7348. 通常情况下我们一般会使用Adjusted R-squared 的值，因为随着模型中变量个数的增加，Multiple R-squared无论加入模型的变量是否可以解释响应值Y，都会随着变变量个数的增长而增长。而Adjusted R-squared却不会存在这个问题。另外还有一点就是Adjusted R-squared永远会比Multiple R-squared小。Boston模型lm.fit2中的Adjusted R-squared: 0.7348. 这个数字代表了lm.fit2这个回归模型中的变量可以解释73.48%的响应值Y. 所以我们总结模型lm.fit2的表现还是很不错的。</p>
+<h1 id="问题4：模型预测"><a href="#问题4：模型预测" class="headerlink" title="问题4：模型预测"></a>问题4：模型预测</h1><p>当我们用样本数据建立好了模型之后。当我们有变量X1，X2，…，Xp的值得时候，我们就可以使用模型去预测响应值Y。但是这里有大致三种不确定性与预测有关。</p>
+<p>模型的系数（coefficient）是估值（estimate），因为我们在Ch2.1.2 为什么要建立ƒ与如何建立ƒ，中知道数据拟合模型（least squares）为ˆY = ˆ?0+ˆ?1X1+ˆ?2X2+…+ˆ?pXp. 而真正的模型（true population regression）应该为ƒ(X) = ?0+?1X1+?2X2+…+?pXp. 所以Y是约等于 ?0+?1X1+?2X2+…+?pXp的。我们还在Ch2.1.2. 还学习到了由于估值系数产生的误差是与可降误差（reducible error）相关的。因此我们可以在这里去计算可靠区间（confidence interval）去检测ˆY和ƒ(X) 之间到底有多么接近。<br>当然当我们假设线性模型符合我们的样本数据的时候，这里也会可能产生其他的可降误差，一般我们称这种误差为模型偏差（model bias）。在Ch2.2.2 方差与偏差之间的权衡有提到过。<br>通常情况下，我们不可能知道真正的ƒ(X) 。就算我们知道，那么模型还是无法完美的去做出预测，因为我们知道模型里还存在着随机的不可降误差ε. 那么Y与ˆY到底有多接近呢？我们一般可以使用计算预测区间（prediction interval）的方法去检测。<br>这里值得注意的是，预测区间永远大于可靠区间。因为预测区间包含了两种误差。</p>
+<p>在我们的Boston例子中，如何进行可靠区间的计算呢？如果我们想要获得估值系数（coefficient estimates）的可靠区间，可以使用：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">confint(lm.fit2)</div></pre></td></tr></table></figure>
+<p>得到了以下的结果：</p>
+<p><img src="http://mingju.net/uploads/images/Ch3.8.png" alt=""></p>
+<p>这个结果告诉了我们每一个变量系数的可靠区间。比如变量rm的95%的可靠区间为[3.003258393, 4.59989929]. 换言之，这个可靠区间[3.003258393, 4.59989929], 包含了95%的该变量所预估的实际值。这时，我们可能更感兴趣的是观察模型预测之后的区间范围。我们可以使用：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">predict(lm.fit2, interval = <span class="string">"confidence"</span>)</div><div class="line">predict(lm.fit2, interval = <span class="string">"prediction"</span>)</div></pre></td></tr></table></figure>
+<p>来计算整个样本数据的可靠区间和预测区间。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这一章介绍的是线性回归，是监督学习中最简单的一个模型。通常来讲，线性回归模型一般用于预测属量反应（quantitative response）的问题。线性回归在统计分析当中已经存在了很长的一段时间，虽然跟一些更现代的统计模型相比来说可能会看起来没有那么华丽，但是线性回归方法
+    
+    </summary>
+    
+      <category term="定量学" scheme="http://mingju.net/categories/%E5%AE%9A%E9%87%8F%E5%AD%A6/"/>
+    
+    
+      <category term="机器学习" scheme="http://mingju.net/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ch2 总结</title>
+    <link href="http://mingju.net/2016/03/ch-2-summary/"/>
+    <id>http://mingju.net/2016/03/ch-2-summary/</id>
+    <published>2016-03-30T19:35:07.000Z</published>
+    <updated>2017-03-18T15:22:24.846Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Ch-2-1-1"><a href="#Ch-2-1-1" class="headerlink" title="Ch 2.1.1"></a>Ch 2.1.1</h2><p>介绍了统计学习（机器学习）的基本目的就是找出并优化模型ƒ。另外我们还简单介绍了什么是方差分析。</p>
+<h2 id="Ch-2-1-2"><a href="#Ch-2-1-2" class="headerlink" title="Ch 2.1.2"></a>Ch 2.1.2</h2><p>介绍了建立ƒ的目的通常有两种。第一种是通过ƒ做预测（prediction），第二是通过ƒ做推理（inference）。其中还介绍了在建立ƒ的过程中会产生两种误差，一种叫做可降误差（reducible error），另外一种叫做不可降误差（irreducible error）。我们的目标是在建立模型的过程中，通过优化模型来降低可将误差。不可降误差负责捕获其他外界一切不可控因素带来的误差值。我们还介绍了建立ƒ的两种实现过程，第一种叫做参数法（parametric），第二种叫做非参数法（non-parametric）。参数法的基本原则就是拿到数据之后假设数据符合某种模型，然后在次基础上建立该模型。非参数法的基本原则是拿到数据之后，不做任何假设，让数据自己去建立一个最符合数据的模型，然后分析师根据实际情况调整模型的平滑度（smoothness）来确定最终的模型。这两种过程都有自己的优势和劣势。参数法假设的模型可能并不与数据相匹配导致产生巨大误差。非参数法虽然避免了参数法的劣势，但是大量的数据来建立模型。</p>
+<h2 id="Ch-2-1-3"><a href="#Ch-2-1-3" class="headerlink" title="Ch 2.1.3"></a>Ch 2.1.3</h2><p>介绍了模型预测精确度与可解释性之间的权衡。我们总结出，当你的目标是推理时，选择更严格，更简单的统计学习模型。当你的目标是预测时，选择更灵活，更复杂的统计学习模型。</p>
+<h2 id="Ch-2-1-4"><a href="#Ch-2-1-4" class="headerlink" title="Ch 2.1.4"></a>Ch 2.1.4</h2><p>介绍了机器学习的两大分类，监督学习（supervised learning）和非监督学习（unsupervised learning）。监督学习用来处理同时拥有自变量（x）和因变量（y）的问题。非监督学习用来处理只有自变量（x）的问题。</p>
+<h2 id="Ch-2-2-1"><a href="#Ch-2-2-1" class="headerlink" title="Ch 2.2.1"></a>Ch 2.2.1</h2><p>介绍了如何评估模型的准确性。通常在回归模型中我们会使用均方差（MSE）来检测模型的准确性。我们还了解了一般情况下我们一般更注重检测数据的均方差而不是训练数据的均方差。同时我们知道检测数据在实际情况中并不是总是会提供。所以我们将在接下来的学习中学习一种叫做交叉验证（cross-validation）的方法从而通过训练数据的均方差来推测检测数据的均方差以达到评估模型准确性的目的。</p>
+<h2 id="Ch-2-2-2"><a href="#Ch-2-2-2" class="headerlink" title="Ch 2.2.2"></a>Ch 2.2.2</h2><p>介绍了方差（variance）与偏差（bias）两个概念。我们了解到在理想状态下我们希望同时减低方差和误差，以达到降低总检测均方差的大小。但是实际状况下，我们并没有办法同时降低方差和偏差。同时我们还学习了方差，偏差已经模型选择之间的相互影响以及它们是在什么情况下产生的。</p>
+<h2 id="Ch-2-2-3"><a href="#Ch-2-2-3" class="headerlink" title="Ch 2.2.3"></a>Ch 2.2.3</h2><p>介绍了统计学系（机器学习）的另一大类问题中的分类问题（classification）。同时，我们还介绍了贝叶斯分类器（Bayes Classifer）理论以及如何在实际应用中使用临近规则法（K-nearest neighbor or KNN）来达到对响应值（response）为定性值（qualitative or categorical）问题时的分类方法理论。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Ch-2-1-1&quot;&gt;&lt;a href=&quot;#Ch-2-1-1&quot; class=&quot;headerlink&quot; title=&quot;Ch 2.1.1&quot;&gt;&lt;/a&gt;Ch 2.1.1&lt;/h2&gt;&lt;p&gt;介绍了统计学习（机器学习）的基本目的就是找出并优化模型ƒ。另外我们还简单介绍了什么是方差分析
+    
+    </summary>
+    
+      <category term="定量学" scheme="http://mingju.net/categories/%E5%AE%9A%E9%87%8F%E5%AD%A6/"/>
+    
+    
+      <category term="机器学习" scheme="http://mingju.net/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ch2.2.3 分类问题</title>
+    <link href="http://mingju.net/2016/03/ch-2-2-3-the-classification-setting/"/>
+    <id>http://mingju.net/2016/03/ch-2-2-3-the-classification-setting/</id>
+    <published>2016-03-30T19:34:52.000Z</published>
+    <updated>2020-04-29T06:16:58.036Z</updated>
+    
+    <content type="html"><![CDATA[<p>在之前的学习中，我们主要涉及了回归问题。这里，我们来讨论一下分类问题（classification）。其实分类问题与回归问题（regression）的最大区别就是相应变量（response）y发生了变化。在回归问题中，响应变量是定量值（quantitative），在分类问题中，响应值是定性值（qualitative or categorical）。比如说我们可以用分类分析去预测吸烟者与不吸烟者得癌症的概率。这时的响应值y就只可能有两种，得癌症或者不得癌症，也就是我们讲的YES与NO的问题。然后基本上分类问题跟回归问题就没有什么太大的区别了，之前讲到的方差与误差之间的权衡还有评估模型的准确性同样适用于分类问题的范畴。</p>
+<p>在解决分类问题的时候，一个最简单的方法就是贝叶斯分类器（Bayes Classifer）。贝叶斯分类器的工作过程就是计算出条件概率。比如说，在一个响应值是yes还有no的问题中，贝叶斯分类器就会把所有响应值大于0.5的放在一个分类（YES）中，然后把响应值小于0.5的放在另一个分类（NO）中。</p>
+<p><img src="http://mingju.net/uploads/images/ch2.8.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.13.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.13.pdf</a></p>
+<p>图中展示了一组模拟数据被贝叶斯分类器分类过后的效果。其中这组模拟数据有两个变量X1和X2，每一个X1和X2变量都会有一个相对应的概率值。概率大于50%的为橘黄色，小于50%的为蓝色。刚好等于50%就落在了那条紫色的线上。那条紫色的线叫做贝叶斯决策边界（Bayes decision boundary）。但是理论上，我们总是希望使用贝叶斯分类器去预测定性值结果。可是，在现实生活中的数据中，当我们有X的时候我们无法去计算Y的条件分布。所以这里就引用了一种可以估测概率的预测方法－临近规则法（K-nearest neighbor or KNN）。在接下来的学习中会详细介绍这一经典的算法。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在之前的学习中，我们主要涉及了回归问题。这里，我们来讨论一下分类问题（classification）。其实分类问题与回归问题（regression）的最大区别就是相应变量（response）y发生了变化。在回归问题中，响应变量是定量值（quantitative），在分类问题
+    
+    </summary>
+    
+      <category term="定量学" scheme="http://mingju.net/categories/%E5%AE%9A%E9%87%8F%E5%AD%A6/"/>
+    
+    
+      <category term="机器学习" scheme="http://mingju.net/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ch2.2.2 方差与偏差之间的权衡</title>
+    <link href="http://mingju.net/2016/03/ch-2-2-2-the-bias-variance-trade-off/"/>
+    <id>http://mingju.net/2016/03/ch-2-2-2-the-bias-variance-trade-off/</id>
+    <published>2016-03-30T19:30:31.000Z</published>
+    <updated>2017-03-18T15:16:37.596Z</updated>
+    
+    <content type="html"><![CDATA[<p>这里需要引进一个预期测试数据均方差（experted test MSE）的概念。其实简单来讲，就是在在不断使用大量的训练数据建模的过程中我们获得的测试数据均方差的平均值。用以下公式表示：</p>
+<p><img src="https://upload.wikimedia.org/math/2/3/d/23d320fd7e767d46498d780ee18773a6.png" alt="\operatorname{MSE}(\hat{\theta})=\operatorname{Var}(\hat{\theta})+ \left(\operatorname{Bias}(\hat{\theta},\theta)\right)^2."></p>
+<p>可以看到预期测试数据均方差是由可降的方差（variance）和偏差（bias）组成（其实还有不可降偏差）。我们可以看出，想要降低预期测试数据均方差，我们就要同时降低方差和偏差。但是这是理想的情况，在接下来的讲述当中你会发现这两者之间是存在权衡问题的，也就是说不可能同时降低两者。</p>
+<p>如果你看不懂公式请不用担心，这里你只需要知道预期测试数据均方差是由什么决定，并且知道几个基本的规则就可以了。</p>
+<p>方差（variance）：当我们使用不同的训练数据组去建立模型时就会产生方差。因为每次不同训练数据建立出来的模型都是不相同的。理想状态下，我们希望这些不同的模型具有相对较低的方差，但是并不是所有时候都会很理想。比如说你使用训练数据建立了一个相当灵活的模型，当其中一个数据点出现变化的时候，这个模型就会出现巨大的变化从而带来巨大的方差。通常来讲，越灵活的数据模型会带来越高的方差。</p>
+<p>偏差（bias）：当我们在处理真实生活中问题的时候通常会产生偏差。比如你在一个明显不是简单线性回归（simple linear regression）的数据上使用了简单线性回归模型，这时就会产生严重的偏差。通常来讲，越灵活的数据模型会带来越低的偏差。</p>
+<p>这里请记住一个基本原则，当我们使用越灵活的模型时，方差往往会不断升高，误差往往会不断降低。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这里需要引进一个预期测试数据均方差（experted test MSE）的概念。其实简单来讲，就是在在不断使用大量的训练数据建模的过程中我们获得的测试数据均方差的平均值。用以下公式表示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://upload.wikimedia.o
+    
+    </summary>
+    
+      <category term="定量学" scheme="http://mingju.net/categories/%E5%AE%9A%E9%87%8F%E5%AD%A6/"/>
+    
+    
+      <category term="机器学习" scheme="http://mingju.net/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ch2.2.1 评估模型的准确性</title>
+    <link href="http://mingju.net/2016/03/ch-2-2-1-measuring-the-quality-of-fit/"/>
+    <id>http://mingju.net/2016/03/ch-2-2-1-measuring-the-quality-of-fit/</id>
+    <published>2016-03-30T19:27:14.000Z</published>
+    <updated>2020-04-29T06:16:21.801Z</updated>
+    
+    <content type="html"><![CDATA[<p>当我们在选择建立模型的过程中需要不断的改善模型以提高模型的准确性。这也是统计分析中最大的难点。在验证一个统计模型的表现时，我们需要找出去测量预测值与实际值的匹配度有多好。也就是说，当我们用我们的模型预测出一个预测值的时候，我们需要知道预测值与实际值到底相差多少。这时我们需要一个方法去测量这个误差。在回归（regression）的问题当中，我们通常使用均方差（MSE）来验证。公式如下：</p>
+<p><img src="https://upload.wikimedia.org/math/0/6/8/0686d09b81bdb146174754ee2f74b81f.png" alt="\operatorname{MSE}=\frac{1}{n}\sum_{i=1}^n(\hat{Y_i} - Y_i)^2"></p>
+<p>均方差越小说明预测值与实际值越接近，均方差越大说明预测值与实际值相差越远。我们的目标是尽量降低均方差的值。因为均方差越小说明模型的预测能力越准确。但是问题是，我们在建立模型的时候使用的是训练数据（training data），这时我们算出来的均方差也是训练数据的均方差。在现实中，我们对训练数据的均方差并没有太大的兴趣。我们更在意的是测试数据（test data）的均方差。因为用来建立模型的训练数据我们已经知道了结果（y），这时我们并不需要再去预测我们已经知道的结果。而我们更在意的是，是否可以使用这个用训练数据建立的模型来预测出新的测试数据的结果。例如，我们使用一组医疗数据（身高，体重，血压，年龄，是否有糖尿病）来建立了一个模型ƒ。在实际应用中，我们希望当我们拿到一个新的病人的身高，体重，血压以及年龄等时候就可以预测出该病人是否患了糖尿病，而不是去预测我们用来建模型的那些数据中的病人是否患病，因为在训练数据中我们已经知道哪位病人患有糖尿病了。所以这时你应该明白我们为什么更在意测试数据的均方差了。回到现实，在实际应用中，有时我们会有测试数据供我们使用，但是大部分情况测试数据是不存在的。但是如果测试数据不存在我们怎么去计算测试数据的均方差呢？一般的处理方法就是选择具有最小训练数据均方差的模型，因为大多数情况训练数据的均方差和测试数据的均方差是具有相关性的。但是，不幸的是这种处理方法有一个基本的问题就是，没有办法保证模型具有最低的训练数据均方差（training MSE）就一定会有最低的测试数据均方差（test MSE）。接下来将会用例子告诉你为什么会存在这个基本问题。</p>
+<p>左图用数据模拟了一个模型ƒ，其中模型ƒ用黑色线代表。另外我们还上面其他建立的3个估测模型ƒ-hat。线性回归（橘黄色线），还有两个平滑样条（蓝色和绿色）。<br><img src="http://mingju.net/uploads/images/ch2.5.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.9.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.9.pdf</a></p>
+<p>右图灰色曲线代表了训练数据均方差，红色曲线代表了测试数据均方差。中间那条灰色的虚线代表了所有模型可能达到的最小测试数据均方差。灰色曲线和红色曲线上面的方块代表了左图三种测试模型的训练数据和测试数据的均方差。方块颜色与左图3个估测模型的颜色相照应。我们从左图可以看出蓝色的线代表的模型是最接近真正的模型ƒ的，所以在相对的右图中，我们看到这个模型同时具有最小的训练数据和测试数据的均方差。我们从左图还看到线性模型（橘黄色线）并没有很好的代表了所有数据点（与真正模型ƒ相比有较大的误差），所以右图中他们的训练数据和测试数据的均方差也就比更接近真正模型ƒ的蓝色线要高很多。当然，我们还可以看到这两个模型的训练数据和测试数据的均方差相差并不是很多，所以在测试数据不存在的时候我们可以用训练数据的均方差来确定最佳模型。但是，如果我们再看一下绿色线所代表的模型时情况就完全不同了。绿色线在左图中，可以看出是拟合数据点最好的模型，所有再右图中该模型的训练数据均方差也是最低的，但是为什么它却有了相对较高的测试数据均方差呢？因为从左图我们可以看出，绿色线代表的模型过度的跟随数据点出现了过度拟合（overfitting）的情况。所以，当我们拿训练数据建立的模型去验证测试数据时就出现了较高的测试数据均方差。因为我们知道过度拟合出来的模型可以很好的代表训练数据，但是不一定可以代表测试数据。所以这个例子也就解释了为什么我们<strong>无法保证模型具有最低的训练数据均方差就一定会有最低的测试数据均方差的道理</strong>。</p>
+<p>从之前的学习中，我们可以判断出这模型的严格和灵活程度。我们知道在上面的例子当中，线性回归（橘黄色）是三个模型当中最严格的，其次是蓝色线所代表的模型，最灵活的是绿色线所代表的模型。我们可以看到，随着模型越灵活度的增高，训练数据均方差会降低，但是测试数据的均方差却不一定。当我们看到一个模型给出了很低的训练数据均方差，但是很高的测试数据的均方差时，我们称作这种情况为过度拟合。通常情况下，训练数据的均方差都会比测试数据的均方差高，因为大多数的统计模型都会直接或者间接的刻意的去降低训练数据均方差。当然，我们在前面也提到，很多时候测试数据并不存在，所以我们在接下来的学习中会讲到一些其他方法去通过训练数据均方差估测测试数据的均方差，比如非常重要的一个方法－交叉验证（cross-validation）。</p>
+<p>接下来两幅图用不同类型的模型ƒ，表示了训练数据均方差和测试数据均方差的关系。有兴趣的朋友可以根据前面的叙述来理解这两幅图中的信息。</p>
+<p><img src="http://mingju.net/uploads/images/ch2.7.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.10.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.10.pdf</a></p>
+<p><img src="http://mingju.net/uploads/images/ch2.6.png" alt=""><br>图片来源:<a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.11.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.11.pdf</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;当我们在选择建立模型的过程中需要不断的改善模型以提高模型的准确性。这也是统计分析中最大的难点。在验证一个统计模型的表现时，我们需要找出去测量预测值与实际值的匹配度有多好。也就是说，当我们用我们的模型预测出一个预测值的时候，我们需要知道预测值与实际值到底相差多少。这时我们需要
+    
+    </summary>
+    
+      <category term="定量学" scheme="http://mingju.net/categories/%E5%AE%9A%E9%87%8F%E5%AD%A6/"/>
+    
+    
+      <category term="机器学习" scheme="http://mingju.net/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ch2.1.4&amp;5 监督学习与非监督学习</title>
+    <link href="http://mingju.net/2016/03/ch2-1-4-5-supervised-vs-unsupervised-learning/"/>
+    <id>http://mingju.net/2016/03/ch2-1-4-5-supervised-vs-unsupervised-learning/</id>
+    <published>2016-03-24T18:57:56.000Z</published>
+    <updated>2017-03-18T12:32:13.294Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="2-1-4监督学习与非监督学习"><a href="#2-1-4监督学习与非监督学习" class="headerlink" title="2.1.4监督学习与非监督学习"></a>2.1.4监督学习与非监督学习</h2><p>大部分的统计学习（机器学习）的问题可以大致归为两类：监督学习（supervised learning）和非监督学习（unsupervised learning）。简单的来讲，监督学习就是有变量（x1,x2,…xi）和相应值（y1,y2,…yi）。所以在处理监督学习的问题时，我们通常是希望通过变量和相应值来建立模型从而达到预测或者推理的目的。常见的监督学习模型包括经典的线性回归（linear regression）和逻辑回归（logistic regression），还有一些现代的广义相加模型（GAM），提升方法（boosting）和支持向量机（support vector machines）。</p>
+<p>而非监督学习只有变量（x1,x2,…xi）却没有相对应的响应值（y）。在处理非监督学习的问题时，通常会比监督学习更具有挑战性。因为我们没有相应值，所以我们有点像在一个伸手不见五指的房间里工作。通常我们使用非监督学习来了解变数（observation）或者说变量（variable）之间的关系。常见的一种非监督学习方法叫做聚类分析（clustering），接下来会详细的介绍。</p>
+<p>当然大部分时候，很多问题都会自然而然地被归类为监督学习或者非监督学习的范畴。当然在现实中，有时候监督学习与非监督学习的边界并不是那么的清晰，所以有时候会出现半监督学习（semi-supervised learning）的情况。这里暂时不做讨论。</p>
+<h2 id="2-1-5回归问题与分类问题"><a href="#2-1-5回归问题与分类问题" class="headerlink" title="2.1.5回归问题与分类问题"></a>2.1.5回归问题与分类问题</h2><p>通常我们会根据相应值（y）来确定是回归问题（regression）还是分类问题（classification）。一般来讲，如果响应值y是定量值（quantitative），那么该问题就是回归问题，如果响应值y是定性值（qualitative or categorical）那么该问题就是分类问题。定量值包括，人的年龄，身高，收入，房子的价格等等。定性指包括，性别，癌症诊断（良性或者恶性）等等。回归问题我们一般会使用线性回归（linear regression）去处理。分类问题我们一般会使用逻辑回归（logistic regression）去处理。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;2-1-4监督学习与非监督学习&quot;&gt;&lt;a href=&quot;#2-1-4监督学习与非监督学习&quot; class=&quot;headerlink&quot; title=&quot;2.1.4监督学习与非监督学习&quot;&gt;&lt;/a&gt;2.1.4监督学习与非监督学习&lt;/h2&gt;&lt;p&gt;大部分的统计学习（机器学习）的问题可
+    
+    </summary>
+    
+      <category term="定量学" scheme="http://mingju.net/categories/%E5%AE%9A%E9%87%8F%E5%AD%A6/"/>
+    
+    
+      <category term="机器学习" scheme="http://mingju.net/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ch2.1.3 模型预测精确度与可解释性之间的权衡</title>
+    <link href="http://mingju.net/2016/03/ch2-1-3-the-trade-off-between-prediction-accuracy-and-model-interpretability/"/>
+    <id>http://mingju.net/2016/03/ch2-1-3-the-trade-off-between-prediction-accuracy-and-model-interpretability/</id>
+    <published>2016-03-24T18:53:28.000Z</published>
+    <updated>2020-04-29T06:15:23.735Z</updated>
+    
+    <content type="html"><![CDATA[<p>在前面的介绍当中，我们已经知道了有的模型相对来说比较严格，有的模型相对来说就灵活很多。可能我们都会有一个问题，那为什么我们要使用那些严格的模型而不是更灵活的模型呢？其实这个问题又回到了你建立模型目的的问题上。如果你的目的是统计推理（inference），那么严格的模型更容易去解释。例如，如果你的目的是统计推理，线性模型相比其他更灵活的模型来讲，更容易去解释。下图展示了模型预测精确度与可解释性之间的权衡：<br><img src="http://mingju.net/uploads/images/ch2.4.png" alt=""></p>
+<p>所以这里我们总结为：</p>
+<ol>
+<li>当你的目标是推理时，选择更严格，更简单的统计学习模型。</li>
+<li>当你的目标是预测时，选择更灵活，更复杂的统计学习模型。</li>
+</ol>
+<p>当然，这只是一个理想的情况。现实中，我们往往想通过简单的模型获得准确的预测结果。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在前面的介绍当中，我们已经知道了有的模型相对来说比较严格，有的模型相对来说就灵活很多。可能我们都会有一个问题，那为什么我们要使用那些严格的模型而不是更灵活的模型呢？其实这个问题又回到了你建立模型目的的问题上。如果你的目的是统计推理（inference），那么严格的模型更容易
+    
+    </summary>
+    
+      <category term="定量学" scheme="http://mingju.net/categories/%E5%AE%9A%E9%87%8F%E5%AD%A6/"/>
+    
+    
+      <category term="机器学习" scheme="http://mingju.net/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ch2.1.2 为什么要建立ƒ与如何建立ƒ</title>
+    <link href="http://mingju.net/2016/03/ch2-1-2-why-and-how-to-estimate-f/"/>
+    <id>http://mingju.net/2016/03/ch2-1-2-why-and-how-to-estimate-f/</id>
+    <published>2016-03-24T18:44:59.000Z</published>
+    <updated>2017-03-20T15:02:11.972Z</updated>
+    
+    <content type="html"><![CDATA[<p>建立<strong>ƒ</strong>的目的其实主要有两点，第一是通过<strong>ƒ</strong>做预测（prediction），第二是做推理（inference）。</p>
+<p>先来谈一下预测。在一般情况情况下，一系列的变量<strong>X</strong>通常是可获得的。但是<strong>Y</strong>通常不是那么容易的得到。这时我们就需要通过使用<strong>X</strong>来预测<strong>Y</strong>。用数学公式表示就是：</p>
+<p><strong>Y-hat = ƒ-hat (X)</strong></p>
+<p>这里你可能又会有些困惑，怎么一会Y一会Y-hat，到底都是什么？其实Y-hat就是代表Y，这里使用不同的标志标识是为了区分估值和实际值，因为我们在前面了解到模型不可能达到100%的准确率，中间总是会有一些误差，所以我们在这里用Y-hat来表示Y的估值。ƒ-hat同样道理。还记得前面提到的误差么？这里要详细解释一下误差到底是如何产生的。误差有两种，一种是可降误差（reducible error），一种是不可降误差（irreducible error）。Y-hat的预测准确性通常就取决了这两种误差带来的影响。因为ƒ-hat是一个估测的模型，它永远不可能等于<strong>ƒ</strong>，只可能无限接近<strong>ƒ</strong>。因为我们可以通过很多方法去改善模型从而降低<strong>ƒ</strong>的误差，所以我们称<strong>ƒ</strong>带来的误差为可降误差。另外不要忘记在公式里（<strong>Y = ƒ(X) + ε</strong>）还有一个，这个<strong>ε</strong>代表了不可降误差。不可降误差的意思就是<strong>ε</strong>永远存在并且大于0。可能你又会问，为什么存在这个不可降误差呢？因为可能包含了我们没有放入模型并且可能对预测带来影响的变量，因为我们知道影响一个结果<strong>Y</strong>的因素有很多，我们不可能把所有的变量都放入模型当中，所以<strong>ε</strong>就捕获了该因素产生的误差。还有一种可能就是无法测量的变化带来的影响，例如，一个病人对一种药的反应取决于很多因素，比如说该病人今天和明天对同一种药可能产生不相同的反应，再比如生产该种药的生产商也无法保证每片药片100%相同。所以当我们建立一个模型的时候，我们的目的就是尽量降低可降误差。</p>
+<p>接下来就是建立<strong>ƒ</strong>的第二个目的，做推理。通常来讲，我们还对X的变化会对Y产生什么样的影响感兴趣。这时我们也需要去建立<strong>ƒ</strong>。当然这时，我们的目的不是去预测，而是去了解<strong>X</strong>与<strong>Y</strong>之间的关系。通俗一点讲，当<strong>X1</strong>，<strong>X2</strong>，…..，<strong>Xp</strong>变化时会对<strong>Y</strong>产生什么影响。做统计推理时，我们希望回答以下三个问题：</p>
+<ol>
+<li>哪一个变量（<strong>X</strong>）与结果（<strong>Y</strong>）有关系？</li>
+<li>每一个变量（<strong>X1</strong>，<strong>X2</strong>，…<strong>Xp</strong>）与结果（<strong>Y</strong>）之间的关系是什么？</li>
+<li>变量（<strong>X1</strong>，<strong>X2</strong>，…<strong>Xp</strong>）与结果（<strong>Y</strong>）之间的关系是否可以用线性方程（linear equation）来总结？还是需要更复杂的方程来总结？</li>
+</ol>
+<p>通常来讲，取决于我们的目的是做预测还是做推理或者两者都有，我们会使用不同的方法去建立<strong>ƒ</strong>。比如说，线性模型通常允许我们去容易的解释一个统计推理，但是一般不会让我们做出高精确的预测。相反的，一些非线性模型可以给出高精确的预测，但是在解释推理的时候又会非常的具有挑战性。总之，这里需要根据你的分析目标和实际情况去选择简单容易解释的模型，还是复杂具有更精确预测功能的模型。</p>
+<p>那么如何建立<strong>ƒ</strong>呢？</p>
+<p>通常我们会随机从整个数据中随机选择一部分作为训练数据（training data），然后用统计分析方法去训练，或者说去教这些训练数据来建立一个未知的ƒ。 用数学的语言就是我们希望找到f-hat，最终希望建立一个Y f-hat(X) 的模型。通常，这个过程基本上有两种实现的过程。<strong>第一种叫做参数法（parametric），第二种叫做非参数法（non-parametric</strong>）。</p>
+<p>参数法模型的建立通常分为两步。第一步，假设数据符合某种模型。比如，当你拿到一组数据时，你可以先假设这组数据符合线性模型（linear model）。</p>
+<p>ƒ(X) = β0+β1X1+β2X2+…+βpXp</p>
+<p>当我们假设了该模型之后我们的任务就变得容易了很多，只需找出β0，β1，β2，βp 就可以了。</p>
+<p>第二步，当我们确立了一个模型之后，我们就需要用训练数据来训练这个模型，也就是上面我们说的要找出β0，β1，β2，βp。从而建立：</p>
+<p>Y ≈ β0+β1X1+β2X2+…+βpXp</p>
+<p>一般最常使用的方法就是我们非常熟悉的最小二乘法（least squares）了。在Ch3的读书笔记中我将会详细介绍最小二乘法。</p>
+<p>当然是用参数法有一个潜在的缺点就是，我们通常假设的模型往往并不与训练数据相匹配，也就是f-hat和f的相差太远。这里充分体现了理想与现实的差距。带来的问题也就显而易见了，如果我们选择了一个距离与f太远的模型，那么我们的模型带来的将是灾难级的表现。怎么办？我们可以选择一个更灵活的模型去匹配训练数据。这时我们可能就需要找出更多的参数（parameter）了。当然，这些更灵活（复杂）的模型可能会带来过度拟合（overfitting）的麻烦。过度拟合的意思就是我们的训练数据过度的跟随误差。如果我们的模型出现了过度拟合的问题，那么当我们用这个模型带入新的数据时，就可能出现预测能力大大下降的情况。因为过度拟合的数据模型可能只是符合训练数据的模式。</p>
+<p>接下来我们讨论模型建立的第二种方法，非参数法。非参数法通常不做明确的假设，也就是说我们不去假设一个模型f。该方法的最大优点是我们的模型有最大限度的可能去匹配训练数据。这也就避免了参数法的缺点。但是非参数法也有一个潜在的缺点就是，想要获得一个精确的模型，非参数法需要大量的训练数据。非参数法通常需要数据分析师去选择平滑度（smoothness）来确定最后的模型。如果模型过于平滑，可能无法带来精确的预测效果，但是如果模型过于不平滑，可能带来过度拟合的情况。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;建立&lt;strong&gt;ƒ&lt;/strong&gt;的目的其实主要有两点，第一是通过&lt;strong&gt;ƒ&lt;/strong&gt;做预测（prediction），第二是做推理（inference）。&lt;/p&gt;
+&lt;p&gt;先来谈一下预测。在一般情况情况下，一系列的变量&lt;strong&gt;X&lt;/strong&gt;
+    
+    </summary>
+    
+      <category term="定量学" scheme="http://mingju.net/categories/%E5%AE%9A%E9%87%8F%E5%AD%A6/"/>
+    
+    
+      <category term="机器学习" scheme="http://mingju.net/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ch2.1.1 统计学习与方差分析简介</title>
+    <link href="http://mingju.net/2016/03/ch2-1-1-statistical-learning-and-regression/"/>
+    <id>http://mingju.net/2016/03/ch2-1-1-statistical-learning-and-regression/</id>
+    <published>2016-03-23T20:50:30.000Z</published>
+    <updated>2020-04-29T06:14:44.633Z</updated>
+    
+    <content type="html"><![CDATA[<p>这是本书的第二章，开头以一个简单的例子来介绍统计学习（机器学习）可以解决怎样的实际问题。例子如下：</p>
+<p><em>假设我们是被一家公司雇佣来解决如何改善公司特定一款产品的销售量。然后公司提供给我们了一组数据，这组数据包含了200个市场中该产品的<font color="#ff6600">销售额（sales）</font>和花费在该产品上的广告预算，分别是<font color="#ff6600">电视广告（TV）</font>，<font color="#ff6600">广播广告（radio）</font>和<font color="#ff6600">报纸广告（newspaper）</font>。</em></p>
+<p><img src="http://mingju.net/uploads/images/ch2.1.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.1.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.1.pdf</a></p>
+<p>当我们把这些数据画在一张图上时，我们可以了解对于这家公司来讲，他们没有直接的办法去增长销售量。但是，他们可以通过控制调整三份不同的广告预算来间接的增长销售量。换句话说，如果我们可以找到广告与销售量的关系就可以通过建立一个统计模型来通过广告预算预测销售量。比如说以下这个模型：</p>
+<p><strong>销售量 ≈ ƒ(电视广告，广播广告，报纸广告)</strong></p>
+<p>这里“销售量”是一个我们想要预测的相应值，通常我们以<strong>Y</strong>来表示。电视广告，广播广告，报纸广告在这里叫做变量，通常我们以X来表示。这里我们把电视广告用<strong>X1</strong>代表，广播广告用<strong>X2</strong>，报纸广告用<strong>X3</strong>代表。我们把3个变量<strong>X1，X2，X3</strong>放在一个矢量里面写作<strong>X = (X1，X2，X3)</strong>，我们就可以把该模型简化成：</p>
+<p><strong>Y = ƒ(X) + ε</strong></p>
+<p>如果你看不明白上面的公式，让我来退一步解释一下。</p>
+<p>销售量 ≈  <strong>ƒ(电视广告，广播广告，报纸广告)</strong></p>
+<p><strong>Y = ƒ(X) +ε</strong></p>
+<p>这两个公式其实是一模一样的，除了<strong>ε</strong>。</p>
+<p><strong>Y </strong>：销售量<br><strong>ƒ(X)</strong>：ƒ(电视广告，广播广告，报纸广告)<br><strong>ε</strong>：误差<br>这里你可能会有疑问，为什么第二个公式多出一个<strong>ε</strong>呢？其实第一个销售量的中文公式中也应该是有的，我为了让你在第一步不会感到困惑，所以就没有增加误差<strong>ε</strong>。你可能又会问，那误差是怎么产生的呢？让我们来看第二个例子：<br><img src="http://mingju.net/uploads/images/ch2.2.png" alt=""></p>
+<p>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.2.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.2.pdf</a></p>
+<p>这幅图展示了30个人“<font color="#ff6600">收入</font>”与“<font color="#ff6600">受教育年数</font>”的关系。左边的那幅图每一个红色的点代表一个人。这时，当你建立一个模型<strong>ƒ</strong>时，连接变量（<font color="#ff6600">受教育年数</font>）和相应值（<font color="#ff6600">收入</font>）的<strong>ƒ</strong>其实是未知的。通俗一点讲，<strong>ƒ</strong>其实是一个估算方法，也就是你在右图中看到的那条蓝色的线。并不是所有红色的点都刚好在那条线上对不对？有的点在线的上方，有的点在线的下方。每一个点到蓝线的距离就是误差。</p>
+<p>在实际应用中，通常在<strong>ƒ</strong>中会不只一个变量。就像第一个销售量与广告预算的例子中展示的那样。下图展示了“<font color="#ff6600">收入</font>”与“<font color="#ff6600">受教育年数</font>”和“<font color="#ff6600">资历年限</font>”的关系。这时我们为了方便就用一个平面表示<strong>ƒ</strong>，从而来表现“<font color="#ff6600">受教育年数</font>”和“<font color="#ff6600">资历年限</font>”这两个变量与“<font color="#ff6600">收入</font>”之间的关系。</p>
+<p><img src="http://mingju.net/uploads/images/ch2.3.png" alt=""><br>图片来源: <a href="http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.3.pdf" target="_blank" rel="external">http://www-bcf.usc.edu/~gareth/ISL/Chapter2/2.3.pdf</a></p>
+<p><strong>所以，统计学习（机器学习）的精华基本上就是浑身解数找出ƒ并且改善ƒ的一个过程。</strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这是本书的第二章，开头以一个简单的例子来介绍统计学习（机器学习）可以解决怎样的实际问题。例子如下：&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;假设我们是被一家公司雇佣来解决如何改善公司特定一款产品的销售量。然后公司提供给我们了一组数据，这组数据包含了200个市场中该产品的&lt;font color
+    
+    </summary>
+    
+      <category term="定量学" scheme="http://mingju.net/categories/%E5%AE%9A%E9%87%8F%E5%AD%A6/"/>
+    
+    
+      <category term="机器学习" scheme="http://mingju.net/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ch.1 机器学习介绍（读书笔记）</title>
+    <link href="http://mingju.net/2016/03/ch-1-an-introduction-to-statistical-learning/"/>
+    <id>http://mingju.net/2016/03/ch-1-an-introduction-to-statistical-learning/</id>
+    <published>2016-03-18T20:32:01.000Z</published>
+    <updated>2017-03-20T14:52:33.740Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近Google旗下Deepmind开发出的软件程序AlphaGo以4：1的成绩战胜韩国围棋9段选手李世石的新闻引起了很多人的关注。同时深度学习（Deep Learning）和各种算法（Algorithm）等词汇也进入了很多人的视线。在数据分析行业又掀起了机器学习（Machine Learning）的热潮。其实机器学习并不是什么新的概念，Deepmind开发出来的AlphaGo也运用到了很多机器学习的一些算法。我们的日常生活中也到处充满了机器学习的产物，Google搜索的的自动填词功能，iPhone上的Siri，还有最早的手机上的手写功能都运用到了机器学习的算法。</p>
+<p>近几年来，机器学习在商业上的应用也成为各个行业的热门。尤其是在市场研究和金融领域的应用更是成为了不少行业领头羊的核心竞争力。我大概1年多以前读了一本由美国斯坦福大学两名教授（Trevor Hastie and Robert Tibshirani）和他们的学生（Gareth James, Daniela Witten）一起完成的一本关于“数据学习”（很多时候也就是我们所讲的机器学习）的书 <a href="http://www-bcf.usc.edu/~gareth/ISL/book.html" target="_blank">An Introduction to Statistical Learning with Applications in R</a> (ISLR)。最近，我又重新复习了一遍这本书，然后打算用自己的博客记录一下自己学习这本书的过程。一方面是当作自己的读书笔记，让自己能够更深入的去理解书中的统计分析技巧，另一方面就是要把这本书分享给大家。我个人认为这本书是目前为止最适合，没有或者只有有限计量学背景，并且又致力于成为数据分析师的朋友们。更重要的是，希望大家通过在跟我一起学习的过程中，能够使用机器学习的技巧去解决真正的商业问题。</p>
+<p>简单的介绍一下这本书，这本书包含了统计学习（机器学习）的一个概况，并且提供了不同领域的大量的复杂的数据库用作实战练习。同时，书中提供了几乎所有非常重要以及常用的建模和预测技巧，其中包含线性回归分析（linear regression），分类分析（classification），重采样法（resampling methods），梯度下降法（shrinkage approaches），树形分簇法（tree-based methods），支持向量机（support vector machines）和聚类分析法（clustering）等等。另外在书的每一章的最后一个章节会提供一个基于R语言的实验分析教学课程，如果你没有接触过R或者刚刚接触R，这本书的实验部分绝对是一个绝佳的开始。其中我认为实验部分最大的亮点就是，书中给你的数据会出现各种在你进行真正数据分析时遇到的各种问题，而不是仅仅提供了一个简单的答案。例如，在进行线性回归分析的时候，我们经常会遇到非线性（non-linearity）问题的干扰。本书的实验部分所给出的数据也同样出现了非线性的问题。这时，实验就会详细的介绍解决该问题的详细办法以及步骤。</p>
+<p>我刚刚也提到了，这本书非常适合没有计量学或者有有限计量学的朋友来学习。因为，该书在编写的时候刻意的去除了大部分的高级技术词汇。所以只要你有一些初级的统计学知识，你就可以去轻松的阅读这本书。这里有一个问题就是，这本书是英文版的，所以如果你不读英文的话可能没办法去学习（不确定是否国内已经有人翻译了这本书）。这也是我写这个读书笔记的另外一个目的，用中文把书中的重点记录下来分享给大家。我的终极目标就是自己把这本书吃透，让读了我读书笔记的人可以跟我一样熟练的去使用这些统计学方法去解决实际问题。当然如果你有任何学习方面的问题也欢迎在评论中分享，共同学习。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近Google旗下Deepmind开发出的软件程序AlphaGo以4：1的成绩战胜韩国围棋9段选手李世石的新闻引起了很多人的关注。同时深度学习（Deep Learning）和各种算法（Algorithm）等词汇也进入了很多人的视线。在数据分析行业又掀起了机器学习（Mach
+    
+    </summary>
+    
+      <category term="定量学" scheme="http://mingju.net/categories/%E5%AE%9A%E9%87%8F%E5%AD%A6/"/>
+    
+    
+      <category term="机器学习" scheme="http://mingju.net/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>EXCEL如何把数据基于列分离到不同工作表中</title>
+    <link href="http://mingju.net/2016/02/excel-split-data-into-multiple-worksheets-based-on-column/"/>
+    <id>http://mingju.net/2016/02/excel-split-data-into-multiple-worksheets-based-on-column/</id>
+    <published>2016-02-12T16:37:52.000Z</published>
+    <updated>2020-04-29T06:17:50.715Z</updated>
+    
+    <content type="html"><![CDATA[<p>前一段工作遇到一个需要处理分离大量数据的重复工作，所以在网上找到了一个方法可以比较快速的根据列明把数据分离到不同的sheet中，而且可以把sheet名称命名为该列名。图片可能看得更明白一些，你可能想把上图中的情况根据A列来把数据根据不同的姓名分离成4个不同的工作表从而达到下面4副小图的情况。过程需要使用VBA代码，但是不用担心，接下来我会详细告诉你操作步骤。</p>
+<p><img src="http://mingju.net/uploads/images/doc-split-data-by-columns1.png" alt=""></p>
+<p><img src="http://mingju.net/uploads/images/doc-split-data-by-columns2.png" alt=""><br><img src="http://mingju.net/uploads/images/doc-split-data-by-columns3.png" alt=""><br><img src="http://mingju.net/uploads/images/doc-split-data-by-columns4.png" alt=""><br><img src="http://mingju.net/uploads/images/doc-split-data-by-columns5.png" alt=""></p>
+<p>第一步，同时按住Alt+F11键打开Microsoft Visual Basic for Applications</p>
+<p>第二步，找到“插入”&gt;“Module”，然后把以下代码复制粘贴到Module窗口中。</p>
+<pre><code>Sub parse_data()
+Dim lr As Long
+Dim ws As Worksheet
+Dim vcol, i As Integer
+Dim icol As Long
+Dim myarr As Variant
+Dim title As String
+Dim titlerow As Integer
+vcol = 1       
+Set ws = Sheets(&quot;Sheet1&quot;)       
+lr = ws.Cells(ws.Rows.Count, vcol).End(xlUp).Row
+title = &quot;A1:C1&quot;           
+titlerow = ws.Range(title).Cells(1).Row
+icol = ws.Columns.Count
+ws.Cells(1, icol) = &quot;Unique&quot;
+For i = 2 To lr
+On Error Resume Next
+If ws.Cells(i, vcol) &lt;&gt; &quot;&quot; And Application.WorksheetFunction.Match(ws.Cells(i, vcol), ws.Columns(icol), 0) = 0 Then
+ws.Cells(ws.Rows.Count, icol).End(xlUp).Offset(1) = ws.Cells(i, vcol)
+End If
+Next
+myarr = Application.WorksheetFunction.Transpose(ws.Columns(icol).SpecialCells(xlCellTypeConstants))
+ws.Columns(icol).Clear
+For i = 2 To UBound(myarr)
+ws.Range(title).AutoFilter field:=vcol, Criteria1:=myarr(i) &amp; &quot;&quot;
+If Not Evaluate(&quot;=ISREF(&apos;&quot; &amp; myarr(i) &amp; &quot;&apos;!A1)&quot;) Then
+Sheets.Add(after:=Worksheets(Worksheets.Count)).Name = myarr(i) &amp; &quot;&quot;
+Else
+Sheets(myarr(i) &amp; &quot;&quot;).Move after:=Worksheets(Worksheets.Count)
+End If
+ws.Range(&quot;A&quot; &amp; titlerow &amp; &quot;:A&quot; &amp; lr).EntireRow.Copy Sheets(myarr(i) &amp; &quot;&quot;).Range(&quot;A1&quot;)
+Sheets(myarr(i) &amp; &quot;&quot;).Columns.AutoFit
+Next
+ws.AutoFilterMode = False
+ws.Activate
+End Sub
+</code></pre><p>注释：<br>vcol =1，数值1是你要根据该列分离数据的列号<br>Set ws = Sheets(“Sheet1”)，Sheet1是你想要分离这些数据的主工作表<br>title = “A1:C1”, A1:C1是标题的范围</p>
+<p>以上这些都是可以根据你自己的需求去改变的。当你设置好代码之后只需要按F5运行这些代码就可以达到你想要的效果了。</p>
+<p>原文链接：<a href="http://www.extendoffice.com/documents/excel/1174-excel-split-data-into-multiple-worksheets-based-on-column.html" target="_blank" rel="external">http://www.extendoffice.com/documents/excel/1174-excel-split-data-into-multiple-worksheets-based-on-column.html</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前一段工作遇到一个需要处理分离大量数据的重复工作，所以在网上找到了一个方法可以比较快速的根据列明把数据分离到不同的sheet中，而且可以把sheet名称命名为该列名。图片可能看得更明白一些，你可能想把上图中的情况根据A列来把数据根据不同的姓名分离成4个不同的工作表从而达到下
+    
+    </summary>
+    
+      <category term="数据处理" scheme="http://mingju.net/categories/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/"/>
+    
+    
+      <category term="Excel" scheme="http://mingju.net/tags/Excel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>“xlsx” 包 OutOfMemoryError 解决办法</title>
+    <link href="http://mingju.net/2015/11/solution-for-xlsx-package-java-lang-out-of-memory-error/"/>
+    <id>http://mingju.net/2015/11/solution-for-xlsx-package-java-lang-out-of-memory-error/</id>
+    <published>2015-11-19T17:22:40.000Z</published>
+    <updated>2017-03-24T05:33:36.434Z</updated>
+    
+    <content type="html"><![CDATA[<p>read.xlsx( ) 是“xlsx” Package中读取Excel中.xlsx的方法，但是在Windows环境下读取相对较大的xlsx文件的时候，有可能出现下面的错误信息导致文件无法读取：</p>
+<pre><code>Error in .jcall(&quot;RJavaTools&quot;, &quot;Ljava/lang/Object;&quot;, &quot;invokeMethod&quot;, cl,: java.lang.OutOfMemoryError: Java heap space
+</code></pre><p>当你得到这个错误信息的时候只需要在你载入xlsx package之前运行下列代码即可解决：</p>
+<pre><code>#### 设置 ####
+options(java.parameters = &quot;-Xmx1000m&quot;)
+################
+if (Sys.getenv(&quot;JAVA_HOME&quot;)!=&quot;&quot;) {
+Sys.setenv(JAVA_HOME=&quot;&quot;)
+}
+library (&quot;xlsx&quot;)
+</code></pre><p>如果你有其他问题请在评论里提出。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;read.xlsx( ) 是“xlsx” Package中读取Excel中.xlsx的方法，但是在Windows环境下读取相对较大的xlsx文件的时候，有可能出现下面的错误信息导致文件无法读取：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Error in .jcall(&amp;quot;RJ
+    
+    </summary>
+    
+    
+      <category term="R" scheme="http://mingju.net/tags/R/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从全球咖啡消费进出口看中国咖啡市场</title>
+    <link href="http://mingju.net/2015/10/from-world-coffee-consumption-and-trade-to-see-the-coffee-market-in-china/"/>
+    <id>http://mingju.net/2015/10/from-world-coffee-consumption-and-trade-to-see-the-coffee-market-in-china/</id>
+    <published>2015-10-27T18:56:09.000Z</published>
+    <updated>2017-03-24T08:49:52.319Z</updated>
+    
+    <content type="html"><![CDATA[<p>下面地图显示了从2003年至2015年世界咖啡的消费情况，颜色越深代表该国家的咖啡消费量越大。美国和巴西毫无疑问的成为世界上最大的两个咖啡消费国（欧洲咖啡消费暂无数据），分别达到了313,437单位和250,890单位。地图上所数据的单位为1,000/60千克每包。</p>
+<p><iframe src="http://mingju.net/uploads/World_Coffee_Consumption.html" width="600" height="400"></iframe><br>数据来源：<a href="http://apps.fas.usda.gov/psdonline/psdDownload.aspx" target="_blank">United States Department of Agriculture</a></p>
+<p>接下来是咖啡进口的情况。美国是世界上咖啡进口最多的国家，从2003年至今进口量达到了318,095个单位。</p>
+<p><iframe src="http://mingju.net/uploads/World_Coffee_Import.html" width="600" height="400"></iframe><br>数据来源：<a href="http://apps.fas.usda.gov/psdonline/psdDownload.aspx" target="_blank">United States Department of Agriculture</a></p>
+<p>从咖啡的出口情况来看，巴西是世界上出口咖啡最多的国家，从2003年至今出口量达到了423,470个单位，其次是越南，出口量达到了273,746个单位。然后就是哥伦比亚和印度尼西亚，出口量分别达到141,445个单位和105,444个单位。越南种植着大量用于制作速溶咖啡的罗伯斯塔咖啡，所以咖啡出口量也很庞大。</p>
+<p><iframe src="http://mingju.net/uploads/World_Coffee_Export.html" width="600" height="400"></iframe><br>数据来源：<a href="http://apps.fas.usda.gov/psdonline/psdDownload.aspx" target="_blank">United States Department of Agriculture</a></p>
+<p>让我们把目标转回中国。中国由于茶文化等诸多原因，显然在咖啡消费能力和进出口能力上完全与美国巴西以及欧洲等具有浓厚咖啡文化的国家没办法相比。但是，从2003年以来至今，中国的咖啡消费量每年都在增长。从2003年的200个单位增长到了2015年的1,660个单位。12年的时间一共增长了730%。单一从咖啡消费量来讲，中国的咖啡市场有着巨大的潜力。</p>
+<p><iframe src="http://mingju.net/uploads/China_Coffee_Consumption.html" width="600" height="425"></iframe><br>数据来源：<a href="http://apps.fas.usda.gov/psdonline/psdDownload.aspx" target="_blank">United States Department of Agriculture</a></p>
+<p>而且现在在中国越来越多的年轻人把喝咖啡当作追求时尚的行为。从咖啡巨头星巴克对中国市场的行动我们也可以看出中国咖啡市场的巨大消费潜力。早在2013年的时候<a href="http://www.usatoday.com/story/money/business/2013/09/16/starbucks-china-flagship-stores/2820885/" target="_blank">中国就已经成为星巴克除美国之外的第一海外市场</a>。星巴克在中国的咖啡店数量更是从2005年的209家增长到了2015年的1937家。10年增长了近827%。下面的地图是星巴克在全球的分布情况。</p>
+<p><iframe src="http://mingju.net/uploads/Worldwide_Starbucks_Stores.html" width="600" height="400"></iframe><br>数据来源：<a href="https://opendata.socrata.com/Business/All-Starbucks-Locations-in-the-World/xy4y-c4mk" target="_blank">OpenData by Socrata</a></p>
+<p><a href="https://www.dropbox.com/sh/502wurmehq06606/AAA7QBTG090bkeJvec3BnuqHa?dl=0" target="_blank">码农的世界你不懂</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;下面地图显示了从2003年至2015年世界咖啡的消费情况，颜色越深代表该国家的咖啡消费量越大。美国和巴西毫无疑问的成为世界上最大的两个咖啡消费国（欧洲咖啡消费暂无数据），分别达到了313,437单位和250,890单位。地图上所数据的单位为1,000/60千克每包。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="数据分析" scheme="http://mingju.net/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+    
+      <category term="R" scheme="http://mingju.net/tags/R/"/>
+    
+      <category term="咖啡" scheme="http://mingju.net/tags/%E5%92%96%E5%95%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据说明恐怖主义是世界问题</title>
+    <link href="http://mingju.net/2015/10/data-shows-why-terrorism-is-a-global-problem/"/>
+    <id>http://mingju.net/2015/10/data-shows-why-terrorism-is-a-global-problem/</id>
+    <published>2015-10-23T20:28:32.000Z</published>
+    <updated>2017-03-24T08:51:47.119Z</updated>
+    
+    <content type="html"><![CDATA[<p>我知道有很多朋友认为中国是世界上最安全的并且没有受到恐怖主义的威胁的国家。其实很久以来我也一直这么认为，感觉中国是世界上最安全的地方。但是在美国接触来自各个地方的人多了，从跟他们的交谈中也慢慢意识到，其实中国也是恐怖主义受害国之一。虽然相比美国等一些国家来讲可能没有那么夸张，但并不代表完中国没有受到恐怖主义的威胁。国内很多媒体的选择性报道，或者弱化这一问题使我们受到了太多的蒙蔽。我在这里不想提及过多的敏感话题，免得我的博客被某墙封杀，但我还是希望能够通过数据来说明这一不可争辩的事实，使大家都能够意识到这一全球性问题。</p>
+<iframe src="http://mingju.net/uploads/World_Terrorism_Overview.html" width="600" height="400"></iframe>
+
+<p>数据是从由美国马里兰大学维护的世界恐怖主义数据库中（<a href="http://www.start.umd.edu/gtd/" target="_blank">The Global Terrorism Database (GTD)</a>）获取的，如果你对数据有任何疑问请不要找我，我只是做出了几个地图而已。</p>
+<p>从上面的地图上我们可以清楚的看到从1970年至今中国大陆一共发生了225起恐怖事件（包括造成人员死亡和非死亡事件）。有没有被惊到呢？虽然中国相比中东地区和美国来讲是一个存在较少恐怖主义活动的国家，但可以看出中国并不是遭受恐怖主义威胁最少的国家。遭受到恐怖主义伤害最少的大部分是集中在北欧和西非的一些国家。还有像土库曼斯坦，越南，加蓬，博兹瓦纳，厄立特里亚，罗马尼亚，塞尔维亚，加拿大，澳大利亚，新西兰等国家。遭受恐怖主义最严重的地区主要集中在中东，北非和中南美等地。其中中东地区的伊拉克，巴基斯坦和阿富汗，从1970年至今，恐怖主义活动更是达到了16,023次，11,522次和7,765次。在中南美地区，秘鲁和哥伦比亚成为恐怖主义的重灾区。值得注意的是，印度和泰国也是恐怖主义的极大受害者，分别达到了9069和3074次。另外，在欧洲的英国，西班牙，法国，意大利也是恐怖主义的受害者，这几个国家分别受到了4881次，3242次，2580次和1540次的恐怖威胁。</p>
+<p>美国虽然是恐怖主义受害相对比较严重的国家之一，但绝对不是受威胁最严重的国家（最严重的是伊拉克）。下面一幅地图展示了，在美国由于恐怖主义造成人员死亡的分布图。</p>
+<p><iframe src="http://mingju.net/uploads/Death_from_Terrorism_US.html" width="600" height="400"></iframe><br>（地图分布只展示了造成人员死亡的事件）</p>
+<p>毫无疑问，2001年的911事件让纽约地区在地图上变得格外醒目。由于在数据库中一些坐标点的重复，有一些标记重叠在了一起，所以当你点击纽约的时候会出现0.5个人的奇葩现象。但是我从世界恐怖主义数据库中一共提取出了4条911期间的死亡人数数据，相加之后得到的遇难人数是2966人，这与当时官方统计出的数据是一致的。</p>
+<p>接下来就是中国的地图了。想必大家也应该可以猜到中国发生恐怖活动最多的地区在哪里了。</p>
+<p><iframe src="http://mingju.net/uploads/Death_from_Terrorism_China.html" width="600" height="400"></iframe><br>（地图分布只展示了造成人员死亡的事件）</p>
+<p>猜对了吧。另外数据也出现了一些小数的情况，原因可能是数据库数据输入错误造成的。这幅地图我就不作过多解释了，免得被请去喝咖啡。</p>
+<p>我写这篇文章的目的只有一个，就是想告诉大家恐怖主义不是某个国家的问题，而是世界问题！</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我知道有很多朋友认为中国是世界上最安全的并且没有受到恐怖主义的威胁的国家。其实很久以来我也一直这么认为，感觉中国是世界上最安全的地方。但是在美国接触来自各个地方的人多了，从跟他们的交谈中也慢慢意识到，其实中国也是恐怖主义受害国之一。虽然相比美国等一些国家来讲可能没有那么夸张
+    
+    </summary>
+    
+      <category term="数据分析" scheme="http://mingju.net/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+    
+      <category term="R" scheme="http://mingju.net/tags/R/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据科学免费学习资源</title>
+    <link href="http://mingju.net/2015/10/free-data-science-learning-resources/"/>
+    <id>http://mingju.net/2015/10/free-data-science-learning-resources/</id>
+    <published>2015-10-19T19:53:28.000Z</published>
+    <updated>2017-03-24T08:44:06.340Z</updated>
+    
+    <content type="html"><![CDATA[<p>数据分析已经成为了目前市场上最热门的一项专业技能。根据领英（Linkedin）2014年对3亿3千万的会员资料分析，统计分析和数据挖掘成为获得工作的最重要的两项技能。哈佛商业评论上在2012年由Thomas H. Davenport和D.J. Patil发表了一篇<a href="https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century/" target="_blank" rel="external">《数据科学家：21世纪最性感的工作》</a>在三年以后也得到了一定的证实。据全球最大的战略咨询公司<a href="http://www.mckinsey.com/features/big_data" target="_blank" rel="external">McKinsey &amp; Company</a>的一份报道预测美国面临着14万至19万拥有数据分析能力的专业人才。然而成为一名真正的数据分析师或者数据科学家的话需要大量的学习和实践。同时也可能会花费很多金钱。感谢互联网和高速发展的网络在线教育。现在我们可以在网络上找到很多免费的学习资料。</p>
+<p>不过可惜的是，目前我只收集到了一些英文资料，对于英文不好的朋友可能会变得毫无用处，但是如果你英文还可以的话就赶紧学起来吧。当然，如果你有好的中文方面的资料也请分享给我和大家。</p>
+<h2 id="统计学"><a href="#统计学" class="headerlink" title="统计学"></a>统计学</h2><ul>
+<li><a href="https://www.coursera.org/course/stats1" target="_blank" rel="external">Statistics One by Coursera</a></li>
+<li><a href="http://stattrek.com/" target="_blank" rel="external">Statistics and Probability</a></li>
+<li><a href="http://oli.cmu.edu/courses/free-open/statistics-course-details/" target="_blank" rel="external">Probability &amp; Statistics</a></li>
+</ul>
+<p>还是要强调，首先应该学习的是统计学知识，定量知识是成为数据分析师不可缺少的。任何数据分析基本上都建立在统计模型的基础上。所以一定要先学习统计学并且把基础建立牢固。</p>
+<h2 id="R语言"><a href="#R语言" class="headerlink" title="R语言"></a>R语言</h2><ul>
+<li><a href="https://www.udemy.com/r-basics/?dtcode=GLwzuIc2GWEW" target="_blank" rel="external">R Basics - R Programming Language Introduction by Udemy</a></li>
+<li><a href="https://www.datacamp.com/courses/free-introduction-to-r" target="_blank" rel="external">Introduction to R at DataCamp</a> 互动式R语言学习平台，有免费的几节R入门课程。</li>
+<li><a href="https://www.codeschool.com/courses/try-r" target="_blank" rel="external">Learn R at Code school</a><br></li></ul>
+
+<p>还是非常推荐学习R语言，很多人对R有一个误区就是必须会编程才能使用R，其实并不是这样的，你可以成为一个R Programmer，那么你就必须要会编程了。但是大部分时间你可以只去使用已经写好的程序就可以了。就像是用Wordpress的插件那么简单。因为R是开源免费的，所以R有超级多的用户并且具有非常活跃的社区，基本上你自己需要进行的一些分析或者需要的一些功能大部分情况都已经被无数的开发者开发出来了，很多时候你只需要直接下载下来去使用就好了。</p>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><ul>
+<li><a href="https://www.udemy.com/learn-python-programming-from-scratch/?dtcode=Y8tHdUo2GWxI" target="_blank" rel="external">Learn Python Programming From Scratch by Udemy</a></li>
+<li><a href="https://www.codecademy.com/tracks/python" target="_blank" rel="external">Learn to program in Python by CodeCademy</a></li>
+<li><a href="http://www.learnpython.org/" target="_blank" rel="external">LearnPython.org interactive Python tutorial</a></li>
+</ul>
+<h2 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h2><ul>
+<li><a href="http://www.dataschool.io/15-hours-of-expert-machine-learning-videos/" target="_blank" rel="external">In-depth introduction to machine learning</a> 强烈推荐</li>
+<li><a href="https://www.coursera.org/learn/machine-learning" target="_blank" rel="external">Machine learning online</a>  斯坦福大学教授授课，这节课有中文字幕。</li>
+<li><a href="https://www.udemy.com/operational-intelligence-and-machine-data-with-splunk/" target="_blank" rel="external">Operational Intelligence and Machine Data with Splunk</a></li>
+</ul>
+<h2 id="数据挖掘"><a href="#数据挖掘" class="headerlink" title="数据挖掘"></a>数据挖掘</h2><ul>
+<li><a href="https://www.udemy.com/scraping-and-data-mining-for-beginners-and-pros/?dtcode=OiThMBJ2GWAW" target="_blank" rel="external">Data Mining and Web Scraping: How to Convert Sites into Data by Udemy</a></li>
+<li><a href="https://www.coursera.org/course/mmds" target="_blank" rel="external">Data Mining by Coursera</a></li>
+</ul>
+<h2 id="大数据"><a href="#大数据" class="headerlink" title="大数据"></a>大数据</h2><ul>
+<li><a href="http://bigdatauniversity.com/" target="_blank" rel="external">Big Data University</a></li>
+<li><a href="https://www.udemy.com/big-data-and-hadoop-essentials-free-tutorial/?dtcode=Z0cAVQ02GWtu" target="_blank" rel="external">Big Data and Hadoop Essentials by Udemy</a></li>
+<li><a href="https://www.udemy.com/overview-of-big-data-hadoop/?dtcode=TCMfbcJ2GWK6" target="_blank" rel="external">Basic overview of Big Data Hadoopby- Udemy</a></li>
+</ul>
+<h2 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h2><ul>
+<li><a href="http://www.sqlcourse.com/" target="_blank" rel="external">Interactive Online SQL Training for Beginners</a></li>
+<li><a href="https://www.udemy.com/sachin-quickly-learns-sql/?dtcode=35dX3aC2GWAW" target="_blank" rel="external">Sachin Quickly Learns (SQL) - Structured Query Language by Udemy</a></li>
+<li><a href="http://www.w3schools.com/sql/" target="_blank" rel="external">SQL Tutorial by w3schools</a></li>
+</ul>
+<p>另外<a href="http://bbs.pinggu.org/" target="_blank" rel="external">人大的经济论坛</a>也是一个很好的中文资源可以利用。如果你有好的中文学习资源请不要忘记在评论里与大家分享。谢谢。</p>
+<p>原文链接：<a href="http://www.datasciencecentral.com/profiles/blogs/how-to-become-a-data-scientist-for-free-1" target="_blank" rel="external">http://www.datasciencecentral.com/profiles/blogs/how-to-become-a-data-scientist-for-free-1</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;数据分析已经成为了目前市场上最热门的一项专业技能。根据领英（Linkedin）2014年对3亿3千万的会员资料分析，统计分析和数据挖掘成为获得工作的最重要的两项技能。哈佛商业评论上在2012年由Thomas H. Davenport和D.J. Patil发表了一篇&lt;a hr
+    
+    </summary>
+    
+      <category term="数据科学" scheme="http://mingju.net/categories/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>商科学生如何成为数据分析师</title>
+    <link href="http://mingju.net/2015/10/business-student-how-to-become-a-data-analyst/"/>
+    <id>http://mingju.net/2015/10/business-student-how-to-become-a-data-analyst/</id>
+    <published>2015-10-17T21:32:16.000Z</published>
+    <updated>2017-03-24T08:54:24.623Z</updated>
+    
+    <content type="html"><![CDATA[<p>很多学习商科的同学对数据分析很有兴趣，想把数据分析师或者数据学家当作自己的职业目标，但是又担心自己不会使用一些市面上常见的数据分析软件或者担心自己没有系统的统计学背景，编程背景等等。那么学习商科学生到底可以成为数据分析师吗？答案是肯定的。接下来我会分享作为商科背景的我是怎样成为一名数据分析师的。希望可以给有商科背景并且想成为数据分析师的朋友一些建议。</p>
+<h2 id="储备定量学（quantitative）知识"><a href="#储备定量学（quantitative）知识" class="headerlink" title="储备定量学（quantitative）知识"></a>储备定量学（quantitative）知识</h2><p>作为一名商学背景的学生，首先你要明白自己的优势和不足分别是什么。拿我本人举一个例子，我的商科专业是市场学。由于在本科期间接触到的关于定量学的知识很少。四年也就修了两门数学课和两门基础统计课。这对于成为一名数据分析师其实是远远不够的。所以在我工作期间，拿到一组数据之后往往变得手足无措。这时候就要花大量的时间去查资料。这时，缺乏定量学的劣势就是暴露无遗，不单单浪费了很多时间影响了工作效率，由于知识储备不够也可能照成更多的错误。所以我建议大家，如果你还是在读生，请多花一些时间在你有限的定量学课程上，如果条件允许尽量可以选修几门统计学科的课程。比如，方差分析，回归分析，逻辑回归分析等课程。当然，现在网络上也有成千上万的关于这些知识的资料。总之，在你毕业之前尽量储备定量学的知识。这对于你成为一名数据分析师和未来的数据科学家非常非常重要。你可能已经被我所说的这个不足吓到，但是不要担心，只要意识到了这个不足什么开始弥补都不晚。说完了劣势，来讲一下你的优势吧。作为有商科背景的你有着专业为统计学或者计算机科学不可比拟的优势（找回一些自信？）。其实现在在一些大的公司里，数据分析团队通常包括三种背景的人。第一商科背景的人，第二计算机背景的人，第三统计学背景的人。所以作为具有商科背景的你是团队缺一不可的人物。但是如果你“不幸”落入一下中小型公司的话，那么可能你就需要成为一个三合一体的“超级赛亚人”了。但是现实就是这么残酷。其实这种情况可以适用到各个职位和行业。但是，如果你具有扎实的商学背景的话，在做出数据分析之后提供商业策略意见的功能还是不容忽视的。不要忘记了数据分析的意义是什么？解决问题。更多的时候是解决商业方面的问题。你的商学背景为你带来的附加技能是那些学计算机科学和统计学的同学不具备的。</p>
+<h2 id="掌握一种或多种数据分析软件"><a href="#掌握一种或多种数据分析软件" class="headerlink" title="掌握一种或多种数据分析软件"></a>掌握一种或多种数据分析软件</h2><p>做数据分析必然需要使用到软件。学会熟练的使用一种或者多种软件会让你在未来职场变得更加具有竞争力。另外，如果你现在就已经非常熟悉你现在使用的这一款软件，那么不妨去试着学习一下其他的数据分析工具来扩充你的数据分析工具箱。比如我自己，最开始是使用Excel以及Excel的各种插件。不要小看Excel，之所以可以长久不衰也是有它的原因的。之后，在我可以熟练的使用Excel之后，我又接触了<a href="http://baike.baidu.com/link?url=iVEkoGMq5siDvOE2SaW6qH_69kVaYHPmYnIyt5gT5roE2vOAIouCwcgO32BOLj0O9SAc8U0iMcCsHcOvFw539_" target="_blank">Stata</a>, <a href="http://baike.baidu.com/link?url=sjJNQPckY5XDnAPi_o4CCD8WJYHlHlNk8cvX6pq6W8nw2jL7Y1QiTeqgcQmvvqdw0jIXvN7Sf6KZmPPMXJxQna" target="_blank">SPSS</a>，以及现在又开始学习<a href="http://baike.baidu.com/link?url=I2NLFHvb0cfz9GJUF7Rez1U2i6xJpz9DEOvYOB2Kk5IZk1Jgtg9Hymx96sYfSDlfZi2HFvpEua027pwj1qQWcK" target="_blank">R语言</a>。在你还在学校的时候就去训练自己使用这些常用的数据分析软件。因为学习任何一种新的工具都是需要大量的时间的。跟投资理财一样，越早开始收益越大。试想，当别人毕业之后一脸茫然的去学习如何下载Excel的时候，你已经可以享受去用Excel算出1+1等于2的快感。</p>
+<h2 id="一些常见问题"><a href="#一些常见问题" class="headerlink" title="一些常见问题"></a>一些常见问题</h2><p>Q：没有商科背景，没有统计学背景，没有计算机背景，能不能成为数据分析师？</p>
+<p>A：只要肯努力。当然，你在这三个领域储备的知识越多就离你成为数据分析师的目标越近。</p>
+<p>Q：不会编程能不能成为数据分析师？</p>
+<p>A：很多数据分析师都不会编程，现在市面上的很多数据分析软件也都不需要你具备写代码的技能。但是想成为数据分析师，统计定量学知识必不可少。</p>
+<p>Q：如何开始学习成为一名数据分析师？</p>
+<p>A：多读书。一般学习一项新技能的开始就是买本书照着学习。当然现在网络发达时代，你也可以在网上找到很多的学习资料。最重要的是坚持学习与练习。</p>
+<p>以上是我在学习以及工作的过程中遇到的问题和对我个人经验的总结。希望对想成为数据分析师的你带来一些帮助，让你少走一些弯路。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;很多学习商科的同学对数据分析很有兴趣，想把数据分析师或者数据学家当作自己的职业目标，但是又担心自己不会使用一些市面上常见的数据分析软件或者担心自己没有系统的统计学背景，编程背景等等。那么学习商科学生到底可以成为数据分析师吗？答案是肯定的。接下来我会分享作为商科背景的我是怎样
+    
+    </summary>
+    
+      <category term="抛砖引玉" scheme="http://mingju.net/categories/%E6%8A%9B%E7%A0%96%E5%BC%95%E7%8E%89/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>SEO不会死</title>
+    <link href="http://mingju.net/2014/08/seo-will-never-die/"/>
+    <id>http://mingju.net/2014/08/seo-will-never-die/</id>
+    <published>2014-08-03T02:47:40.000Z</published>
+    <updated>2020-04-29T06:22:25.794Z</updated>
+    
+    <content type="html"><![CDATA[<p>在2012年7月20日，美国财经杂志《福布斯》刊登了营销专家Ken Krogue的一篇文章（<a href="http://tech.qq.com/a/20120724/000134.htm" target="_blank">中文</a>）称，传统的搜索引擎优化（SEO）时代已经过去，社交媒体的时代将会取代SEO行业。而且他预测SEO产业将于今后两年内消亡。两年过去了，SEO产业发生了什么变化？</p>
+<h2 id="SEO转向内容营销"><a href="#SEO转向内容营销" class="headerlink" title="SEO转向内容营销"></a>SEO转向内容营销</h2><p>随着Google算法（<a href="http://baike.baidu.com/view/6359984.htm" target="_blank">熊猫算法</a>，<a href="http://baike.baidu.com/view/8486132.htm" target="_blank">企鹅算法</a>）的改变，一些所谓的SEO技巧已经彻底过时。很多的SEO从业者转向了内容营销（Content Marketing）。其实这才是SEO最初的本质——为用户提供高质量的内容，而不是为搜索引擎提供垃圾信息。</p>
+<h2 id="SEO与社交媒体结合"><a href="#SEO与社交媒体结合" class="headerlink" title="SEO与社交媒体结合"></a>SEO与社交媒体结合</h2><p>对于Krogue所说的社交媒体取代SEO行业的看法，我个人不是完全同意。SEO与社交媒体结合有可能会是未来SEO行业的一个趋势。在2014年1月，Matt Cuttz回答了一个关于社交媒体信号是否会影响页面的排名（视频字幕正在翻译，将在近期发布在咕嘟博客）的问题。Matt虽然没有明确指出Google会使用社交媒体信号计算页面排名。但是他也提到，社交媒体信号可能会在未来成为影响页面排名的因素。</p>
+<h2 id="SEO从业者现状"><a href="#SEO从业者现状" class="headerlink" title="SEO从业者现状"></a>SEO从业者现状</h2><p>美国很多公司已经不再单一的去招聘一名SEO专员去处理公司的SEO业务。就目前我看到的现状而言，公司更多招聘的是具有SEO技能的市场营销人员。</p>
+<center><br><img src="http://mingju.net/uploads/images/SEO-Jobs-Trend.jpg" alt=""><br></center>
+
+<p>上图是美国知名招聘网站<a href="http://www.indeed.com/jobanalytics/jobtrends?q=seo&amp;l=" target="_blank">Indeed</a>上与SEO相关的职位需求走势图。从2012年到2014年，SEO职位需求不断减少。</p>
+<h2 id="SEO不会死"><a href="#SEO不会死" class="headerlink" title="SEO不会死"></a>SEO不会死</h2><p>为什么说SEO不会死？因为搜索引擎需要你的内容，所以它需要给你一定的刺激（如，好的排名-&gt;利益）让你不断的贡献优质的内容，这才是搜索引擎存在的本质与意义。如果有一天，你从搜索引擎的搜索结果中得到的到处是广告信息，相信这个搜索引擎离倒闭不远了。</p>
+<p>#结语#</p>
+<p>SEO职位市场的消极形势，给SEO从业人员敲响了警钟。虽说SEO不会死，但是从今天开始就要转变传统SEO思想！</p>
+<p><strong>SEO+内容+社交媒体 = SEOer Rock !!!</strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在2012年7月20日，美国财经杂志《福布斯》刊登了营销专家Ken Krogue的一篇文章（&lt;a href=&quot;http://tech.qq.com/a/20120724/000134.htm&quot; target=&quot;_blank&quot;&gt;中文&lt;/a&gt;）称，传统的搜索引擎优化（SEO）时
+    
+    </summary>
+    
+      <category term="抛砖引玉" scheme="http://mingju.net/categories/%E6%8A%9B%E7%A0%96%E5%BC%95%E7%8E%89/"/>
+    
+    
+      <category term="SEO" scheme="http://mingju.net/tags/SEO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>产品价格制定策略与技巧分享</title>
+    <link href="http://mingju.net/2014/03/pricing-strategy-and-technique/"/>
+    <id>http://mingju.net/2014/03/pricing-strategy-and-technique/</id>
+    <published>2014-03-11T04:08:09.000Z</published>
+    <updated>2020-04-29T06:21:33.224Z</updated>
+    
+    <content type="html"><![CDATA[<p>不知道大家对产品的价格制定了解多少。下面是我最近从Pros公司听到的一个关于产品价格制定的一个小技巧。这里值得注意的是，这个技巧只是提供了一个价格制定的思想。并不是所有情况都适用。</p>
+<p>在下图中，横轴是消费者愿意购买一件产品的价格，纵轴是消费者人数。我们可以看出大多数的消费者愿意为这件产品付出$1.9美元。那么是不是意味着我们就要把这件产品的价格定在$1.9美元呢？</p>
+<p><img src="http://mingju.net/uploads/images/Pricing1.jpg" alt=""></p>
+<p>根据Pros的Matt介绍说，根据他多年的价格制定经验，可以把价格稍微提高一些，比如制定在$2.1美元。这样的制定策略可以获得更多的利益。</p>
+<p><img src="http://mingju.net/uploads/images/Pricing2.jpg" alt=""></p>
+<p>Matt还介绍到，适当的提高一点价格短期内可能会造成客户损失的现象，然而当消费者逐渐适应$2.1美元这个价格时，消费者损失的这种现象就会消失了。但是，不可以把价格定的太高，比如$2.9美金。</p>
+<p>当然，这只是价格制定中的一个小技巧，在使用的时候一定要小心。因为价格的制定受到很多因素的影响，比如经济状况，市场需求，市场供应等等。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;不知道大家对产品的价格制定了解多少。下面是我最近从Pros公司听到的一个关于产品价格制定的一个小技巧。这里值得注意的是，这个技巧只是提供了一个价格制定的思想。并不是所有情况都适用。&lt;/p&gt;
+&lt;p&gt;在下图中，横轴是消费者愿意购买一件产品的价格，纵轴是消费者人数。我们可以看出大
+    
+    </summary>
+    
+      <category term="市场研究" scheme="http://mingju.net/categories/%E5%B8%82%E5%9C%BA%E7%A0%94%E7%A9%B6/"/>
+    
+    
+  </entry>
+  
+</feed>

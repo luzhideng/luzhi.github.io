@@ -1,0 +1,978 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="机器学习," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Lüzhi's Notebook" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="这一章介绍的是线性回归，是监督学习中最简单的一个模型。通常来讲，线性回归模型一般用于预测属量反应（quantitative response）的问题。线性回归在统计分析当中已经存在了很长的一段时间，虽然跟一些更现代的统计模型相比来说可能会看起来没有那么华丽，但是线性回归方法还是一种非常有效以及应用广泛的统计模型。并且在接下来将要学习到的那些更为华丽的模型当中很多都是又线性回归模型衍生出来的。所以学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ch3 线性回归分析（建立模型）">
+<meta property="og:url" content="http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/index.html">
+<meta property="og:site_name" content="Lüzhi's Notebook">
+<meta property="og:description" content="这一章介绍的是线性回归，是监督学习中最简单的一个模型。通常来讲，线性回归模型一般用于预测属量反应（quantitative response）的问题。线性回归在统计分析当中已经存在了很长的一段时间，虽然跟一些更现代的统计模型相比来说可能会看起来没有那么华丽，但是线性回归方法还是一种非常有效以及应用广泛的统计模型。并且在接下来将要学习到的那些更为华丽的模型当中很多都是又线性回归模型衍生出来的。所以学">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.1.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.3.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/ch3.2.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.4.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.5.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.6.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.7.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/Ch3.8.png">
+<meta property="og:updated_time" content="2020-05-02T00:19:03.529Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ch3 线性回归分析（建立模型）">
+<meta name="twitter:description" content="这一章介绍的是线性回归，是监督学习中最简单的一个模型。通常来讲，线性回归模型一般用于预测属量反应（quantitative response）的问题。线性回归在统计分析当中已经存在了很长的一段时间，虽然跟一些更现代的统计模型相比来说可能会看起来没有那么华丽，但是线性回归方法还是一种非常有效以及应用广泛的统计模型。并且在接下来将要学习到的那些更为华丽的模型当中很多都是又线性回归模型衍生出来的。所以学">
+<meta name="twitter:image" content="http://mingju.net/uploads/images/Ch3.1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/"/>
+
+
+
+
+
+  <title> Ch3 线性回归分析（建立模型） | Lüzhi's Notebook </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lüzhi's Notebook</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Harnessing Data to Drive Marketing</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://mingju.net/2016/04/ch3-linear-regression-part1-modeling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lüzhi Deng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lüzhi's Notebook">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Ch3 线性回归分析（建立模型）
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-21T02:30:19+08:00">
+                2016-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/定量学/" itemprop="url" rel="index">
+                    <span itemprop="name">定量学</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这一章介绍的是线性回归，是监督学习中最简单的一个模型。通常来讲，线性回归模型一般用于预测属量反应（quantitative response）的问题。线性回归在统计分析当中已经存在了很长的一段时间，虽然跟一些更现代的统计模型相比来说可能会看起来没有那么华丽，但是线性回归方法还是一种非常有效以及应用广泛的统计模型。并且在接下来将要学习到的那些更为华丽的模型当中很多都是又线性回归模型衍生出来的。所以学习并理解线性回归模型非常重要。本章在原著上大概有60多页的内容，对于没有扎实统计背景的人读起来可能有点枯燥。所以，我打算用一个实例来演示如何做线性回归分析，并且把其中会遇到的问题解释加以总结，同时给出解决这些问题的方法。这里需要声明的是，本章主要专注于线性回归分析，对于模型内的验证分析将在接下来的内容中详细讲述。本实例中使用的数据为经典的“Boston”数据。</p>
+<p>在我们进行数据分析之前，首先要了解4个主要问题：</p>
+<ol>
+<li><strong>响应值与变量之间的关系</strong>：数据组的变量中（X1, X2, …,Xp）是否存在至少一个是可以用来去预测响应值（Y）的？</li>
+<li><strong>选取重要变量</strong>：是所有的变量都可以用于取解释响应值（Y）？还是只有其中的某个或某几个变量可以用来解释响应值。</li>
+<li><strong>模型拟合</strong>：模型拟合数据的拟合程度有多好？</li>
+<li><strong>模型预测</strong>：当我们拥有新的变量值时，模型对预测的准确性如何？</li>
+</ol>
+<p>数据背景：该数据是Harrison和Rubinfeld在1978年为了研究空气质量对波士顿郊区房价的影响。研究结果被发表在Harrison, D. and Rubinfeld, D.L. ‘Hedonic prices and the demand for clean air’, J. Environ. Economics &amp; Management, vol.5, 81-102, 1978. 有兴趣的朋友可以研究一下。该数据组一共包含了506条值和14条变量。变量和解释：</p>
+<ol>
+<li>crim－该地区的人均犯罪率</li>
+<li>zn－该地区居民区面积超过25,000平方英尺的比率</li>
+<li>indus－该地区未被商业化面积的比率</li>
+<li>chas－该地区房屋是否靠近查尔斯河（1为靠近，0为不靠近）</li>
+<li>nox－一该地区氧化氮浓度</li>
+<li>rm－该地区房屋内平均房间数量</li>
+<li>age－该地区房屋在1940年建成的比率</li>
+<li>dis－该地区距离波士顿5个工作园区的平均距离（权重数据）</li>
+<li>rad－该地区距离高数公路的指数</li>
+<li>tax－ 该地区财产税税率（单位：每$10,000美金）</li>
+<li>ptratio－该地区师生比例（学生/教师，越高证明每位学生享有的教师资源越少，越低说明每位学生享有的教师资源越多）</li>
+<li>black－该地区非裔美国人比率（计算公式：1000*(BK－0.63)^2，这里可以忽略该公式，该变量表示了非裔美国人在该社区的比率）</li>
+<li>lstat－该地区底层人群的百分比</li>
+<li>medv－该地区房屋价值中位数（单位：$1,000）</li>
+</ol>
+<h1 id="问题1：响应值与变量之间的关系"><a href="#问题1：响应值与变量之间的关系" class="headerlink" title="问题1：响应值与变量之间的关系"></a>问题1：响应值与变量之间的关系</h1><h2 id="第一步，分析目的"><a href="#第一步，分析目的" class="headerlink" title="第一步，分析目的"></a>第一步，分析目的</h2><p>在做具体的分析之前，我们首先要了解我们此次分析的目的是什么？是推理，预测还是两者都有。显然，我们这次的分析目的是想知道是什么因素影响了房屋的价值（medv），同时我们也希望通过建立模型达到预测房屋价值的目的。所以此次分析目的为推理和预测两者都有。</p>
+<h2 id="第二步，数据直觉"><a href="#第二步，数据直觉" class="headerlink" title="第二步，数据直觉"></a>第二步，数据直觉</h2><p>当一位有经验的数据分析师拿到数据并且浏览数据之后，会有一个直觉从而对数据进行初步的判断。当我们拿到Boston数据之后，浏览完每一个变量之后，我们直觉基本就会告诉我们每个变量可能会对响应值产生什么影响。例如，变量crim，该地区的人均犯罪率，我们的直觉告诉我们犯罪率越高的地区可能房屋的价值就会越低，那么到底是不是这样呢？我们还需要进行下一步更详细的分析。初级的数据分析师刚开始可能由于不熟悉数据变量或者不熟悉公司业务，拿到数据之后没有一点头绪，这时并不需要担心。当你对一个行业领域或者一个消费群体了解越来越深入的时候，这种数据直觉就慢慢的建立起来了。</p>
+<h2 id="第三步，浏览数据"><a href="#第三步，浏览数据" class="headerlink" title="第三步，浏览数据"></a>第三步，浏览数据</h2><p>首先我们需要导入数据。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df &lt;- read.csv(<span class="string">"Boston.csv"</span>, header = <span class="literal">TRUE</span>)</div></pre></td></tr></table></figure>
+<p>接下来用str()方法浏览数据的结构</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">str(df)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.1.png" alt=""></p>
+<p>通过浏览数据结构我们可以看到该数据组有506条数据和14个变量。</p>
+<p>然后用summary()总结数据</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">summary(df)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.3.png" alt=""></p>
+<p>我个人强烈建议大家在进行任何数据分析之前，一定要进行这两个步骤，这样可以让你对数据有一个初步的理解。如果这里想要像在Excel里面那样浏览数据可以使用一个方法</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fix(df)</div></pre></td></tr></table></figure>
+<p>这个方法可以打开一个像spreadsheet一样的表格，当浏览结束之后记得把该窗口关掉，否则以下命令将不能继续执行。</p>
+<p>接下来我们就要看每个变量与响应值的关系了。这时我们可以通过相关性矩阵图（correlation matrix）来浏览不同变量与相应值的关系。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plot(df, pch = <span class="string">"."</span>, col = <span class="string">"blue"</span>)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/ch3.2.png" alt=""></p>
+<p>当然除了使用最直观的相关性矩阵图来观察相关性，我们还可以使用cor()来了解变量之间的具体相关值</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cor(df)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.4.png" alt=""></p>
+<p>当我们对数据进行了基本的分析之后，可以发现房屋价值（medv）跟房间数量（rm）还有底层人群的百分比（lstat）具有最强的相关性。相关指数分别为0.695和－0.738. 同时我们从相关性矩阵图中可以看出底层人群的百分比（lstat）与房屋价值（medv）之间虽然存在较强的负相关性，但是他们的关系并不是线性（liner）的。这里我们就遇到了处理线性回归的第一个常见问题－变量与响应值之间的非线性（non-linearity）关系。我们还发现某些变量之间也具有较强的相关性。比如非零售商业化面积的比率（indus）与一氧化氮浓度（nox）的相关性为0.764，非零售商业化面积的比率（indus）与财产税税率（tax）的相关性为0.721.另外距离高数公路的指数（rad）和财产税税率（tax）的相关性为0.91. 这里如果我们把这些具有相关性较强的变量同时放在模型中的时候就有可能会遇到我们处理线性回归分析的第二个常见问题－共线性（Collinearity）。在该总结的第二部分模型改善中，我会详细的介绍如何通过解决这两个常见问题以及另外其他的四个常见问题（异方差性，离群值，高杠杆率点和误差项相关）来改善模型。</p>
+<h2 id="第四步，观察响应值分布"><a href="#第四步，观察响应值分布" class="headerlink" title="第四步，观察响应值分布"></a>第四步，观察响应值分布</h2><p>理论上，当我们要进行线性回归分析时，我们希望响应值（Y）是成正态分布（Normal Distribution）。但是在处理实际生活中的案例时，很少会出现响应值是正态分布的情况。最直观去观察响应值的分布就是使用直方图（histogram）。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hist(df$medv)</div></pre></td></tr></table></figure>
+<p><img src="http://mingju.net/uploads/images/Ch3.5.png" alt=""></p>
+<p>从对房屋价值（medv）的直方图中，我们可以看出数据称右偏态分布（right skewed distribution）通常我们处理右偏态分布的方法是使用对数转换法（log transformation）。如果数据称左偏态分布（left skewed）的话，通常的处理方法为平方转换法（squaring）。在这里我们首先不对任何数据进行转换，直接建立模型，然后在接下来的分析中我会介绍如何通过转换数据来改善模型。</p>
+<h2 id="第五步，建立初步模型lm-fit"><a href="#第五步，建立初步模型lm-fit" class="headerlink" title="第五步，建立初步模型lm.fit"></a>第五步，建立初步模型lm.fit</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit &lt;- lm(medv ~., data = Boston)</div><div class="line">summary(lm.fit)</div></pre></td></tr></table></figure>
+<p>我们通过lm()方法拟合了一个多变量线性模型，其中“medv ~.”这个语法表示把所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
+<p><img src="http://mingju.net/uploads/images/Ch3.6.png" alt=""></p>
+<p>通常我们在建立线性回归模型之后，首先需要检查的是F值。通常情况下，如果F值大于1的话我们就基本有证据去否定零假设（null hypothesis, H0），也就是可以说明模型中至少一个变量（X）与响应值（Y）相关。如果没有任何变量与响应值有关系的话，我们一般期望F值接近于1。在上述例子中我们可以看到F值（F-statistic）为108.1，因为F值比1大很多，所以这里我们可以否定零假设H0. 那么如果F值如果只大于1一点，我们应该如何判断呢？这里请遵循以下两个基本原则：</p>
+<ol>
+<li>如果数据组中的样本（n）很大，即使F值稍微大于1一点，也为我们提供了去否定零假设H0的证据。</li>
+<li>如果数据组中的样本（n）很小，通常我们需要相对较大的F值来否定零假设H0.</li>
+</ol>
+<p>接下来我们需要检查的是与F值相关的p值（p-value），上述例子的p值为2.2e-16，是一个无限接近0的值，所以我们有很强的证据来证明至少有一个变量（X）是与响应值（Y）相关的。我们还注意到在上述例子中，每一个变量都会有一个对应的p值，这些变量的p值表示了每一个单独变量与响应值（Y）的关系。其中我们在每个单独变量对应的p值后面会看到“*”符号，这个符号表示了在某个显著水平（significance level）该变量是否与响应值相关。其中显著值水平在“Signif.codes”一栏有解释。这里我们看到了很多个变量的p值都很小，只有变量indus和age具有较大的p值。那么我们可以确定模型中存在单独的变量具有较小的p值，至少其中一个变量与响应值相关吗？其实这个结论是有问题的。这也就是为什么我建议大家首先验证F值的原因。因为当变量的个数相对较大的时候，我们遇到具有较小p值的变量的机会就会大大降低。也就是说当变量个数很大的时候，我们总会一不小心就会看到某几个（至少1个）变量的p值是较小的，那么这个时候我们说，这个变量肯定与响应值相关，我们的结论存在问题的可能性就相当大了。但是F值不会被这个问题所影响，因为F值会根据变量的数量作出自动调整。当然，这里需要注意的是，通过F值去验证变量与响应值之间是否存在相关性的方法只有在变量的数量相对样本来讲比较小的情况，有时候我们会遇到变量的数量远远大于样本的数量，当遇到这种情况的时候我们就没有办法继续使用F值取兖州变量与响应值之间的关系了。所以当这种情况出现的时候，我们需要使用其他办法来，比如说向前逐步回归（forward selection）来选择重要的变量来拟合模型。这种多维数据（high-dimensional）的问题我将在接下来的文章中做详细的解释。</p>
+<h1 id="问题2：选取重要变量"><a href="#问题2：选取重要变量" class="headerlink" title="问题2：选取重要变量"></a>问题2：选取重要变量</h1><p>在解决了问题1之后，我们需要观察的是哪些变量影响了响应值（Y）。通常，最简单的办法就似乎看每一个变量的p值。当然我们在问题1中也解释了这种方法在变量个数比较大时存在的危险性，所以一定记得检验F值。我们在进行对变量的p值观察之后，发现变量indus和age具有较大的p值，最简单的处理办法就是把这两个变量从模型中移除。然后把剩下统计显著的变量放入再次建立一个新的模型lm.fit2.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">lm.fit2 &lt;- lm(medv ~.-age-indus, data = df)</div><div class="line">summary(lm.fit2)</div></pre></td></tr></table></figure>
+<p>其中“medv ~.-age-indus”这个语法表示把除了age和indus之外的所有变量（X）放入与响应值（Y，这里Y=medv）的模型中。我们用summary()得到以下结果。</p>
+<p><img src="http://mingju.net/uploads/images/Ch3.7.png" alt=""></p>
+<p>选择重要变量的方法有很多，我们这里采取的是一种最普通的处理方法。当我们拥有更多数量的变量供我们选择的时候，这种简单的方法就不适用了。通常当我们遇到大量变量时，我们会使用向前逐步回归（forward selection），向后逐步回归（backward selection）或者合并（mixed selection）这两种方法。这里我们只对这三种方法进行简单的介绍，在接下来的文章中我会对这三种方法的使用做详细的解释。</p>
+<p><strong>向前逐步回归：</strong>开始于一个只有截距（intercept）没有任何变量的空模型（null model），然后向模型中不断的加入变量，然后看哪些变量可以带来最低的残差平方和（RSS）。</p>
+<p><strong>向后逐步回归：</strong>把所有变量放入模型中，然后逐步移除p值比较大的变量。（我们上面运用的方法就是简化版的向后逐步法。</p>
+<p><strong>混合法：</strong>结合了向前逐步和向后逐步两种方法。开始使用空模型（向前逐步），然后逐渐向模型里一个接一个的加入变量。如果发现加入的变量的p值比较大，就移除该变量（向后逐步）。然后不断重复向前逐步，向后逐步直到模型里的变量都有较低的p值，模型外的变量都有较高的p值。<br>向后逐步法在变量数量大于样本数量的时候不能够被使用，但是向前逐步法始终可以使用。但是向前逐步法是一种比较贪婪的方法，它可能存在先前加入模型的变量在逐步法进行的过程中模型添加了其他的变量之后，这些先前在模型中的变量就变得冗余了。混合法可以解决向前逐步法的这一不足。</p>
+<h1 id="问题3：模型拟合"><a href="#问题3：模型拟合" class="headerlink" title="问题3：模型拟合"></a>问题3：模型拟合</h1><p>检验模型拟合的质量一般使用标准化残差（Residual Standard Error or RSE）或者R2去判断。标准化残差是标准差（Standard Deviation）的估值，其实就是响应值相对于真实回归方程的平均离散值。标准化残差用来检验一个模型是否缺乏拟合程度。使用标准化残差的判断模型拟合质量的一般规则是，小的标准化残差代表数据拟合模型程度质量较高，大的标准化残差代表数据拟合模型质量较低。在上图中我们可以看到我们的模型lm.fit2的标准化残差residual standard error为4.736.  这个值告诉我们，在Boston真正的房屋价值与回归方程线的平均离散值约为$4,736. 换句话说就是，即使模型是正确的，但是由于误差我们通过变量预测的Boston的房价依旧会有平均$4,736的误差。在Boston数据组当中，我们可以通过mean(df$medv)算出房屋价值的平均值为22.53281（单位：$1,000），所以误差的百分比约等于21%（4.736/22.53281*100）。这个误差是否能够被接受完全取决于你的分析目的。</p>
+<p>标准化残差提供了一个检验样本数据与模型拟合质量的硬性检测法。但是该方法用于检测响应值Y的偏差，所以通常不太容易决定什么是一个好的标准化残差，什么是一个差的标准化残差。R2提供了另外一种检验模型拟合质量的方法。R2是一个0到1的比率，它的值代表了Y被X的方差的解释能力。如果R2接近1的话说明一大部分的响应值方差被回归方程所解释。如果R2接近0的话说明了回归方程没有很好的解释模型的响应值方差。一般来讲，我们希望得到接近于1的R2值，因为R2越高也就越说明了数据拟合模型的程度越好。但是在实际应用中，由于误差或者数据与模型（例如，数据不是线性却使用了线性模型去拟合数据）不匹配造成R2接近0的情况比比皆是。所以说多大的R2是一个可以接受的R2很难讲，还是取决于你的研究课题。比如，如果你研究的科目是自然科学，可能你需要一个非常接近于1的R2，但是如果你研究的科目是社会科学，由于外在的其他影响因素太多，一个线性模型可能根本无法解释所有的因素带来的影响，所以R2等于0.1的情况在实际应用中也是很常见的情况。</p>
+<p>在我们的Boston模型的分析结果中，我们可以看到两个R2分别为：Multiple R-squared: 0.7406，和Adjusted R-squared: 0.7348. 通常情况下我们一般会使用Adjusted R-squared 的值，因为随着模型中变量个数的增加，Multiple R-squared无论加入模型的变量是否可以解释响应值Y，都会随着变变量个数的增长而增长。而Adjusted R-squared却不会存在这个问题。另外还有一点就是Adjusted R-squared永远会比Multiple R-squared小。Boston模型lm.fit2中的Adjusted R-squared: 0.7348. 这个数字代表了lm.fit2这个回归模型中的变量可以解释73.48%的响应值Y. 所以我们总结模型lm.fit2的表现还是很不错的。</p>
+<h1 id="问题4：模型预测"><a href="#问题4：模型预测" class="headerlink" title="问题4：模型预测"></a>问题4：模型预测</h1><p>当我们用样本数据建立好了模型之后。当我们有变量X1，X2，…，Xp的值得时候，我们就可以使用模型去预测响应值Y。但是这里有大致三种不确定性与预测有关。</p>
+<p>模型的系数（coefficient）是估值（estimate），因为我们在Ch2.1.2 为什么要建立ƒ与如何建立ƒ，中知道数据拟合模型（least squares）为ˆY = ˆ?0+ˆ?1X1+ˆ?2X2+…+ˆ?pXp. 而真正的模型（true population regression）应该为ƒ(X) = ?0+?1X1+?2X2+…+?pXp. 所以Y是约等于 ?0+?1X1+?2X2+…+?pXp的。我们还在Ch2.1.2. 还学习到了由于估值系数产生的误差是与可降误差（reducible error）相关的。因此我们可以在这里去计算可靠区间（confidence interval）去检测ˆY和ƒ(X) 之间到底有多么接近。<br>当然当我们假设线性模型符合我们的样本数据的时候，这里也会可能产生其他的可降误差，一般我们称这种误差为模型偏差（model bias）。在Ch2.2.2 方差与偏差之间的权衡有提到过。<br>通常情况下，我们不可能知道真正的ƒ(X) 。就算我们知道，那么模型还是无法完美的去做出预测，因为我们知道模型里还存在着随机的不可降误差ε. 那么Y与ˆY到底有多接近呢？我们一般可以使用计算预测区间（prediction interval）的方法去检测。<br>这里值得注意的是，预测区间永远大于可靠区间。因为预测区间包含了两种误差。</p>
+<p>在我们的Boston例子中，如何进行可靠区间的计算呢？如果我们想要获得估值系数（coefficient estimates）的可靠区间，可以使用：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">confint(lm.fit2)</div></pre></td></tr></table></figure>
+<p>得到了以下的结果：</p>
+<p><img src="http://mingju.net/uploads/images/Ch3.8.png" alt=""></p>
+<p>这个结果告诉了我们每一个变量系数的可靠区间。比如变量rm的95%的可靠区间为[3.003258393, 4.59989929]. 换言之，这个可靠区间[3.003258393, 4.59989929], 包含了95%的该变量所预估的实际值。这时，我们可能更感兴趣的是观察模型预测之后的区间范围。我们可以使用：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">predict(lm.fit2, interval = <span class="string">"confidence"</span>)</div><div class="line">predict(lm.fit2, interval = <span class="string">"prediction"</span>)</div></pre></td></tr></table></figure>
+<p>来计算整个样本数据的可靠区间和预测区间。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/ch-2-summary/" rel="next" title="Ch2 总结">
+                <i class="fa fa-chevron-left"></i> Ch2 总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/ch3-linear-regression-part2-model-improvement/" rel="prev" title="Ch3 线性回归分析（改善模型）">
+                Ch3 线性回归分析（改善模型） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Lüzhi Deng" />
+          <p class="site-author-name" itemprop="name">Lüzhi Deng</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/luzhideng/" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  Linkedin
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/luzhideng" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#问题1：响应值与变量之间的关系"><span class="nav-text">问题1：响应值与变量之间的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一步，分析目的"><span class="nav-text">第一步，分析目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二步，数据直觉"><span class="nav-text">第二步，数据直觉</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三步，浏览数据"><span class="nav-text">第三步，浏览数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四步，观察响应值分布"><span class="nav-text">第四步，观察响应值分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五步，建立初步模型lm-fit"><span class="nav-text">第五步，建立初步模型lm.fit</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题2：选取重要变量"><span class="nav-text">问题2：选取重要变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题3：模型拟合"><span class="nav-text">问题3：模型拟合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题4：模型预测"><span class="nav-text">问题4：模型预测</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-git"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lüzhi Deng</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

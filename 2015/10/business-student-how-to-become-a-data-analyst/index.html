@@ -1,0 +1,895 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Lüzhi's Notebook" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="很多学习商科的同学对数据分析很有兴趣，想把数据分析师或者数据学家当作自己的职业目标，但是又担心自己不会使用一些市面上常见的数据分析软件或者担心自己没有系统的统计学背景，编程背景等等。那么学习商科学生到底可以成为数据分析师吗？答案是肯定的。接下来我会分享作为商科背景的我是怎样成为一名数据分析师的。希望可以给有商科背景并且想成为数据分析师的朋友一些建议。
+储备定量学（quantitative）知识作为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="商科学生如何成为数据分析师">
+<meta property="og:url" content="http://mingju.net/2015/10/business-student-how-to-become-a-data-analyst/index.html">
+<meta property="og:site_name" content="Lüzhi's Notebook">
+<meta property="og:description" content="很多学习商科的同学对数据分析很有兴趣，想把数据分析师或者数据学家当作自己的职业目标，但是又担心自己不会使用一些市面上常见的数据分析软件或者担心自己没有系统的统计学背景，编程背景等等。那么学习商科学生到底可以成为数据分析师吗？答案是肯定的。接下来我会分享作为商科背景的我是怎样成为一名数据分析师的。希望可以给有商科背景并且想成为数据分析师的朋友一些建议。
+储备定量学（quantitative）知识作为">
+<meta property="og:updated_time" content="2017-03-24T08:54:24.623Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="商科学生如何成为数据分析师">
+<meta name="twitter:description" content="很多学习商科的同学对数据分析很有兴趣，想把数据分析师或者数据学家当作自己的职业目标，但是又担心自己不会使用一些市面上常见的数据分析软件或者担心自己没有系统的统计学背景，编程背景等等。那么学习商科学生到底可以成为数据分析师吗？答案是肯定的。接下来我会分享作为商科背景的我是怎样成为一名数据分析师的。希望可以给有商科背景并且想成为数据分析师的朋友一些建议。
+储备定量学（quantitative）知识作为">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mingju.net/2015/10/business-student-how-to-become-a-data-analyst/"/>
+
+
+
+
+
+  <title> 商科学生如何成为数据分析师 | Lüzhi's Notebook </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lüzhi's Notebook</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Harnessing Data to Drive Marketing</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://mingju.net/2015/10/business-student-how-to-become-a-data-analyst/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lüzhi Deng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lüzhi's Notebook">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                商科学生如何成为数据分析师
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-10-18T05:32:16+08:00">
+                2015-10-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/抛砖引玉/" itemprop="url" rel="index">
+                    <span itemprop="name">抛砖引玉</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>很多学习商科的同学对数据分析很有兴趣，想把数据分析师或者数据学家当作自己的职业目标，但是又担心自己不会使用一些市面上常见的数据分析软件或者担心自己没有系统的统计学背景，编程背景等等。那么学习商科学生到底可以成为数据分析师吗？答案是肯定的。接下来我会分享作为商科背景的我是怎样成为一名数据分析师的。希望可以给有商科背景并且想成为数据分析师的朋友一些建议。</p>
+<h2 id="储备定量学（quantitative）知识"><a href="#储备定量学（quantitative）知识" class="headerlink" title="储备定量学（quantitative）知识"></a>储备定量学（quantitative）知识</h2><p>作为一名商学背景的学生，首先你要明白自己的优势和不足分别是什么。拿我本人举一个例子，我的商科专业是市场学。由于在本科期间接触到的关于定量学的知识很少。四年也就修了两门数学课和两门基础统计课。这对于成为一名数据分析师其实是远远不够的。所以在我工作期间，拿到一组数据之后往往变得手足无措。这时候就要花大量的时间去查资料。这时，缺乏定量学的劣势就是暴露无遗，不单单浪费了很多时间影响了工作效率，由于知识储备不够也可能照成更多的错误。所以我建议大家，如果你还是在读生，请多花一些时间在你有限的定量学课程上，如果条件允许尽量可以选修几门统计学科的课程。比如，方差分析，回归分析，逻辑回归分析等课程。当然，现在网络上也有成千上万的关于这些知识的资料。总之，在你毕业之前尽量储备定量学的知识。这对于你成为一名数据分析师和未来的数据科学家非常非常重要。你可能已经被我所说的这个不足吓到，但是不要担心，只要意识到了这个不足什么开始弥补都不晚。说完了劣势，来讲一下你的优势吧。作为有商科背景的你有着专业为统计学或者计算机科学不可比拟的优势（找回一些自信？）。其实现在在一些大的公司里，数据分析团队通常包括三种背景的人。第一商科背景的人，第二计算机背景的人，第三统计学背景的人。所以作为具有商科背景的你是团队缺一不可的人物。但是如果你“不幸”落入一下中小型公司的话，那么可能你就需要成为一个三合一体的“超级赛亚人”了。但是现实就是这么残酷。其实这种情况可以适用到各个职位和行业。但是，如果你具有扎实的商学背景的话，在做出数据分析之后提供商业策略意见的功能还是不容忽视的。不要忘记了数据分析的意义是什么？解决问题。更多的时候是解决商业方面的问题。你的商学背景为你带来的附加技能是那些学计算机科学和统计学的同学不具备的。</p>
+<h2 id="掌握一种或多种数据分析软件"><a href="#掌握一种或多种数据分析软件" class="headerlink" title="掌握一种或多种数据分析软件"></a>掌握一种或多种数据分析软件</h2><p>做数据分析必然需要使用到软件。学会熟练的使用一种或者多种软件会让你在未来职场变得更加具有竞争力。另外，如果你现在就已经非常熟悉你现在使用的这一款软件，那么不妨去试着学习一下其他的数据分析工具来扩充你的数据分析工具箱。比如我自己，最开始是使用Excel以及Excel的各种插件。不要小看Excel，之所以可以长久不衰也是有它的原因的。之后，在我可以熟练的使用Excel之后，我又接触了<a href="http://baike.baidu.com/link?url=iVEkoGMq5siDvOE2SaW6qH_69kVaYHPmYnIyt5gT5roE2vOAIouCwcgO32BOLj0O9SAc8U0iMcCsHcOvFw539_" target="_blank">Stata</a>, <a href="http://baike.baidu.com/link?url=sjJNQPckY5XDnAPi_o4CCD8WJYHlHlNk8cvX6pq6W8nw2jL7Y1QiTeqgcQmvvqdw0jIXvN7Sf6KZmPPMXJxQna" target="_blank">SPSS</a>，以及现在又开始学习<a href="http://baike.baidu.com/link?url=I2NLFHvb0cfz9GJUF7Rez1U2i6xJpz9DEOvYOB2Kk5IZk1Jgtg9Hymx96sYfSDlfZi2HFvpEua027pwj1qQWcK" target="_blank">R语言</a>。在你还在学校的时候就去训练自己使用这些常用的数据分析软件。因为学习任何一种新的工具都是需要大量的时间的。跟投资理财一样，越早开始收益越大。试想，当别人毕业之后一脸茫然的去学习如何下载Excel的时候，你已经可以享受去用Excel算出1+1等于2的快感。</p>
+<h2 id="一些常见问题"><a href="#一些常见问题" class="headerlink" title="一些常见问题"></a>一些常见问题</h2><p>Q：没有商科背景，没有统计学背景，没有计算机背景，能不能成为数据分析师？</p>
+<p>A：只要肯努力。当然，你在这三个领域储备的知识越多就离你成为数据分析师的目标越近。</p>
+<p>Q：不会编程能不能成为数据分析师？</p>
+<p>A：很多数据分析师都不会编程，现在市面上的很多数据分析软件也都不需要你具备写代码的技能。但是想成为数据分析师，统计定量学知识必不可少。</p>
+<p>Q：如何开始学习成为一名数据分析师？</p>
+<p>A：多读书。一般学习一项新技能的开始就是买本书照着学习。当然现在网络发达时代，你也可以在网上找到很多的学习资料。最重要的是坚持学习与练习。</p>
+<p>以上是我在学习以及工作的过程中遇到的问题和对我个人经验的总结。希望对想成为数据分析师的你带来一些帮助，让你少走一些弯路。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/08/seo-will-never-die/" rel="next" title="SEO不会死">
+                <i class="fa fa-chevron-left"></i> SEO不会死
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/free-data-science-learning-resources/" rel="prev" title="数据科学免费学习资源">
+                数据科学免费学习资源 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Lüzhi Deng" />
+          <p class="site-author-name" itemprop="name">Lüzhi Deng</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/luzhideng/" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  Linkedin
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/luzhideng" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#储备定量学（quantitative）知识"><span class="nav-text">储备定量学（quantitative）知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#掌握一种或多种数据分析软件"><span class="nav-text">掌握一种或多种数据分析软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些常见问题"><span class="nav-text">一些常见问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-git"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lüzhi Deng</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
