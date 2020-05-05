@@ -34,7 +34,7 @@
     
     <entry>
       <title><![CDATA[Pandas数据操作基础]]></title>
-      <url>http://mingju.net/2020/04/data-manipulation-with-pandas/</url>
+      <url>http://mingju.net/2020/05/data-manipulation-with-pandas/</url>
       <content type="html"><![CDATA[<p>这篇笔记总结一些在学习在使用Padans操作数据的一些基础知识及令人困惑的语法。</p>
 <h1 id="DataFrame索引"><a href="#DataFrame索引" class="headerlink" title="DataFrame索引"></a>DataFrame索引</h1><p>选取Python中DataFrame中元素的值一般分为三种方法：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: <span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line">In [<span class="number">2</span>]: df = pd.read_csv(<span class="string">'sales.csv'</span>, index_col=<span class="string">'month'</span>)</div><div class="line">In [<span class="number">3</span>]: df</div><div class="line">Out[<span class="number">3</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |</div></pre></td></tr></table></figure>
@@ -970,9 +970,9 @@ library (&quot;xlsx&quot;)
         
         <tags>
             
-            <tag> Ted </tag>
-            
             <tag> 消费者行为学 </tag>
+            
+            <tag> Ted </tag>
             
         </tags>
         
