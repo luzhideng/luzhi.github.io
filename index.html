@@ -284,7 +284,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mingju.net/2020/04/Pandas-foundation-notes/">
+    <link itemprop="mainEntityOfPage" href="http://mingju.net/2020/05/merging-dataframes-with-pandas/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lüzhi Deng">
@@ -306,8 +306,156 @@
             
               
                 
-                <a class="post-title-link" href="/2020/04/Pandas-foundation-notes/" itemprop="url">
-                  Pandas及Numpy基础笔记
+                <a class="post-title-link" href="/2020/05/merging-dataframes-with-pandas/" itemprop="url">
+                  Pandas对DataFrame的合并
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-05T07:55:00+08:00">
+                2020-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          读入多个数据文件一般Pandas中最常使用读入文件的方法就是pd.read_csv(filepath)了，这个方法中有很多的变量，具体查文档。另外还有一些其他常用的读取数据文件的函数比如pd.read_excel(), pd.read_html()和pd.read_json()等。
+一般我们使用最笨的方法如下，就是每读取一个文件我们就写一句df = pd.read_csv()
+123In [1]: import pandas as pdIn [2]: dataframe0 = pd.read_csv('sales-jan-2015.csv')In [3]: dataframe1 = pd.re
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/05/merging-dataframes-with-pandas/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://mingju.net/2020/04/data-manipulation-with-pandas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lüzhi Deng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lüzhi's Notebook">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2020/04/data-manipulation-with-pandas/" itemprop="url">
+                  Pandas数据操作基础
                 </a>
               
             
@@ -383,13 +531,13 @@
       
         
           
-          这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。
+          这篇笔记总结一些在学习在使用Padans操作数据的一些基础知识及令人困惑的语法。
 DataFrame索引选取Python中DataFrame中元素的值一般分为三种方法：
-12345678910111213In [1]: import pandas as pdIn [2]: df = pd.read_csv('sales.csv', index_col='month')In [3]: dfOut[3]:|       | eggs | salt | spam ||-------|------|------|------|| month |      |      |      ||
+12345678910111213In [1]: import pandas as pdIn [2]: df = pd.read_csv('sales.csv', index_col='month')In [3]: dfOut[3]:|       | eggs | salt | spam ||-------|------|------|------|| month |      |      |      ||  Jan  
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/04/Pandas-foundation-notes/#more" rel="contents">
+            <a class="btn" href="/2020/04/data-manipulation-with-pandas/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1605,155 +1753,6 @@ Ch 2.1.2介绍了建立ƒ的目的通常有两种。第一种是通过ƒ做预�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mingju.net/2016/03/ch2-1-2-why-and-how-to-estimate-f/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lüzhi Deng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lüzhi's Notebook">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/ch2-1-2-why-and-how-to-estimate-f/" itemprop="url">
-                  Ch2.1.2 为什么要建立ƒ与如何建立ƒ
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-25T02:44:59+08:00">
-                2016-03-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/定量学/" itemprop="url" rel="index">
-                    <span itemprop="name">定量学</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          建立ƒ的目的其实主要有两点，第一是通过ƒ做预测（prediction），第二是做推理（inference）。
-先来谈一下预测。在一般情况情况下，一系列的变量X通常是可获得的。但是Y通常不是那么容易的得到。这时我们就需要通过使用X来预测Y。用数学公式表示就是：
-Y-hat = ƒ-hat (X)
-这里你可能又会有些困惑，怎么一会Y一会Y-hat，到底都是什么？其实Y-hat就是代表Y，这里使用不同的标志标识是为了区分估值和实际值，因为我们在前面了解到模型不可能达到100%的准确率，中间总是会有一些误差，所以我们在这里用Y-hat来表示Y的估值。ƒ-hat同样道理。还记得前面提到的误差么？这里要详
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/03/ch2-1-2-why-and-how-to-estimate-f/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1803,7 +1802,7 @@ Y-hat = ƒ-hat (X)
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

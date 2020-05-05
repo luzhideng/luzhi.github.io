@@ -89,22 +89,22 @@
 
 
 
-<meta name="description" content="这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。
+<meta name="description" content="这篇笔记总结一些在学习在使用Padans操作数据的一些基础知识及令人困惑的语法。
 DataFrame索引选取Python中DataFrame中元素的值一般分为三种方法：
-12345678910111213In [1]: import pandas as pdIn [2]: df = pd.read_csv(&apos;sales.csv&apos;, index_col=&apos;month&apos;)In [3]:">
+12345678910111213In [1]: import pandas as pdIn [2]: df = pd.read_csv(&apos;sales.csv&apos;, index_col=&apos;month&apos;)In [3]: dfOut[3">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pandas及Numpy基础笔记">
-<meta property="og:url" content="http://mingju.net/2020/04/Pandas-foundation-notes/index.html">
+<meta property="og:title" content="Pandas数据操作基础">
+<meta property="og:url" content="http://mingju.net/2020/04/data-manipulation-with-pandas/index.html">
 <meta property="og:site_name" content="Lüzhi's Notebook">
-<meta property="og:description" content="这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。
+<meta property="og:description" content="这篇笔记总结一些在学习在使用Padans操作数据的一些基础知识及令人困惑的语法。
 DataFrame索引选取Python中DataFrame中元素的值一般分为三种方法：
-12345678910111213In [1]: import pandas as pdIn [2]: df = pd.read_csv(&apos;sales.csv&apos;, index_col=&apos;month&apos;)In [3]:">
-<meta property="og:updated_time" content="2020-05-04T13:54:25.613Z">
+12345678910111213In [1]: import pandas as pdIn [2]: df = pd.read_csv(&apos;sales.csv&apos;, index_col=&apos;month&apos;)In [3]: dfOut[3">
+<meta property="og:updated_time" content="2020-05-04T23:50:33.394Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Pandas及Numpy基础笔记">
-<meta name="twitter:description" content="这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。
+<meta name="twitter:title" content="Pandas数据操作基础">
+<meta name="twitter:description" content="这篇笔记总结一些在学习在使用Padans操作数据的一些基础知识及令人困惑的语法。
 DataFrame索引选取Python中DataFrame中元素的值一般分为三种方法：
-12345678910111213In [1]: import pandas as pdIn [2]: df = pd.read_csv(&apos;sales.csv&apos;, index_col=&apos;month&apos;)In [3]:">
+12345678910111213In [1]: import pandas as pdIn [2]: df = pd.read_csv(&apos;sales.csv&apos;, index_col=&apos;month&apos;)In [3]: dfOut[3">
 
 
 
@@ -132,13 +132,13 @@ DataFrame索引选取Python中DataFrame中元素的值一般分为三种方法�
 
 
 
-  <link rel="canonical" href="http://mingju.net/2020/04/Pandas-foundation-notes/"/>
+  <link rel="canonical" href="http://mingju.net/2020/04/data-manipulation-with-pandas/"/>
 
 
 
 
 
-  <title> Pandas及Numpy基础笔记 | Lüzhi's Notebook </title>
+  <title> Pandas数据操作基础 | Lüzhi's Notebook </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -291,7 +291,7 @@ DataFrame索引选取Python中DataFrame中元素的值一般分为三种方法�
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mingju.net/2020/04/Pandas-foundation-notes/">
+    <link itemprop="mainEntityOfPage" href="http://mingju.net/2020/04/data-manipulation-with-pandas/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lüzhi Deng">
@@ -312,7 +312,7 @@ DataFrame索引选取Python中DataFrame中元素的值一般分为三种方法�
             
             
               
-                Pandas及Numpy基础笔记
+                Pandas数据操作基础
               
             
           </h2>
@@ -385,7 +385,7 @@ DataFrame索引选取Python中DataFrame中元素的值一般分为三种方法�
       
 
       
-        <p>这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。</p>
+        <p>这篇笔记总结一些在学习在使用Padans操作数据的一些基础知识及令人困惑的语法。</p>
 <h1 id="DataFrame索引"><a href="#DataFrame索引" class="headerlink" title="DataFrame索引"></a>DataFrame索引</h1><p>选取Python中DataFrame中元素的值一般分为三种方法：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: <span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line">In [<span class="number">2</span>]: df = pd.read_csv(<span class="string">'sales.csv'</span>, index_col=<span class="string">'month'</span>)</div><div class="line">In [<span class="number">3</span>]: df</div><div class="line">Out[<span class="number">3</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |</div></pre></td></tr></table></figure>
 <h2 id="两个方括号方法df-‘列名’-‘行名’"><a href="#两个方括号方法df-‘列名’-‘行名’" class="headerlink" title="两个方括号方法df[‘列名’][‘行名’]"></a>两个方括号方法df[‘列名’][‘行名’]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">4</span>]: df</div><div class="line">Out[<span class="number">4</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |</div><div class="line"></div><div class="line">In [<span class="number">5</span>]: df[<span class="string">'salt'</span>][<span class="string">'Jan'</span>]</div><div class="line">Out[<span class="number">5</span>]: <span class="number">12.0</span></div></pre></td></tr></table></figure>
@@ -468,6 +468,10 @@ DataFrame索引选取Python中DataFrame中元素的值一般分为三种方法�
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/05/merging-dataframes-with-pandas/" rel="prev" title="Pandas对DataFrame的合并">
+                Pandas对DataFrame的合并 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -538,7 +542,7 @@ DataFrame索引选取Python中DataFrame中元素的值一般分为三种方法�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

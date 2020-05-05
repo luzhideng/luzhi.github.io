@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://mingju.net/"/>
-  <updated>2020-05-04T13:54:25.613Z</updated>
+  <updated>2020-05-05T00:45:51.883Z</updated>
   <id>http://mingju.net/</id>
   
   <author>
@@ -16,13 +16,44 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Pandas及Numpy基础笔记</title>
-    <link href="http://mingju.net/2020/04/Pandas-foundation-notes/"/>
-    <id>http://mingju.net/2020/04/Pandas-foundation-notes/</id>
-    <published>2020-04-28T17:22:40.000Z</published>
-    <updated>2020-05-04T13:54:25.613Z</updated>
+    <title>Pandas对DataFrame的合并</title>
+    <link href="http://mingju.net/2020/05/merging-dataframes-with-pandas/"/>
+    <id>http://mingju.net/2020/05/merging-dataframes-with-pandas/</id>
+    <published>2020-05-04T23:55:00.000Z</published>
+    <updated>2020-05-05T00:45:51.883Z</updated>
     
-    <content type="html"><![CDATA[<p>这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。</p>
+    <content type="html"><![CDATA[<h1 id="读入多个数据文件"><a href="#读入多个数据文件" class="headerlink" title="读入多个数据文件"></a>读入多个数据文件</h1><p>一般Pandas中最常使用读入文件的方法就是<code>pd.read_csv(filepath)</code>了，这个方法中有很多的变量，具体查文档。另外还有一些其他常用的读取数据文件的函数比如<code>pd.read_excel()</code>, <code>pd.read_html()</code>和<code>pd.read_json()</code>等。</p>
+<p>一般我们使用最笨的方法如下，就是每读取一个文件我们就写一句<code>df = pd.read_csv()</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: <span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line">In [<span class="number">2</span>]: dataframe0 = pd.read_csv(<span class="string">'sales-jan-2015.csv'</span>)</div><div class="line">In [<span class="number">3</span>]: dataframe1 = pd.read_csv(<span class="string">'sales-feb-2015.csv'</span>)</div></pre></td></tr></table></figure>
+<p>更简便的一些方法读取多个文件便是使用循环：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">4</span>]: filenames = [<span class="string">'sales-jan-2015.csv'</span>, <span class="string">'sales-feb-2015.csv'</span>]</div><div class="line">In [<span class="number">5</span>]: dataframes = []</div><div class="line">In [<span class="number">6</span>]: <span class="keyword">for</span> f <span class="keyword">in</span> filenames:</div><div class="line">...: dataframes.append(pd.read_csv(f))</div></pre></td></tr></table></figure>
+<p>或者也可以用comprehension循环list：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">7</span>]: filenames = [<span class="string">'sales-jan-2015.csv'</span>, <span class="string">'sales-feb-2015.csv'</span>]</div><div class="line">In [<span class="number">8</span>]: dataframes = [pd.read_csv(f) <span class="keyword">for</span> f <span class="keyword">in</span> filenames]</div></pre></td></tr></table></figure>
+<p>还有就是可以用comprehension和glob包来循环：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">9</span>]: <span class="keyword">from</span> glob <span class="keyword">import</span> glob</div><div class="line">In [<span class="number">10</span>]: filenames = glob(<span class="string">'sales*.csv'</span>)</div><div class="line">In [<span class="number">11</span>]: dataframes = [pd.read_csv(f) <span class="keyword">for</span> f <span class="keyword">in</span> filenames]</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;读入多个数据文件&quot;&gt;&lt;a href=&quot;#读入多个数据文件&quot; class=&quot;headerlink&quot; title=&quot;读入多个数据文件&quot;&gt;&lt;/a&gt;读入多个数据文件&lt;/h1&gt;&lt;p&gt;一般Pandas中最常使用读入文件的方法就是&lt;code&gt;pd.read_csv(filepa
+    
+    </summary>
+    
+      <category term="Python" scheme="http://mingju.net/categories/Python/"/>
+    
+    
+      <category term="Pandas" scheme="http://mingju.net/tags/Pandas/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Pandas数据操作基础</title>
+    <link href="http://mingju.net/2020/04/data-manipulation-with-pandas/"/>
+    <id>http://mingju.net/2020/04/data-manipulation-with-pandas/</id>
+    <published>2020-04-28T17:22:40.000Z</published>
+    <updated>2020-05-04T23:50:33.394Z</updated>
+    
+    <content type="html"><![CDATA[<p>这篇笔记总结一些在学习在使用Padans操作数据的一些基础知识及令人困惑的语法。</p>
 <h1 id="DataFrame索引"><a href="#DataFrame索引" class="headerlink" title="DataFrame索引"></a>DataFrame索引</h1><p>选取Python中DataFrame中元素的值一般分为三种方法：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">1</span>]: <span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line">In [<span class="number">2</span>]: df = pd.read_csv(<span class="string">'sales.csv'</span>, index_col=<span class="string">'month'</span>)</div><div class="line">In [<span class="number">3</span>]: df</div><div class="line">Out[<span class="number">3</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |</div></pre></td></tr></table></figure>
 <h2 id="两个方括号方法df-‘列名’-‘行名’"><a href="#两个方括号方法df-‘列名’-‘行名’" class="headerlink" title="两个方括号方法df[‘列名’][‘行名’]"></a>两个方括号方法df[‘列名’][‘行名’]</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">In [<span class="number">4</span>]: df</div><div class="line">Out[<span class="number">4</span>]:</div><div class="line">|       | eggs | salt | spam |</div><div class="line">|-------|------|------|------|</div><div class="line">| month |      |      |      |</div><div class="line">|  Jan  |  <span class="number">47</span>  | <span class="number">12.0</span> |  <span class="number">17</span>  |</div><div class="line">|  Feb  |  <span class="number">110</span> | <span class="number">50.0</span> |  <span class="number">31</span>  |</div><div class="line">|  Mar  |  <span class="number">211</span> | <span class="number">89.0</span> |  <span class="number">72</span>  |</div><div class="line">|  Apr  |  <span class="number">77</span>  | <span class="number">87.0</span> |  <span class="number">20</span>  |</div><div class="line">|  May  |  <span class="number">132</span> |  NaN |  <span class="number">52</span>  |</div><div class="line">|  Jun  |  <span class="number">205</span> |  <span class="number">60</span>  |  <span class="number">55</span>  |</div><div class="line"></div><div class="line">In [<span class="number">5</span>]: df[<span class="string">'salt'</span>][<span class="string">'Jan'</span>]</div><div class="line">Out[<span class="number">5</span>]: <span class="number">12.0</span></div></pre></td></tr></table></figure>
@@ -61,8 +92,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;这篇笔记总结一些在学习Pandas中遇到的一些比较令人迷惑的语法和一些常用的函数以及常用变量。&lt;/p&gt;
-&lt;h1 id=&quot;DataFrame索引&quot;&gt;&lt;a href=&quot;#DataFrame索引&quot; class=&quot;headerlink&quot; title=&quot;DataFrame索引&quot;&gt;&lt;/
+      &lt;p&gt;这篇笔记总结一些在学习在使用Padans操作数据的一些基础知识及令人困惑的语法。&lt;/p&gt;
+&lt;h1 id=&quot;DataFrame索引&quot;&gt;&lt;a href=&quot;#DataFrame索引&quot; class=&quot;headerlink&quot; title=&quot;DataFrame索引&quot;&gt;&lt;/a&gt;DataF
     
     </summary>
     
@@ -545,50 +576,15 @@
     <link href="http://mingju.net/2016/02/excel-split-data-into-multiple-worksheets-based-on-column/"/>
     <id>http://mingju.net/2016/02/excel-split-data-into-multiple-worksheets-based-on-column/</id>
     <published>2016-02-12T16:37:52.000Z</published>
-    <updated>2020-04-29T06:17:50.715Z</updated>
+    <updated>2020-05-04T23:57:42.876Z</updated>
     
     <content type="html"><![CDATA[<p>前一段工作遇到一个需要处理分离大量数据的重复工作，所以在网上找到了一个方法可以比较快速的根据列明把数据分离到不同的sheet中，而且可以把sheet名称命名为该列名。图片可能看得更明白一些，你可能想把上图中的情况根据A列来把数据根据不同的姓名分离成4个不同的工作表从而达到下面4副小图的情况。过程需要使用VBA代码，但是不用担心，接下来我会详细告诉你操作步骤。</p>
 <p><img src="http://mingju.net/uploads/images/doc-split-data-by-columns1.png" alt=""></p>
 <p><img src="http://mingju.net/uploads/images/doc-split-data-by-columns2.png" alt=""><br><img src="http://mingju.net/uploads/images/doc-split-data-by-columns3.png" alt=""><br><img src="http://mingju.net/uploads/images/doc-split-data-by-columns4.png" alt=""><br><img src="http://mingju.net/uploads/images/doc-split-data-by-columns5.png" alt=""></p>
 <p>第一步，同时按住Alt+F11键打开Microsoft Visual Basic for Applications</p>
 <p>第二步，找到“插入”&gt;“Module”，然后把以下代码复制粘贴到Module窗口中。</p>
-<pre><code>Sub parse_data()
-Dim lr As Long
-Dim ws As Worksheet
-Dim vcol, i As Integer
-Dim icol As Long
-Dim myarr As Variant
-Dim title As String
-Dim titlerow As Integer
-vcol = 1       
-Set ws = Sheets(&quot;Sheet1&quot;)       
-lr = ws.Cells(ws.Rows.Count, vcol).End(xlUp).Row
-title = &quot;A1:C1&quot;           
-titlerow = ws.Range(title).Cells(1).Row
-icol = ws.Columns.Count
-ws.Cells(1, icol) = &quot;Unique&quot;
-For i = 2 To lr
-On Error Resume Next
-If ws.Cells(i, vcol) &lt;&gt; &quot;&quot; And Application.WorksheetFunction.Match(ws.Cells(i, vcol), ws.Columns(icol), 0) = 0 Then
-ws.Cells(ws.Rows.Count, icol).End(xlUp).Offset(1) = ws.Cells(i, vcol)
-End If
-Next
-myarr = Application.WorksheetFunction.Transpose(ws.Columns(icol).SpecialCells(xlCellTypeConstants))
-ws.Columns(icol).Clear
-For i = 2 To UBound(myarr)
-ws.Range(title).AutoFilter field:=vcol, Criteria1:=myarr(i) &amp; &quot;&quot;
-If Not Evaluate(&quot;=ISREF(&apos;&quot; &amp; myarr(i) &amp; &quot;&apos;!A1)&quot;) Then
-Sheets.Add(after:=Worksheets(Worksheets.Count)).Name = myarr(i) &amp; &quot;&quot;
-Else
-Sheets(myarr(i) &amp; &quot;&quot;).Move after:=Worksheets(Worksheets.Count)
-End If
-ws.Range(&quot;A&quot; &amp; titlerow &amp; &quot;:A&quot; &amp; lr).EntireRow.Copy Sheets(myarr(i) &amp; &quot;&quot;).Range(&quot;A1&quot;)
-Sheets(myarr(i) &amp; &quot;&quot;).Columns.AutoFit
-Next
-ws.AutoFilterMode = False
-ws.Activate
-End Sub
-</code></pre><p>注释：<br>vcol =1，数值1是你要根据该列分离数据的列号<br>Set ws = Sheets(“Sheet1”)，Sheet1是你想要分离这些数据的主工作表<br>title = “A1:C1”, A1:C1是标题的范围</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Sub</span> parse_data()</div><div class="line"><span class="keyword">Dim</span> lr As Long</div><div class="line"><span class="keyword">Dim</span> ws As Worksheet</div><div class="line"><span class="keyword">Dim</span> vcol, i As Integer</div><div class="line"><span class="keyword">Dim</span> icol As Long</div><div class="line"><span class="keyword">Dim</span> myarr As Variant</div><div class="line"><span class="keyword">Dim</span> title As <span class="built_in">String</span></div><div class="line"><span class="keyword">Dim</span> titlerow As Integer</div><div class="line">vcol = <span class="number">1</span>       </div><div class="line"><span class="keyword">Set</span> ws = Sheets(<span class="string">"Sheet1"</span>)       </div><div class="line">lr = ws.Cells(ws.Rows.Count, vcol).<span class="keyword">End</span>(xlUp).Row</div><div class="line">title = <span class="string">"A1:C1"</span>           </div><div class="line">titlerow = ws.Range(title).Cells(<span class="number">1</span>).Row</div><div class="line">icol = ws.Columns.Count</div><div class="line">ws.Cells(<span class="number">1</span>, icol) = <span class="string">"Unique"</span></div><div class="line"><span class="keyword">For</span> i = <span class="number">2</span> <span class="keyword">To</span> lr</div><div class="line"><span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">Resume</span> <span class="keyword">Next</span></div><div class="line"><span class="keyword">If</span> ws.Cells(i, vcol) &lt;&gt; <span class="string">""</span> <span class="keyword">And</span> Application.WorksheetFunction.Match(ws.Cells(i, vcol), ws.Columns(icol), <span class="number">0</span>) = <span class="number">0</span> <span class="keyword">Then</span></div><div class="line">ws.Cells(ws.Rows.Count, icol).<span class="keyword">End</span>(xlUp).Offset(<span class="number">1</span>) = ws.Cells(i, vcol)</div><div class="line"><span class="keyword">End</span> <span class="keyword">If</span></div><div class="line"><span class="keyword">Next</span></div><div class="line">myarr = Application.WorksheetFunction.Transpose(ws.Columns(icol).SpecialCells(xlCellTypeConstants))</div><div class="line">ws.Columns(icol).Clear</div><div class="line"><span class="keyword">For</span> i = <span class="number">2</span> <span class="keyword">To</span> <span class="built_in">UBound</span>(myarr)</div><div class="line">ws.Range(title).AutoFilter field:=vcol, Criteria1:=myarr(i) &amp; <span class="string">""</span></div><div class="line"><span class="keyword">If</span> <span class="keyword">Not</span> Evaluate(<span class="string">"=ISREF('"</span> &amp; myarr(i) &amp; <span class="string">"'!A1)"</span>) <span class="keyword">Then</span></div><div class="line">Sheets.Add(after:=Worksheets(Worksheets.Count)).Name = myarr(i) &amp; <span class="string">""</span></div><div class="line"><span class="keyword">Else</span></div><div class="line">Sheets(myarr(i) &amp; <span class="string">""</span>).Move after:=Worksheets(Worksheets.Count)</div><div class="line"><span class="keyword">End</span> <span class="keyword">If</span></div><div class="line">ws.Range(<span class="string">"A"</span> &amp; titlerow &amp; <span class="string">":A"</span> &amp; lr).EntireRow.Copy Sheets(myarr(i) &amp; <span class="string">""</span>).Range(<span class="string">"A1"</span>)</div><div class="line">Sheets(myarr(i) &amp; <span class="string">""</span>).Columns.AutoFit</div><div class="line"><span class="keyword">Next</span></div><div class="line">ws.AutoFilterMode = <span class="literal">False</span></div><div class="line">ws.Activate</div><div class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></div></pre></td></tr></table></figure>
+<p>注释：<br>vcol =1，数值1是你要根据该列分离数据的列号<br>Set ws = Sheets(“Sheet1”)，Sheet1是你想要分离这些数据的主工作表<br>title = “A1:C1”, A1:C1是标题的范围</p>
 <p>以上这些都是可以根据你自己的需求去改变的。当你设置好代码之后只需要按F5运行这些代码就可以达到你想要的效果了。</p>
 <p>原文链接：<a href="http://www.extendoffice.com/documents/excel/1174-excel-split-data-into-multiple-worksheets-based-on-column.html" target="_blank" rel="external">http://www.extendoffice.com/documents/excel/1174-excel-split-data-into-multiple-worksheets-based-on-column.html</a></p>
 ]]></content>
@@ -827,34 +823,6 @@ library (&quot;xlsx&quot;)
     
     
       <category term="SEO" scheme="http://mingju.net/tags/SEO/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>产品价格制定策略与技巧分享</title>
-    <link href="http://mingju.net/2014/03/pricing-strategy-and-technique/"/>
-    <id>http://mingju.net/2014/03/pricing-strategy-and-technique/</id>
-    <published>2014-03-11T04:08:09.000Z</published>
-    <updated>2020-04-29T06:21:33.224Z</updated>
-    
-    <content type="html"><![CDATA[<p>不知道大家对产品的价格制定了解多少。下面是我最近从Pros公司听到的一个关于产品价格制定的一个小技巧。这里值得注意的是，这个技巧只是提供了一个价格制定的思想。并不是所有情况都适用。</p>
-<p>在下图中，横轴是消费者愿意购买一件产品的价格，纵轴是消费者人数。我们可以看出大多数的消费者愿意为这件产品付出$1.9美元。那么是不是意味着我们就要把这件产品的价格定在$1.9美元呢？</p>
-<p><img src="http://mingju.net/uploads/images/Pricing1.jpg" alt=""></p>
-<p>根据Pros的Matt介绍说，根据他多年的价格制定经验，可以把价格稍微提高一些，比如制定在$2.1美元。这样的制定策略可以获得更多的利益。</p>
-<p><img src="http://mingju.net/uploads/images/Pricing2.jpg" alt=""></p>
-<p>Matt还介绍到，适当的提高一点价格短期内可能会造成客户损失的现象，然而当消费者逐渐适应$2.1美元这个价格时，消费者损失的这种现象就会消失了。但是，不可以把价格定的太高，比如$2.9美金。</p>
-<p>当然，这只是价格制定中的一个小技巧，在使用的时候一定要小心。因为价格的制定受到很多因素的影响，比如经济状况，市场需求，市场供应等等。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;不知道大家对产品的价格制定了解多少。下面是我最近从Pros公司听到的一个关于产品价格制定的一个小技巧。这里值得注意的是，这个技巧只是提供了一个价格制定的思想。并不是所有情况都适用。&lt;/p&gt;
-&lt;p&gt;在下图中，横轴是消费者愿意购买一件产品的价格，纵轴是消费者人数。我们可以看出大
-    
-    </summary>
-    
-      <category term="市场研究" scheme="http://mingju.net/categories/%E5%B8%82%E5%9C%BA%E7%A0%94%E7%A9%B6/"/>
-    
     
   </entry>
   
