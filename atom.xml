@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://mingju.net/"/>
-  <updated>2020-05-07T09:32:52.002Z</updated>
+  <updated>2020-05-13T02:02:57.181Z</updated>
   <id>http://mingju.net/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python.query()函数对DataFrame的选取</title>
+    <link href="http://mingju.net/2020/05/data-manipulation-with-query/"/>
+    <id>http://mingju.net/2020/05/data-manipulation-with-query/</id>
+    <published>2020-05-13T01:58:00.000Z</published>
+    <updated>2020-05-13T02:02:57.181Z</updated>
+    
+    <content type="html"><![CDATA[<p>创建DataFrame:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line">d=&#123;</div><div class="line">    <span class="string">'name'</span>:[<span class="string">'a'</span>,<span class="string">'n'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'e'</span>,<span class="string">'f'</span>],</div><div class="line">    <span class="string">'Gender'</span>:[<span class="string">'male'</span>,<span class="string">'female'</span>,<span class="string">'male'</span>,<span class="string">'male'</span>,<span class="string">'female'</span>,<span class="string">'female'</span>],</div><div class="line">    <span class="string">'age'</span>:[<span class="number">23</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">22</span>,<span class="number">21</span>,<span class="number">20</span>],</div><div class="line">    <span class="string">'hight'</span>:[<span class="number">173</span>,<span class="number">174</span>,<span class="number">164</span>,<span class="number">172</span>,<span class="number">161</span>,<span class="number">160</span>],</div><div class="line">    <span class="string">'weight1'</span>:[<span class="number">53</span>,<span class="number">74</span>,<span class="number">44</span>,<span class="number">62</span>,<span class="number">71</span>,<span class="number">60</span>],</div><div class="line">    <span class="string">'weight2'</span>:[<span class="number">53</span>,<span class="number">64</span>,<span class="number">54</span>,<span class="number">66</span>,<span class="number">81</span>,<span class="number">50</span>]</div><div class="line">&#125;</div><div class="line">df=pd.DataFrame(d)</div><div class="line">df</div><div class="line">Out[<span class="number">6</span>]: </div><div class="line">  name  Gender  age  hight  weight1  weight2</div><div class="line"><span class="number">0</span>    a    male   <span class="number">23</span>    <span class="number">173</span>       <span class="number">53</span>       <span class="number">53</span></div><div class="line"><span class="number">1</span>    n  female   <span class="number">24</span>    <span class="number">174</span>       <span class="number">74</span>       <span class="number">64</span></div><div class="line"><span class="number">2</span>    c    male   <span class="number">24</span>    <span class="number">164</span>       <span class="number">44</span>       <span class="number">54</span></div><div class="line"><span class="number">3</span>    d    male   <span class="number">22</span>    <span class="number">172</span>       <span class="number">62</span>       <span class="number">66</span></div><div class="line"><span class="number">4</span>    e  female   <span class="number">21</span>    <span class="number">161</span>       <span class="number">71</span>       <span class="number">81</span></div><div class="line"><span class="number">5</span>    f  female   <span class="number">20</span>    <span class="number">160</span>       <span class="number">60</span>       <span class="number">50</span></div></pre></td></tr></table></figure>
+<p>一般来说如果进行行挑选，可以进行的操作是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">df[df.age==<span class="number">24</span>]</div><div class="line">Out[<span class="number">13</span>]: </div><div class="line">  name  Gender  age  hight  weight1  weight2</div><div class="line"><span class="number">1</span>    n  female   <span class="number">24</span>    <span class="number">174</span>       <span class="number">74</span>       <span class="number">64</span></div><div class="line"><span class="number">2</span>    c    male   <span class="number">24</span>    <span class="number">164</span>       <span class="number">44</span>       <span class="number">54</span></div><div class="line"></div><div class="line">df[(df.age==<span class="number">24</span> )&amp;( df.hight ==<span class="number">174</span>)]</div><div class="line">Out[<span class="number">14</span>]: </div><div class="line">  name  Gender  age  hight  weight1  weight2</div><div class="line"><span class="number">1</span>    n  female   <span class="number">24</span>    <span class="number">174</span>       <span class="number">74</span>       <span class="number">64</span></div></pre></td></tr></table></figure>
+<p>但是如果用python.query函数，则更加有逻辑且代码更优雅</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">df.query(<span class="string">"age==24"</span>)</div><div class="line">Out[<span class="number">20</span>]: </div><div class="line">  name  Gender  age  hight  weight1  weight2</div><div class="line"><span class="number">1</span>    n  female   <span class="number">24</span>    <span class="number">174</span>       <span class="number">74</span>       <span class="number">64</span></div><div class="line"><span class="number">2</span>    c    male   <span class="number">24</span>    <span class="number">164</span>       <span class="number">44</span>       <span class="number">54</span></div><div class="line"></div><div class="line">df.query(<span class="string">"age==24"</span>).query(<span class="string">'hight==174'</span>)</div><div class="line">Out[<span class="number">21</span>]: </div><div class="line">  name  Gender  age  hight  weight1  weight2</div><div class="line"><span class="number">1</span>    n  female   <span class="number">24</span>    <span class="number">174</span>       <span class="number">74</span>       <span class="number">64</span></div><div class="line">Out[<span class="number">29</span>]: </div><div class="line">  name Gender  age  hight  weight1  weight2</div><div class="line"><span class="number">0</span>    a   male   <span class="number">23</span>    <span class="number">173</span>       <span class="number">53</span>       <span class="number">53</span></div><div class="line"><span class="number">2</span>    c   male   <span class="number">24</span>    <span class="number">164</span>       <span class="number">44</span>       <span class="number">54</span></div><div class="line"><span class="number">3</span>    d   male   <span class="number">22</span>    <span class="number">172</span>       <span class="number">62</span>       <span class="number">66</span></div><div class="line">df.query(<span class="string">'index &gt; 2'</span>)</div><div class="line">Out[<span class="number">47</span>]: </div><div class="line">  name  Gender  age  hight  weight1  weight2</div><div class="line"><span class="number">3</span>    d    male   <span class="number">22</span>    <span class="number">172</span>       <span class="number">62</span>       <span class="number">66</span></div><div class="line"><span class="number">4</span>    e  female   <span class="number">21</span>    <span class="number">161</span>       <span class="number">71</span>       <span class="number">81</span></div><div class="line"><span class="number">5</span>    f  female   <span class="number">20</span>    <span class="number">160</span>       <span class="number">60</span>       <span class="number">50</span></div><div class="line">df.query(<span class="string">'Gender =="male" and name =="a"'</span>)</div><div class="line">Out[<span class="number">30</span>]: </div><div class="line">  name Gender  age  hight  weight1  weight2</div><div class="line"><span class="number">0</span>    a   male   <span class="number">23</span>    <span class="number">173</span>       <span class="number">53</span>       <span class="number">53</span></div><div class="line"></div><div class="line">df.query(<span class="string">'Gender =="male" and age&lt;24'</span>)</div><div class="line">Out[<span class="number">31</span>]: </div><div class="line">  name Gender  age  hight  weight1  weight2</div><div class="line"><span class="number">0</span>    a   male   <span class="number">23</span>    <span class="number">173</span>       <span class="number">53</span>       <span class="number">53</span></div><div class="line"><span class="number">3</span>    d   male   <span class="number">22</span>    <span class="number">172</span>       <span class="number">62</span>       <span class="number">66</span></div></pre></td></tr></table></figure>
+<p>除此之外，query（）函数还可以进行不同列之间的值对比：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">df.query(<span class="string">'weight1 &gt; weight2'</span>)</div><div class="line">Out[<span class="number">22</span>]: </div><div class="line">  name  Gender  age  hight  weight1  weight2</div><div class="line"><span class="number">1</span>    n  female   <span class="number">24</span>    <span class="number">174</span>       <span class="number">74</span>       <span class="number">64</span></div><div class="line"><span class="number">5</span>    f  female   <span class="number">20</span>    <span class="number">160</span>       <span class="number">60</span>       <span class="number">50</span></div></pre></td></tr></table></figure>
+<p>原文链接：<a href="https://www.jianshu.com/p/d174c6ed6d2e" target="_blank" rel="external">https://www.jianshu.com/p/d174c6ed6d2e</a></p>
+<p>原作者：<a href="https://www.jianshu.com/u/619b87e54936" target="_blank" rel="external">柳叶刀与小鼠标</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;创建DataFrame:&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;d
+    
+    </summary>
+    
+      <category term="数据处理" scheme="http://mingju.net/categories/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/"/>
+    
+    
+      <category term="Python" scheme="http://mingju.net/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>Pandas对DataFrame的合并</title>
@@ -817,39 +850,6 @@ library (&quot;xlsx&quot;)
     
       <category term="抛砖引玉" scheme="http://mingju.net/categories/%E6%8A%9B%E7%A0%96%E5%BC%95%E7%8E%89/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>SEO不会死</title>
-    <link href="http://mingju.net/2014/08/seo-will-never-die/"/>
-    <id>http://mingju.net/2014/08/seo-will-never-die/</id>
-    <published>2014-08-03T02:47:40.000Z</published>
-    <updated>2020-04-29T06:22:25.794Z</updated>
-    
-    <content type="html"><![CDATA[<p>在2012年7月20日，美国财经杂志《福布斯》刊登了营销专家Ken Krogue的一篇文章（<a href="http://tech.qq.com/a/20120724/000134.htm" target="_blank">中文</a>）称，传统的搜索引擎优化（SEO）时代已经过去，社交媒体的时代将会取代SEO行业。而且他预测SEO产业将于今后两年内消亡。两年过去了，SEO产业发生了什么变化？</p>
-<h2 id="SEO转向内容营销"><a href="#SEO转向内容营销" class="headerlink" title="SEO转向内容营销"></a>SEO转向内容营销</h2><p>随着Google算法（<a href="http://baike.baidu.com/view/6359984.htm" target="_blank">熊猫算法</a>，<a href="http://baike.baidu.com/view/8486132.htm" target="_blank">企鹅算法</a>）的改变，一些所谓的SEO技巧已经彻底过时。很多的SEO从业者转向了内容营销（Content Marketing）。其实这才是SEO最初的本质——为用户提供高质量的内容，而不是为搜索引擎提供垃圾信息。</p>
-<h2 id="SEO与社交媒体结合"><a href="#SEO与社交媒体结合" class="headerlink" title="SEO与社交媒体结合"></a>SEO与社交媒体结合</h2><p>对于Krogue所说的社交媒体取代SEO行业的看法，我个人不是完全同意。SEO与社交媒体结合有可能会是未来SEO行业的一个趋势。在2014年1月，Matt Cuttz回答了一个关于社交媒体信号是否会影响页面的排名（视频字幕正在翻译，将在近期发布在咕嘟博客）的问题。Matt虽然没有明确指出Google会使用社交媒体信号计算页面排名。但是他也提到，社交媒体信号可能会在未来成为影响页面排名的因素。</p>
-<h2 id="SEO从业者现状"><a href="#SEO从业者现状" class="headerlink" title="SEO从业者现状"></a>SEO从业者现状</h2><p>美国很多公司已经不再单一的去招聘一名SEO专员去处理公司的SEO业务。就目前我看到的现状而言，公司更多招聘的是具有SEO技能的市场营销人员。</p>
-<center><br><img src="http://mingju.net/uploads/images/SEO-Jobs-Trend.jpg" alt=""><br></center>
-
-<p>上图是美国知名招聘网站<a href="http://www.indeed.com/jobanalytics/jobtrends?q=seo&amp;l=" target="_blank">Indeed</a>上与SEO相关的职位需求走势图。从2012年到2014年，SEO职位需求不断减少。</p>
-<h2 id="SEO不会死"><a href="#SEO不会死" class="headerlink" title="SEO不会死"></a>SEO不会死</h2><p>为什么说SEO不会死？因为搜索引擎需要你的内容，所以它需要给你一定的刺激（如，好的排名-&gt;利益）让你不断的贡献优质的内容，这才是搜索引擎存在的本质与意义。如果有一天，你从搜索引擎的搜索结果中得到的到处是广告信息，相信这个搜索引擎离倒闭不远了。</p>
-<p>#结语#</p>
-<p>SEO职位市场的消极形势，给SEO从业人员敲响了警钟。虽说SEO不会死，但是从今天开始就要转变传统SEO思想！</p>
-<p><strong>SEO+内容+社交媒体 = SEOer Rock !!!</strong></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在2012年7月20日，美国财经杂志《福布斯》刊登了营销专家Ken Krogue的一篇文章（&lt;a href=&quot;http://tech.qq.com/a/20120724/000134.htm&quot; target=&quot;_blank&quot;&gt;中文&lt;/a&gt;）称，传统的搜索引擎优化（SEO）时
-    
-    </summary>
-    
-      <category term="抛砖引玉" scheme="http://mingju.net/categories/%E6%8A%9B%E7%A0%96%E5%BC%95%E7%8E%89/"/>
-    
-    
-      <category term="SEO" scheme="http://mingju.net/tags/SEO/"/>
     
   </entry>
   
