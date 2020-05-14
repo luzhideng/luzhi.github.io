@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://mingju.net/"/>
-  <updated>2020-05-13T02:02:57.181Z</updated>
+  <updated>2020-05-14T00:57:04.397Z</updated>
   <id>http://mingju.net/</id>
   
   <author>
@@ -16,11 +16,41 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>pd.read_excel()与pd.ExcelFile()函数</title>
+    <link href="http://mingju.net/2020/05/pd.read_excel_and_pd.ExcelFile/"/>
+    <id>http://mingju.net/2020/05/pd.read_excel_and_pd.ExcelFile/</id>
+    <published>2020-05-14T00:12:00.000Z</published>
+    <updated>2020-05-14T00:57:04.397Z</updated>
+    
+    <content type="html"><![CDATA[<p>这两个函数很有意思，他们都可以对Microsoft Excel的表格进行数据读取操作，但是返回的对象不同，所以对其操作也有所不同。这篇没有对这两个函数进行深究，仅描述对其基本操作的一些不同点。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line">file = <span class="string">'example.xls'</span>				<span class="comment">#这里也可以是xlsx格式的文档</span></div><div class="line">xls_a = pd.read_excel(file, sheet_name=<span class="keyword">None</span>)		<span class="comment">#sheet_name=None读取所有sheets</span></div><div class="line">xls_b = pd.ExcelFile(file)							<span class="comment">#xls_b与xls_a读取功能相同</span></div><div class="line">type(xls_a)</div><div class="line">Out [<span class="number">1</span>]: collections.OrderedDict					<span class="comment">#返回字典类型</span></div><div class="line">type(xls_b)</div><div class="line">Out [<span class="number">2</span>]: pandas.io.excel.ExcelFile					<span class="comment">#返回pandas excel对象</span></div></pre></td></tr></table></figure>
+<p>由于两种读取方式返回对象的差别，所以在对其操作上有不同。其中<code>pd.read_excel()</code>返回的字典类型，其key对应的是sheet names，value对应的是相应的dataframe。而pandas excel对象则有其独有的操作方式。</p>
+<p>获取xls_a也就是使用<code>pd.read_excel()</code>读取的对象时，获取其sheet name和dataframe的操作按python字典的操作方式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">xls_a.keys()				<span class="comment">#获取sheet names</span></div><div class="line">xls_a[<span class="string">'sheet name'</span>]			<span class="comment">#获取相应sheet下的dataframe，同时也可以使用index获取</span></div></pre></td></tr></table></figure>
+<p>而获取xls_b也就是使用pd.ExcelFile()读取的对象时，获取sheet name和dataframe都有其特定的操作方式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">xls_b.sheet_names			<span class="comment">#获取sheet names</span></div><div class="line">xls_b.parse(<span class="string">'sheet name'</span>)	<span class="comment">#使用sheet name获取sheet下的dataframe</span></div><div class="line">xls_b.parse(<span class="number">0</span>)				<span class="comment">#使用index获取相应sheet下的dataframe</span></div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这两个函数很有意思，他们都可以对Microsoft Excel的表格进行数据读取操作，但是返回的对象不同，所以对其操作也有所不同。这篇没有对这两个函数进行深究，仅描述对其基本操作的一些不同点。&lt;/p&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;ta
+    
+    </summary>
+    
+      <category term="数据读取" scheme="http://mingju.net/categories/%E6%95%B0%E6%8D%AE%E8%AF%BB%E5%8F%96/"/>
+    
+    
+      <category term="Pandas" scheme="http://mingju.net/tags/Pandas/"/>
+    
+  </entry>
+  
+  <entry>
     <title>python.query()函数对DataFrame的选取</title>
     <link href="http://mingju.net/2020/05/data-manipulation-with-query/"/>
     <id>http://mingju.net/2020/05/data-manipulation-with-query/</id>
     <published>2020-05-13T01:58:00.000Z</published>
-    <updated>2020-05-13T02:02:57.181Z</updated>
+    <updated>2020-05-14T00:10:51.024Z</updated>
     
     <content type="html"><![CDATA[<p>创建DataFrame:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line">d=&#123;</div><div class="line">    <span class="string">'name'</span>:[<span class="string">'a'</span>,<span class="string">'n'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>,<span class="string">'e'</span>,<span class="string">'f'</span>],</div><div class="line">    <span class="string">'Gender'</span>:[<span class="string">'male'</span>,<span class="string">'female'</span>,<span class="string">'male'</span>,<span class="string">'male'</span>,<span class="string">'female'</span>,<span class="string">'female'</span>],</div><div class="line">    <span class="string">'age'</span>:[<span class="number">23</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">22</span>,<span class="number">21</span>,<span class="number">20</span>],</div><div class="line">    <span class="string">'hight'</span>:[<span class="number">173</span>,<span class="number">174</span>,<span class="number">164</span>,<span class="number">172</span>,<span class="number">161</span>,<span class="number">160</span>],</div><div class="line">    <span class="string">'weight1'</span>:[<span class="number">53</span>,<span class="number">74</span>,<span class="number">44</span>,<span class="number">62</span>,<span class="number">71</span>,<span class="number">60</span>],</div><div class="line">    <span class="string">'weight2'</span>:[<span class="number">53</span>,<span class="number">64</span>,<span class="number">54</span>,<span class="number">66</span>,<span class="number">81</span>,<span class="number">50</span>]</div><div class="line">&#125;</div><div class="line">df=pd.DataFrame(d)</div><div class="line">df</div><div class="line">Out[<span class="number">6</span>]: </div><div class="line">  name  Gender  age  hight  weight1  weight2</div><div class="line"><span class="number">0</span>    a    male   <span class="number">23</span>    <span class="number">173</span>       <span class="number">53</span>       <span class="number">53</span></div><div class="line"><span class="number">1</span>    n  female   <span class="number">24</span>    <span class="number">174</span>       <span class="number">74</span>       <span class="number">64</span></div><div class="line"><span class="number">2</span>    c    male   <span class="number">24</span>    <span class="number">164</span>       <span class="number">44</span>       <span class="number">54</span></div><div class="line"><span class="number">3</span>    d    male   <span class="number">22</span>    <span class="number">172</span>       <span class="number">62</span>       <span class="number">66</span></div><div class="line"><span class="number">4</span>    e  female   <span class="number">21</span>    <span class="number">161</span>       <span class="number">71</span>       <span class="number">81</span></div><div class="line"><span class="number">5</span>    f  female   <span class="number">20</span>    <span class="number">160</span>       <span class="number">60</span>       <span class="number">50</span></div></pre></td></tr></table></figure>
@@ -819,36 +849,6 @@ library (&quot;xlsx&quot;)
     </summary>
     
       <category term="数据科学" scheme="http://mingju.net/categories/%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>商科学生如何成为数据分析师</title>
-    <link href="http://mingju.net/2015/10/business-student-how-to-become-a-data-analyst/"/>
-    <id>http://mingju.net/2015/10/business-student-how-to-become-a-data-analyst/</id>
-    <published>2015-10-17T21:32:16.000Z</published>
-    <updated>2017-03-24T08:54:24.623Z</updated>
-    
-    <content type="html"><![CDATA[<p>很多学习商科的同学对数据分析很有兴趣，想把数据分析师或者数据学家当作自己的职业目标，但是又担心自己不会使用一些市面上常见的数据分析软件或者担心自己没有系统的统计学背景，编程背景等等。那么学习商科学生到底可以成为数据分析师吗？答案是肯定的。接下来我会分享作为商科背景的我是怎样成为一名数据分析师的。希望可以给有商科背景并且想成为数据分析师的朋友一些建议。</p>
-<h2 id="储备定量学（quantitative）知识"><a href="#储备定量学（quantitative）知识" class="headerlink" title="储备定量学（quantitative）知识"></a>储备定量学（quantitative）知识</h2><p>作为一名商学背景的学生，首先你要明白自己的优势和不足分别是什么。拿我本人举一个例子，我的商科专业是市场学。由于在本科期间接触到的关于定量学的知识很少。四年也就修了两门数学课和两门基础统计课。这对于成为一名数据分析师其实是远远不够的。所以在我工作期间，拿到一组数据之后往往变得手足无措。这时候就要花大量的时间去查资料。这时，缺乏定量学的劣势就是暴露无遗，不单单浪费了很多时间影响了工作效率，由于知识储备不够也可能照成更多的错误。所以我建议大家，如果你还是在读生，请多花一些时间在你有限的定量学课程上，如果条件允许尽量可以选修几门统计学科的课程。比如，方差分析，回归分析，逻辑回归分析等课程。当然，现在网络上也有成千上万的关于这些知识的资料。总之，在你毕业之前尽量储备定量学的知识。这对于你成为一名数据分析师和未来的数据科学家非常非常重要。你可能已经被我所说的这个不足吓到，但是不要担心，只要意识到了这个不足什么开始弥补都不晚。说完了劣势，来讲一下你的优势吧。作为有商科背景的你有着专业为统计学或者计算机科学不可比拟的优势（找回一些自信？）。其实现在在一些大的公司里，数据分析团队通常包括三种背景的人。第一商科背景的人，第二计算机背景的人，第三统计学背景的人。所以作为具有商科背景的你是团队缺一不可的人物。但是如果你“不幸”落入一下中小型公司的话，那么可能你就需要成为一个三合一体的“超级赛亚人”了。但是现实就是这么残酷。其实这种情况可以适用到各个职位和行业。但是，如果你具有扎实的商学背景的话，在做出数据分析之后提供商业策略意见的功能还是不容忽视的。不要忘记了数据分析的意义是什么？解决问题。更多的时候是解决商业方面的问题。你的商学背景为你带来的附加技能是那些学计算机科学和统计学的同学不具备的。</p>
-<h2 id="掌握一种或多种数据分析软件"><a href="#掌握一种或多种数据分析软件" class="headerlink" title="掌握一种或多种数据分析软件"></a>掌握一种或多种数据分析软件</h2><p>做数据分析必然需要使用到软件。学会熟练的使用一种或者多种软件会让你在未来职场变得更加具有竞争力。另外，如果你现在就已经非常熟悉你现在使用的这一款软件，那么不妨去试着学习一下其他的数据分析工具来扩充你的数据分析工具箱。比如我自己，最开始是使用Excel以及Excel的各种插件。不要小看Excel，之所以可以长久不衰也是有它的原因的。之后，在我可以熟练的使用Excel之后，我又接触了<a href="http://baike.baidu.com/link?url=iVEkoGMq5siDvOE2SaW6qH_69kVaYHPmYnIyt5gT5roE2vOAIouCwcgO32BOLj0O9SAc8U0iMcCsHcOvFw539_" target="_blank">Stata</a>, <a href="http://baike.baidu.com/link?url=sjJNQPckY5XDnAPi_o4CCD8WJYHlHlNk8cvX6pq6W8nw2jL7Y1QiTeqgcQmvvqdw0jIXvN7Sf6KZmPPMXJxQna" target="_blank">SPSS</a>，以及现在又开始学习<a href="http://baike.baidu.com/link?url=I2NLFHvb0cfz9GJUF7Rez1U2i6xJpz9DEOvYOB2Kk5IZk1Jgtg9Hymx96sYfSDlfZi2HFvpEua027pwj1qQWcK" target="_blank">R语言</a>。在你还在学校的时候就去训练自己使用这些常用的数据分析软件。因为学习任何一种新的工具都是需要大量的时间的。跟投资理财一样，越早开始收益越大。试想，当别人毕业之后一脸茫然的去学习如何下载Excel的时候，你已经可以享受去用Excel算出1+1等于2的快感。</p>
-<h2 id="一些常见问题"><a href="#一些常见问题" class="headerlink" title="一些常见问题"></a>一些常见问题</h2><p>Q：没有商科背景，没有统计学背景，没有计算机背景，能不能成为数据分析师？</p>
-<p>A：只要肯努力。当然，你在这三个领域储备的知识越多就离你成为数据分析师的目标越近。</p>
-<p>Q：不会编程能不能成为数据分析师？</p>
-<p>A：很多数据分析师都不会编程，现在市面上的很多数据分析软件也都不需要你具备写代码的技能。但是想成为数据分析师，统计定量学知识必不可少。</p>
-<p>Q：如何开始学习成为一名数据分析师？</p>
-<p>A：多读书。一般学习一项新技能的开始就是买本书照着学习。当然现在网络发达时代，你也可以在网上找到很多的学习资料。最重要的是坚持学习与练习。</p>
-<p>以上是我在学习以及工作的过程中遇到的问题和对我个人经验的总结。希望对想成为数据分析师的你带来一些帮助，让你少走一些弯路。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;很多学习商科的同学对数据分析很有兴趣，想把数据分析师或者数据学家当作自己的职业目标，但是又担心自己不会使用一些市面上常见的数据分析软件或者担心自己没有系统的统计学背景，编程背景等等。那么学习商科学生到底可以成为数据分析师吗？答案是肯定的。接下来我会分享作为商科背景的我是怎样
-    
-    </summary>
-    
-      <category term="抛砖引玉" scheme="http://mingju.net/categories/%E6%8A%9B%E7%A0%96%E5%BC%95%E7%8E%89/"/>
     
     
   </entry>

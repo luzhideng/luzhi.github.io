@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title><![CDATA[pd.read_excel()与pd.ExcelFile()函数]]></title>
+      <url>http://mingju.net/2020/05/pd.read_excel_and_pd.ExcelFile/</url>
+      <content type="html"><![CDATA[<p>这两个函数很有意思，他们都可以对Microsoft Excel的表格进行数据读取操作，但是返回的对象不同，所以对其操作也有所不同。这篇没有对这两个函数进行深究，仅描述对其基本操作的一些不同点。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line">file = <span class="string">'example.xls'</span>				<span class="comment">#这里也可以是xlsx格式的文档</span></div><div class="line">xls_a = pd.read_excel(file, sheet_name=<span class="keyword">None</span>)		<span class="comment">#sheet_name=None读取所有sheets</span></div><div class="line">xls_b = pd.ExcelFile(file)							<span class="comment">#xls_b与xls_a读取功能相同</span></div><div class="line">type(xls_a)</div><div class="line">Out [<span class="number">1</span>]: collections.OrderedDict					<span class="comment">#返回字典类型</span></div><div class="line">type(xls_b)</div><div class="line">Out [<span class="number">2</span>]: pandas.io.excel.ExcelFile					<span class="comment">#返回pandas excel对象</span></div></pre></td></tr></table></figure>
+<p>由于两种读取方式返回对象的差别，所以在对其操作上有不同。其中<code>pd.read_excel()</code>返回的字典类型，其key对应的是sheet names，value对应的是相应的dataframe。而pandas excel对象则有其独有的操作方式。</p>
+<p>获取xls_a也就是使用<code>pd.read_excel()</code>读取的对象时，获取其sheet name和dataframe的操作按python字典的操作方式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">xls_a.keys()				<span class="comment">#获取sheet names</span></div><div class="line">xls_a[<span class="string">'sheet name'</span>]			<span class="comment">#获取相应sheet下的dataframe，同时也可以使用index获取</span></div></pre></td></tr></table></figure>
+<p>而获取xls_b也就是使用pd.ExcelFile()读取的对象时，获取sheet name和dataframe都有其特定的操作方式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">xls_b.sheet_names			<span class="comment">#获取sheet names</span></div><div class="line">xls_b.parse(<span class="string">'sheet name'</span>)	<span class="comment">#使用sheet name获取sheet下的dataframe</span></div><div class="line">xls_b.parse(<span class="number">0</span>)				<span class="comment">#使用index获取相应sheet下的dataframe</span></div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> 数据读取 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Pandas </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[python.query()函数对DataFrame的选取]]></title>
       <url>http://mingju.net/2020/05/data-manipulation-with-query/</url>
       <content type="html"><![CDATA[<p>创建DataFrame:</p>
