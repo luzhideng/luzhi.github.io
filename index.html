@@ -384,7 +384,7 @@
         
           
           这两个函数很有意思，他们都可以对Microsoft Excel的表格进行数据读取操作，但是返回的对象不同，所以对其操作也有所不同。这篇没有对这两个函数进行深究，仅描述对其基本操作的一些不同点。
-12345678import pandas as pdfile = 'example.xls'				#这里也可以是xlsx格式的文档xls_a = pd.read_excel(file, sheet_name=None)		#sheet_name=None读取所有sheetsxls_b = pd.ExcelFile(file)							#xls_b与xls_a读取功能相同type(xls_a)Ou
+12345678import pandas as pdfile = 'example.xls'							#这里也可以是xlsx格式的文档xls_a = pd.read_excel(file, sheet_name=None)	#sheet_name=None读取所有sheetsxls_b = pd.ExcelFile(file)						#xls_b与xls_a读取功能相同type(xls_a)O
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -536,6 +536,153 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/05/data-manipulation-with-query/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://mingju.net/2020/05/taobao_crawler/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lüzhi Deng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lüzhi's Notebook">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2020/05/taobao_crawler/" itemprop="url">
+                  淘宝商品比价定向爬虫【MOOC实例微优化】
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-13T09:58:00+08:00">
+                2020-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/网络爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">网络爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          在MOOC北京理工大学嵩天老师的公开课上有一个淘宝商品比价定向爬虫的实例。源代码如下：
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950"""@author: 嵩天"""#CrowTaobaoPrice.pyimport requestsimport re def getHTMLText(url):    try:        r = requests.get(url, timeout=30)        r.raise_for_status()      
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/05/taobao_crawler/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1601,154 +1748,6 @@ Ch 2.1.2介绍了建立ƒ的目的通常有两种。第一种是通过ƒ做预�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mingju.net/2016/03/ch-2-2-1-measuring-the-quality-of-fit/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lüzhi Deng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Lüzhi's Notebook">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/ch-2-2-1-measuring-the-quality-of-fit/" itemprop="url">
-                  Ch2.2.1 评估模型的准确性
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-03-31T03:27:14+08:00">
-                2016-03-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/定量学/" itemprop="url" rel="index">
-                    <span itemprop="name">定量学</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          当我们在选择建立模型的过程中需要不断的改善模型以提高模型的准确性。这也是统计分析中最大的难点。在验证一个统计模型的表现时，我们需要找出去测量预测值与实际值的匹配度有多好。也就是说，当我们用我们的模型预测出一个预测值的时候，我们需要知道预测值与实际值到底相差多少。这时我们需要一个方法去测量这个误差。在回归（regression）的问题当中，我们通常使用均方差（MSE）来验证。公式如下：
-
-均方差越小说明预测值与实际值越接近，均方差越大说明预测值与实际值相差越远。我们的目标是尽量降低均方差的值。因为均方差越小说明模型的预测能力越准确。但是问题是，我们在建立模型的时候使用的是训练数据（trainin
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/03/ch-2-2-1-measuring-the-quality-of-fit/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1798,7 +1797,7 @@ Ch 2.1.2介绍了建立ƒ的目的通常有两种。第一种是通过ƒ做预�
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1809,7 +1808,7 @@ Ch 2.1.2介绍了建立ƒ的目的通常有两种。第一种是通过ƒ做预�
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
