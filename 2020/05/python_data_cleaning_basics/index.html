@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="咖啡,星巴克," />
+  <meta name="keywords" content="Python," />
 
 
 
@@ -89,18 +89,16 @@
 
 
 
-<meta name="description" content="为了寻找为什么意大利没有星巴克的原因，我特意去了几家罗马著名的咖啡馆。当我去到一家名字叫做Sant’ Eustachio II Caffè的咖啡馆时，我惊呆了。当时大概有40多个人排队等着点咖啡，小小的咖啡店站满了人，我甚至找不到一个站的地方。吧台边大家互相聊着天，咖啡师娴熟的向咖啡杯里倒着浓缩咖啡，店员跟顾客们互相开着玩笑。然而在美国的星巴克，你是不可能看到这种情景的。顾客通常点上一杯咖啡，坐在">
+<meta name="description" content="有数据显示说，数据分析师或者数据科学家通常会花掉80%的时间去清理数据，20%的时间去分析数据和写数据报告。因为通常在真实世界当中拿到的数据往往跟在课堂中拿到的数据样本有着千差万别。真实世界的数据一般会非常的dirty，所以需要花大量的时间去清洗。一般来说，造成数据脏乱差的原因通常有两种，一是人为输入错误，而是技术原因造成的错误。不干净整洁的数据会给我们的分析造成很大的困扰，甚至会产生错误的报告从">
 <meta property="og:type" content="article">
-<meta property="og:title" content="为什么意大利没有星巴克？">
-<meta property="og:url" content="http://mingju.net/2013/12/why-starbucks-is-not-present-in-italy/index.html">
+<meta property="og:title" content="Python中的基本数据清理">
+<meta property="og:url" content="http://mingju.net/2020/05/python_data_cleaning_basics/index.html">
 <meta property="og:site_name" content="Lüzhi's Notebook">
-<meta property="og:description" content="为了寻找为什么意大利没有星巴克的原因，我特意去了几家罗马著名的咖啡馆。当我去到一家名字叫做Sant’ Eustachio II Caffè的咖啡馆时，我惊呆了。当时大概有40多个人排队等着点咖啡，小小的咖啡店站满了人，我甚至找不到一个站的地方。吧台边大家互相聊着天，咖啡师娴熟的向咖啡杯里倒着浓缩咖啡，店员跟顾客们互相开着玩笑。然而在美国的星巴克，你是不可能看到这种情景的。顾客通常点上一杯咖啡，坐在">
-<meta property="og:image" content="http://mingju.net/uploads/images/SEIICaffe.jpg">
-<meta property="og:updated_time" content="2020-04-29T06:24:52.103Z">
+<meta property="og:description" content="有数据显示说，数据分析师或者数据科学家通常会花掉80%的时间去清理数据，20%的时间去分析数据和写数据报告。因为通常在真实世界当中拿到的数据往往跟在课堂中拿到的数据样本有着千差万别。真实世界的数据一般会非常的dirty，所以需要花大量的时间去清洗。一般来说，造成数据脏乱差的原因通常有两种，一是人为输入错误，而是技术原因造成的错误。不干净整洁的数据会给我们的分析造成很大的困扰，甚至会产生错误的报告从">
+<meta property="og:updated_time" content="2020-05-25T08:02:53.819Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="为什么意大利没有星巴克？">
-<meta name="twitter:description" content="为了寻找为什么意大利没有星巴克的原因，我特意去了几家罗马著名的咖啡馆。当我去到一家名字叫做Sant’ Eustachio II Caffè的咖啡馆时，我惊呆了。当时大概有40多个人排队等着点咖啡，小小的咖啡店站满了人，我甚至找不到一个站的地方。吧台边大家互相聊着天，咖啡师娴熟的向咖啡杯里倒着浓缩咖啡，店员跟顾客们互相开着玩笑。然而在美国的星巴克，你是不可能看到这种情景的。顾客通常点上一杯咖啡，坐在">
-<meta name="twitter:image" content="http://mingju.net/uploads/images/SEIICaffe.jpg">
+<meta name="twitter:title" content="Python中的基本数据清理">
+<meta name="twitter:description" content="有数据显示说，数据分析师或者数据科学家通常会花掉80%的时间去清理数据，20%的时间去分析数据和写数据报告。因为通常在真实世界当中拿到的数据往往跟在课堂中拿到的数据样本有着千差万别。真实世界的数据一般会非常的dirty，所以需要花大量的时间去清洗。一般来说，造成数据脏乱差的原因通常有两种，一是人为输入错误，而是技术原因造成的错误。不干净整洁的数据会给我们的分析造成很大的困扰，甚至会产生错误的报告从">
 
 
 
@@ -128,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://mingju.net/2013/12/why-starbucks-is-not-present-in-italy/"/>
+  <link rel="canonical" href="http://mingju.net/2020/05/python_data_cleaning_basics/"/>
 
 
 
 
 
-  <title> 为什么意大利没有星巴克？ | Lüzhi's Notebook </title>
+  <title> Python中的基本数据清理 | Lüzhi's Notebook </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -287,7 +285,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://mingju.net/2013/12/why-starbucks-is-not-present-in-italy/">
+    <link itemprop="mainEntityOfPage" href="http://mingju.net/2020/05/python_data_cleaning_basics/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lüzhi Deng">
@@ -308,7 +306,7 @@
             
             
               
-                为什么意大利没有星巴克？
+                Python中的基本数据清理
               
             
           </h2>
@@ -323,8 +321,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-12-01T12:01:43+08:00">
-                2013-12-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-25T15:39:00+08:00">
+                2020-05-25
               </time>
             
 
@@ -346,8 +344,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/市场研究/" itemprop="url" rel="index">
-                    <span itemprop="name">市场研究</span>
+                  <a href="/categories/数据清洗/" itemprop="url" rel="index">
+                    <span itemprop="name">数据清洗</span>
                   </a>
                 </span>
 
@@ -381,12 +379,8 @@
       
 
       
-        <p>为了寻找为什么意大利没有星巴克的原因，我特意去了几家罗马著名的咖啡馆。当我去到一家名字叫做Sant’ Eustachio II Caffè的咖啡馆时，我惊呆了。当时大概有40多个人排队等着点咖啡，小小的咖啡店站满了人，我甚至找不到一个站的地方。吧台边大家互相聊着天，咖啡师娴熟的向咖啡杯里倒着浓缩咖啡，店员跟顾客们互相开着玩笑。然而在美国的星巴克，你是不可能看到这种情景的。顾客通常点上一杯咖啡，坐在桌子旁掏出出手机或拿出笔记本电脑连上Wi-Fi，各自做着自己的事情。</p>
-<p><img src="http://mingju.net/uploads/images/SEIICaffe.jpg" alt=""></p>
-<p></p><p style="text-align: center;">图为在Sant’ Eustachio II Caffè排队买咖啡的人</p><br>当晚，我和一个在意大利留学的朋友聊天时问到，“为什么罗马没有一家星巴克呢”？朋友说，“大部分的意大利人认为星巴克不明白如何制作真正的咖啡。意大利人认为自己是世界上最好咖啡的发源地，而且他们很以自己的咖啡为骄傲。因此让意大利人去喝美国的咖啡，有点强人所难”。<p></p>
-<p>我们知道星巴克发展的转折点发生在Howard Schultz 先生在20世纪80年代访问意大利之后。他把意大利的咖啡文化带到了美国并加以改进，从而使得更适合美国的文化。然而这些改进是建立在意大利咖啡文化的基础上进行的。一方面，意大利人是根本不会考虑手持一个纸杯在街道上或者开车的时候喝咖啡的。他们把在一间咖啡馆喝咖啡当做是一种生活上的享受。另一方面，意大利因咖啡而著名，如果星巴克进军意大利市场的计划失败，星巴克不仅仅损失的是金钱，同时也损害了星巴克的品牌形象。所以，从目前来看，星巴克选择不进入意大利市场看似是一个合理的决定。</p>
-<p>然而，根据我个人的观点。我认为星巴克可以采取一些非直接的运营方式进入意大利这个咖啡需求大国。例如，星巴克可以收购当地的一些咖啡品牌，利用自己强大的资金实力，形成竞争优势。对于担心品牌形象受损和美国咖啡在意大利不利的形象，星巴克可以让这些咖啡厅独立运营，暂时不要提及这条“绿色的美人鱼”。</p>
-
+        <p>有数据显示说，数据分析师或者数据科学家通常会花掉80%的时间去清理数据，20%的时间去分析数据和写数据报告。因为通常在真实世界当中拿到的数据往往跟在课堂中拿到的数据样本有着千差万别。真实世界的数据一般会非常的dirty，所以需要花大量的时间去清洗。一般来说，造成数据脏乱差的原因通常有两种，一是人为输入错误，而是技术原因造成的错误。不干净整洁的数据会给我们的分析造成很大的困扰，甚至会产生错误的报告从而影响决策。所以，当我们拿到一大堆数据的时候，第一个工作是要判断数据的来源，并且尽量的以科学的方法把数据清洗干净，然后再进行接下来的分析操作。这篇文章会分步介绍一些常见的数据清理基本操作。</p>
+<h1 id="数据类型问题"><a href="#数据类型问题" class="headerlink" title="数据类型问题"></a>数据类型问题</h1>
       
     </div>
 
@@ -409,9 +403,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/咖啡/" rel="tag"># 咖啡</a>
-          
-            <a href="/tags/星巴克/" rel="tag"># 星巴克</a>
+            <a href="/tags/Python/" rel="tag"># Python</a>
           
         </div>
       
@@ -424,8 +416,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2013/02/75-lean-or-25-fat-ground-beef-which-one-tastes-better/" rel="next" title="75%瘦牛肉和25%肥牛肉哪种更好吃？">
-                <i class="fa fa-chevron-left"></i> 75%瘦牛肉和25%肥牛肉哪种更好吃？
+              <a href="/2020/05/taobao_crawler/" rel="next" title="淘宝商品比价定向爬虫【MOOC实例微优化】">
+                <i class="fa fa-chevron-left"></i> 淘宝商品比价定向爬虫【MOOC实例微优化】
               </a>
             
           </div>
@@ -433,10 +425,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2014/02/coupons-for-daughter-killed-in-car-crash/" rel="prev" title="给在车祸中丧生女儿的优惠券">
-                给在车祸中丧生女儿的优惠券 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -483,8 +471,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -573,6 +570,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据类型问题"><span class="nav-text">数据类型问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
