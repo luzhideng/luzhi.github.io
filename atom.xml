@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://mingju.net/"/>
-  <updated>2020-05-28T05:03:25.750Z</updated>
+  <updated>2020-05-29T00:44:17.249Z</updated>
   <id>http://mingju.net/</id>
   
   <author>
@@ -16,11 +16,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Python中的缺失数据处理方法</title>
+    <link href="http://mingju.net/2020/05/dealing_with_missing_data_in_python/"/>
+    <id>http://mingju.net/2020/05/dealing_with_missing_data_in_python/</id>
+    <published>2020-05-29T00:18:00.000Z</published>
+    <updated>2020-05-29T00:44:17.249Z</updated>
+    
+    <content type="html"><![CDATA[<p>在数据清洗的过程中，还有一个非常重要的问题就是处理缺失的数据，尤其是在我们拿到样本比较小的数据时，能够通过一些合理的方式去补全这些缺失的数据对我们接下来的分析尤为重要。这篇将会介绍一些处理数据缺失的处理方法和手段。</p>
+<p>一般情况下，缺失的数据通常会以NA, nan, 0, .等来表示，造成缺失数据的原因一般也是两种，一个是人为错误，还有就是技术错误。在遍历缺失数据时，有一个非常好用的可视化库Missingno。接下来会经常使用这个库进行可视化我们的缺失数据，以便更好的去理解数据缺失的原因：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#需要配合matplotlib来使用missingno库</span></div><div class="line"><span class="keyword">import</span> missingno <span class="keyword">as</span> msno</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">msno.matrix(df)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p>首先我们需要了解处理缺失数据的一个基本流程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">graph LR</div><div class="line">	A(转化所有缺失值为空) --&gt;B(分析缺失值的数量及类型) --&gt;C(合理的删除或者补全缺失数据) --&gt;D(比较评估表现)</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在数据清洗的过程中，还有一个非常重要的问题就是处理缺失的数据，尤其是在我们拿到样本比较小的数据时，能够通过一些合理的方式去补全这些缺失的数据对我们接下来的分析尤为重要。这篇将会介绍一些处理数据缺失的处理方法和手段。&lt;/p&gt;
+&lt;p&gt;一般情况下，缺失的数据通常会以NA, nan
+    
+    </summary>
+    
+      <category term="数据清洗" scheme="http://mingju.net/categories/%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97/"/>
+    
+    
+      <category term="Python" scheme="http://mingju.net/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Python中的基本数据清理</title>
-    <link href="http://mingju.net/2020/05/python_data_cleaning_basics/"/>
-    <id>http://mingju.net/2020/05/python_data_cleaning_basics/</id>
+    <link href="http://mingju.net/2020/05/data_cleaning_basics_in_python/"/>
+    <id>http://mingju.net/2020/05/data_cleaning_basics_in_python/</id>
     <published>2020-05-25T07:39:00.000Z</published>
-    <updated>2020-05-28T05:03:25.750Z</updated>
+    <updated>2020-05-29T00:20:05.572Z</updated>
     
     <content type="html"><![CDATA[<p>有数据显示说，数据分析师或者数据科学家通常会花掉80%的时间去清理数据，20%的时间去分析数据和写数据报告。因为通常在真实世界当中拿到的数据往往跟在课堂中拿到的数据样本有着千差万别。真实世界的数据一般会非常的dirty，所以需要花大量的时间去清洗。一般来说，造成数据脏乱差的原因通常有两种，一是人为输入错误，而是技术原因造成的错误。不干净整洁的数据会给我们的分析造成很大的困扰，甚至会产生错误的报告从而影响决策。所以，当我们拿到一大堆数据的时候，第一个工作是要判断数据的来源，并且尽量的以科学的方法把数据清洗干净，然后再进行接下来的分析操作。这篇文章会分步介绍一些常见的数据清理基本操作。数据是从<a href="https://assets.datacamp.com/production/repositories/5737/datasets/ba95dfa6d750e4bf2ddda2349cfe0af80ab765ff/airlines_final.csv" target="_blank" rel="external">datacamp</a>中获取的，我在次基础上又把相对干净的数据弄脏了一些一遍举例演示，这是一个叫做airlines的csv文件，其中包含了从旧金山国际机场几天出发的航班的数据。我们先来简单的看一下airlines.csv都包含哪些数据。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">df = pd.read_csv(<span class="string">'datasets/airlines.csv'</span>)</div><div class="line">df.info()</div><div class="line">df.head()</div></pre></td></tr></table></figure>
@@ -83,6 +110,33 @@
 
 <p>除了可以根据数据划分组别，我们还可以重新映射数据，比如说我们可以把<code>day</code>变量的星期几重新映射成工作日（weekday）和周末（weekend）：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mappings = &#123;<span class="string">'Monday'</span>:<span class="string">'weekday'</span>, <span class="string">'Tuesday'</span>:<span class="string">'weekday'</span>, <span class="string">'Wednesday'</span>: <span class="string">'weekday'</span>, </div><div class="line">            <span class="string">'Thursday'</span>: <span class="string">'weekday'</span>, <span class="string">'Friday'</span>: <span class="string">'weekday'</span>, </div><div class="line">            <span class="string">'Saturday'</span>: <span class="string">'weekend'</span>, <span class="string">'Sunday'</span>: <span class="string">'weekend'</span>&#125;</div><div class="line"></div><div class="line">df[<span class="string">'day_week'</span>] = df[<span class="string">'day'</span>].replace(mappings)</div></pre></td></tr></table></figure>
+<h1 id="文本数据清理"><a href="#文本数据清理" class="headerlink" title="文本数据清理"></a>文本数据清理</h1><p>full_name变量中的姓名中有个别数据出现了一些敬称如Dr. Mr. Ms. Miss.等，我们为了使得数据变得统一，可以把这些敬称去除：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'full_name'</span>] = df[<span class="string">'full_name'</span>].str.replace(<span class="string">'Dr.'</span>, <span class="string">''</span>).str.replace(<span class="string">'Mr.'</span>, <span class="string">''</span>)\</div><div class="line">    .str.replace(<span class="string">'Ms.'</span>, <span class="string">''</span>).str.replace(<span class="string">'Miss.'</span>, <span class="string">''</span>).str.strip()</div><div class="line"><span class="comment"># 验证数据里是否还存在已经去除的敬称</span></div><div class="line"><span class="keyword">assert</span> df[<span class="string">'full_name'</span>].str.contains(<span class="string">'Ms.|Mr.|Miss|Dr.'</span>).any() == <span class="keyword">False</span></div></pre></td></tr></table></figure>
+<p>关于文本数据清理，可能会在实际情况中遇到更多的问题，多数情况我们需要使用replace()函数进行替换或者删除文本，同时在清理更加复杂的文本数据的时候还会用到正则表达式。</p>
+<h1 id="格式统一问题"><a href="#格式统一问题" class="headerlink" title="格式统一问题"></a>格式统一问题</h1><center><br><img src="http://mingju.net/uploads/images/Figure_4.png" alt=""><br></center>
+
+<p>数据的格式统一性也是经常出现的问题，例如在airlines中，起飞日期dept_time的数据中就出现了日期格式不统一的问题，甚至出现了13/31/2018这种不存在的日期：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#我们首先把dept_time转换成合适的数据类型datetime类型</span></div><div class="line">df[<span class="string">'dept_time_dt'</span>] = pd.to_datetime(df[<span class="string">'dept_time'</span>])</div></pre></td></tr></table></figure>
+<p>出现了报错：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DateParseError: Invalid date specified (<span class="number">13</span>/<span class="number">31</span>)</div></pre></td></tr></table></figure>
+<p>因为日期类型超出了范围，所以pandas抛出一个DateParseError错误，我们可以在<code>pd.to_datetime()</code>函数中增加一个<code>errors</code>参数来解决这个问题：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'dept_time_dt'</span>] = pd.to_datetime(df[<span class="string">'dept_time'</span>],\</div><div class="line">                                    infer_datetime_format = <span class="keyword">True</span>, \</div><div class="line">                                    errors = <span class="string">'coerce'</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">df.info()</div><div class="line">Out [14]:</div><div class="line">&lt;class 'pandas.core.frame.DataFrame'&gt;</div><div class="line">Int64Index: 2465 entries, 0 to 2467</div><div class="line">Data columns (total 24 columns):</div><div class="line"> #   Column              Non-Null Count  Dtype         </div><div class="line">---  ------              --------------  -----         </div><div class="line"> 0   id                  2465 non-null   int64         </div><div class="line"> 1   wait_time           2465 non-null   float64       </div><div class="line"> 2   full_name           2465 non-null   object        </div><div class="line"> 3   day                 2465 non-null   object        </div><div class="line"> 4   airline             2465 non-null   object        </div><div class="line"> 5   destination         2465 non-null   object        </div><div class="line"> 6   dest_region         2465 non-null   object        </div><div class="line"> 7   dest_size           2465 non-null   object        </div><div class="line"> 8   boarding_area       2465 non-null   object        </div><div class="line"> 9   dept_time           2465 non-null   object        </div><div class="line"> 10  temperature         2465 non-null   float64       </div><div class="line"> 11  wait_min            2465 non-null   object        </div><div class="line"> 12  cleanliness         2465 non-null   object        </div><div class="line"> 13  safety              2465 non-null   object        </div><div class="line"> 14  satisfaction        2465 non-null   object        </div><div class="line"> 15  rating              2465 non-null   int64         </div><div class="line"> 16  frequent_flyer      2465 non-null   int64         </div><div class="line"> 17  points_gain         2465 non-null   int64         </div><div class="line"> 18  points_last_time    2465 non-null   int64         </div><div class="line"> 19  total_points        2465 non-null   int64         </div><div class="line"> 20  frequent_flyer_cat  2465 non-null   category      </div><div class="line"> 21  wait_type           2465 non-null   category      </div><div class="line"> 22  day_week            2465 non-null   object        </div><div class="line"> 23  dept_time_dt        2464 non-null   datetime64[ns]</div><div class="line">dtypes: category(2), datetime64[ns](1), float64(2), int64(6), object(13)</div><div class="line">memory usage: 447.9+ KB</div><div class="line">df.head()</div><div class="line">Out [15]:</div><div class="line">  id  wait_time       full_name    ... wait_type day_week dept_time_dt</div><div class="line">0   13       90.0     Krista Leon  ...    medium  weekday          NaT</div><div class="line">1   14       89.0  Andrew Salazar  ...    medium  weekday   2018-12-31</div><div class="line">3  101      140.0  Kelvin Richard  ...    medium  weekday   2018-12-31</div><div class="line">4  102      200.0    Kylan Harper  ...      long  weekday   2018-12-31</div><div class="line">5  103      130.0      Cesar Lang  ...    medium  weekday   2018-12-31</div><div class="line"></div><div class="line">[5 rows x 24 columns]</div></pre></td></tr></table></figure>
+<p>这时<code>dept_time_dt</code>变量已经变为了<code>datetime64[ns]</code>类型，并且<code>infer_datetime_format = True</code>参数把December 31st, 2018映射成了2018-12-31跟其他数据统一的格式。13/31/2018这个日期程序无法映射和判断其到底为哪天，所以它被赋值为了NaT。</p>
+<p>在<code>dept_time_dt</code>中还出现了一些当天起飞的航班日期被标记成了未来的日期，我们把这些日期进行一些处理：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#获取今天的日期</span></div><div class="line">today = pd.to_datetime(<span class="string">'today'</span>).floor(<span class="string">'D'</span>)</div><div class="line"><span class="comment">#选取`dept_time_dt`中大于今天日期的数据，把其日期设置为今天的日期</span></div><div class="line">df.loc[df[<span class="string">'dept_time_dt'</span>] &gt; today, <span class="string">'dept_time_dt'</span>] = today</div><div class="line"><span class="comment">#打印出目前数据中最大的日期</span></div><div class="line">print(df[<span class="string">'dept_time_dt'</span>].max())</div></pre></td></tr></table></figure>
+<p>到目前为止，我们几乎对所有变量都进行了一定的清理，未被清理的数据也就只剩下个别的变量了。接下来我们来看一下<code>temperature</code>这个变量的数据有没有问题：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">plt.scatter(x = <span class="string">'dept_time_dt'</span>, y = <span class="string">'temperature'</span>, data = df)</div><div class="line"><span class="comment"># Create title, xlabel and ylabel</span></div><div class="line">plt.title(<span class="string">'Temperature in Fahrenheit - SFO'</span>)</div><div class="line">plt.xlabel(<span class="string">'Dates'</span>)</div><div class="line">plt.ylabel(<span class="string">'Temperature in Fahrenheit'</span>)</div><div class="line">plt.xticks(rotation = <span class="number">90</span>)</div><div class="line"><span class="comment"># Show plot</span></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<center><br><img src="http://mingju.net/uploads/images/Figure_5.png" alt=""><br></center>
+
+<p>通过散点图发现了2018年1月和2019年1月有出现了一些极寒的温度，在旧金山这种地方不太会出现10华氏度左右的问题，通过常识判断，应该是10摄氏度，我们对小于20的温度值进行温度转换：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">temp_cel = df.loc[df[<span class="string">'temperature'</span>] &lt; <span class="number">20</span>, <span class="string">'temperature'</span>]</div><div class="line"><span class="comment">#摄氏度转华氏度公式</span></div><div class="line">temp_fah = <span class="number">1.8</span> * temp_cel + <span class="number">32</span></div><div class="line">df.loc[df[<span class="string">'temperature'</span>] &lt; <span class="number">20</span>, <span class="string">'temperature'</span>] = temp_fah</div><div class="line"><span class="comment">#验证数据是否还存在最小值低于20的情况</span></div><div class="line"><span class="keyword">assert</span> df[<span class="string">'temperature'</span>].min() &gt; <span class="number">20</span></div></pre></td></tr></table></figure>
+<h1 id="交叉验证"><a href="#交叉验证" class="headerlink" title="交叉验证"></a>交叉验证</h1><p>最后我们对常旅会员的积分进行交叉验证，看是否存在积分不对等的情况。关于积分一共有三个变量，分别是本次飞行获得的积分（points_gain），本次飞行之前的基本（points_last_time），还有总积分(total_points)。</p>
+<p>所以，total_points = points_gain + points_last_time</p>
+<p>我们来验证一下是否如此：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">points_col = [<span class="string">'points_gain'</span>, <span class="string">'points_last_time'</span>]</div><div class="line">points_equ = df[points_col].sum(axis=<span class="number">1</span>) == df[<span class="string">'total_points'</span>]</div><div class="line">consistent_points = df[points_equ]</div><div class="line">inconsistent_points = df[~points_equ]</div><div class="line">print(<span class="string">"Number of inconsistent points: "</span>, inconsistent_points.shape[<span class="number">0</span>])</div><div class="line"></div><div class="line">Out [<span class="number">16</span>]:</div><div class="line">Number of inconsistent points:  <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>发现了存在1个不相等的数据。一般来讲，当我们发现了这种不前后矛盾的数据之后，最简单的办法就是drop，或者我们可以设置为NA空值，然后对其进行impute。我们的例子中的这种情况处理办法比较简单，可以就矛盾的数据拿出来检查，然后看是哪里出了问题，然后进行处理即可。</p>
+<p>借此，我们对airlines这个df的数据清洗就到此为止了，接下来我们就可以对此进行分析了。</p>
 ]]></content>
     
     <summary type="html">
@@ -831,41 +885,6 @@ library (&quot;xlsx&quot;)
     
     
       <category term="R" scheme="http://mingju.net/tags/R/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>从全球咖啡消费进出口看中国咖啡市场</title>
-    <link href="http://mingju.net/2015/10/from-world-coffee-consumption-and-trade-to-see-the-coffee-market-in-china/"/>
-    <id>http://mingju.net/2015/10/from-world-coffee-consumption-and-trade-to-see-the-coffee-market-in-china/</id>
-    <published>2015-10-27T18:56:09.000Z</published>
-    <updated>2020-05-05T22:42:18.991Z</updated>
-    
-    <content type="html"><![CDATA[<p>下面地图显示了从2003年至2015年世界咖啡的消费情况，颜色越深代表该国家的咖啡消费量越大。美国和巴西毫无疑问的成为世界上最大的两个咖啡消费国（欧洲咖啡消费暂无数据），分别达到了313,437单位和250,890单位。地图上所数据的单位为1,000/60千克每包。</p>
-<p><iframe src="http://mingju.net/uploads/World_Coffee_Consumption.html" width="600" height="400"></iframe><br>数据来源：<a href="http://apps.fas.usda.gov/psdonline/psdDownload.aspx" target="_blank">United States Department of Agriculture</a></p>
-<p>接下来是咖啡进口的情况。美国是世界上咖啡进口最多的国家，从2003年至今进口量达到了318,095个单位。</p>
-<p><iframe src="http://mingju.net/uploads/World_Coffee_Import.html" width="600" height="400"></iframe><br>数据来源：<a href="http://apps.fas.usda.gov/psdonline/psdDownload.aspx" target="_blank">United States Department of Agriculture</a></p>
-<p>从咖啡的出口情况来看，巴西是世界上出口咖啡最多的国家，从2003年至今出口量达到了423,470个单位，其次是越南，出口量达到了273,746个单位。然后就是哥伦比亚和印度尼西亚，出口量分别达到141,445个单位和105,444个单位。越南种植着大量用于制作速溶咖啡的罗伯斯塔咖啡，所以咖啡出口量也很庞大。</p>
-<p><iframe src="http://mingju.net/uploads/World_Coffee_Export.html" width="600" height="400"></iframe><br>数据来源：<a href="http://apps.fas.usda.gov/psdonline/psdDownload.aspx" target="_blank">United States Department of Agriculture</a></p>
-<p>让我们把目标转回中国。中国由于茶文化等诸多原因，显然在咖啡消费能力和进出口能力上完全与美国巴西以及欧洲等具有浓厚咖啡文化的国家没办法相比。但是，从2003年以来至今，中国的咖啡消费量每年都在增长。从2003年的200个单位增长到了2015年的1,660个单位。12年的时间一共增长了730%。单一从咖啡消费量来讲，中国的咖啡市场有着巨大的潜力。</p>
-<p><iframe src="http://mingju.net/uploads/China_Coffee_Consumption.html" width="600" height="425"></iframe><br>数据来源：<a href="http://apps.fas.usda.gov/psdonline/psdDownload.aspx" target="_blank">United States Department of Agriculture</a></p>
-<p>而且现在在中国越来越多的年轻人把喝咖啡当作追求时尚的行为。从咖啡巨头星巴克对中国市场的行动我们也可以看出中国咖啡市场的巨大消费潜力。早在2013年的时候<a href="http://www.usatoday.com/story/money/business/2013/09/16/starbucks-china-flagship-stores/2820885/" target="_blank">中国就已经成为星巴克除美国之外的第一海外市场</a>。星巴克在中国的咖啡店数量更是从2005年的209家增长到了2015年的1937家。10年增长了近827%。下面的地图是星巴克在全球的分布情况。</p>
-<p><iframe src="http://mingju.net/uploads/Worldwide_Starbucks_Stores.html" width="600" height="400"></iframe><br>数据来源：<a href="https://opendata.socrata.com/Business/All-Starbucks-Locations-in-the-World/xy4y-c4mk" target="_blank">OpenData by Socrata</a></p>
-<p><a href="https://www.dropbox.com/sh/502wurmehq06606/AAA7QBTG090bkeJvec3BnuqHa?dl=0" target="_blank">码农的世界你不懂</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;下面地图显示了从2003年至2015年世界咖啡的消费情况，颜色越深代表该国家的咖啡消费量越大。美国和巴西毫无疑问的成为世界上最大的两个咖啡消费国（欧洲咖啡消费暂无数据），分别达到了313,437单位和250,890单位。地图上所数据的单位为1,000/60千克每包。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="数据可视化" scheme="http://mingju.net/categories/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/"/>
-    
-    
-      <category term="R" scheme="http://mingju.net/tags/R/"/>
-    
-      <category term="咖啡" scheme="http://mingju.net/tags/%E5%92%96%E5%95%A1/"/>
     
   </entry>
   
