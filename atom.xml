@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://mingju.net/"/>
-  <updated>2020-05-30T11:32:59.080Z</updated>
+  <updated>2020-05-31T05:48:17.089Z</updated>
   <id>http://mingju.net/</id>
   
   <author>
@@ -20,13 +20,13 @@
     <link href="http://mingju.net/2020/05/dealing_with_missing_data_in_python/"/>
     <id>http://mingju.net/2020/05/dealing_with_missing_data_in_python/</id>
     <published>2020-05-29T00:18:00.000Z</published>
-    <updated>2020-05-30T11:32:59.080Z</updated>
+    <updated>2020-05-31T05:48:17.089Z</updated>
     
-    <content type="html"><![CDATA[<p>在数据清洗的过程中，还有一个非常重要的问题就是处理缺失的数据，尤其是在我们拿到样本比较小的数据时，能够通过一些合理的方式去补全这些缺失的数据对我们接下来的分析尤为重要。这篇将会介绍一些处理数据缺失的处理方法和手段。</p>
+    <content type="html"><![CDATA[<p>在数据清洗的过程中，还有一个非常重要的问题就是处理缺失的数据，尤其是在我们拿到样本比较小的数据时，能够通过一些合理的方式去插补这些缺失的数据对我们接下来的分析尤为重要。这篇将会介绍一些处理数据缺失的处理方法和手段。</p>
 <p>一般情况下，缺失的数据通常会以NA, nan, 0, .等来表示，造成缺失数据的原因一般也是两种，一个是人为错误，还有就是技术错误。在遍历缺失数据时，有一个非常好用的可视化库Missingno。接下来会经常使用这个库进行可视化我们的缺失数据，以便更好的去理解数据缺失的原因：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#需要配合matplotlib来使用missingno库</span></div><div class="line"><span class="keyword">import</span> missingno <span class="keyword">as</span> msno</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">msno.matrix(df)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
 <p>首先我们需要了解处理缺失数据的一个基本流程：</p>
-<p><strong>转化所有缺失值为空 –&gt;分析缺失值的数量及类型–&gt;合理的删除或者补全缺失数据 –&gt;比较评估表现</strong></p>
+<p><strong>转化所有缺失值为空 –&gt;分析缺失值的数量及类型–&gt;合理删除或插补缺失数据 –&gt;比较评估表现</strong></p>
 <p>这篇将会使用datacamp中的<a href="https://assets.datacamp.com/production/repositories/4584/datasets/459359643874ba6411189d4a5251204b6142dd7d/pima-indians-diabetes%20data.csv" target="_blank" rel="external">diabetes</a>数据。这个链接下载下来的数据是一个xls文件，可能是文件类型出现了问题，可自行修改成csv后缀。其中我对原数据进行了一些修改从而更好的完成这篇文章的例子（该文使用的数据下载地址）：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">import pandas as pd</div><div class="line">import numpy as np</div><div class="line">df = pd.read_csv('datasets/pima-indians-diabetes.csv')</div><div class="line">df.head()</div><div class="line">Out [1]:</div><div class="line"> 	Pregnant  Glucose  Diastolic_BP ... Diabetes_Pedigree  Age  Class</div><div class="line">0         6    129.0          90.0  ...             0.582   60      0</div><div class="line">1        12     92.0          62.0  ...             0.926   44      1</div><div class="line">2         1     90.0          68.0  ...             1.138   36      0</div><div class="line">3         1    109.0          60.0  ...             0.947   21      0</div><div class="line">4         1     73.0          50.0  ...             0.248   21      0</div><div class="line">df.info()</div><div class="line">Out [2]:</div><div class="line">&lt;class 'pandas.core.frame.DataFrame'&gt;</div><div class="line">RangeIndex: 768 entries, 0 to 767</div><div class="line">Data columns (total 9 columns):</div><div class="line"> #   Column             Non-Null Count  Dtype  </div><div class="line">---  ------             --------------  -----  </div><div class="line"> 0   Pregnant           768 non-null    int64  </div><div class="line"> 1   Glucose            763 non-null    float64</div><div class="line"> 2   Diastolic_BP       733 non-null    float64</div><div class="line"> 3   Skin_Fold          768 non-null    object </div><div class="line"> 4   Serum_Insulin      394 non-null    float64</div><div class="line"> 5   BMI                768 non-null    float64</div><div class="line"> 6   Diabetes_Pedigree  768 non-null    float64</div><div class="line"> 7   Age                768 non-null    int64  </div><div class="line"> 8   Class              768 non-null    int64  </div><div class="line">dtypes: float64(5), int64(3), object(1)</div><div class="line">memory usage: 54.1+ KB</div></pre></td></tr></table></figure>
 <p>通过<code>.head()</code>我们大致对数据有了一个了解，通过<code>.info()</code>我们可以判断出变量<code>Glucose</code>，<code>Diastolic_BP</code>，<code>Serum_Insulin</code>这三个变量是有数据缺失的。除了这三个可以很直观的看出有缺失值的变量外，很多时候数据还会存在一些隐藏的缺失情况。我们观察发现，所有变量类型都是数字类型，只有Skin_Fold是一个对象（object）类型，虽然它在<code>.info()</code>中包含了768条完整的数据，但是这要引起我们的重视，所以要对其进行重点观察：</p>
@@ -44,11 +44,45 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">import missingno as msno</div><div class="line">import matplotlib.pyplot as plt</div><div class="line">msno.bar(df)</div><div class="line">msno.matrix(df)</div></pre></td></tr></table></figure>
 <center><br><img src="http://mingju.net/uploads/images/Figure_6.png" alt=""><br><img src="http://mingju.net/uploads/images/Figure_7.png" alt=""><br></center>
 
-<h1 id="合理的删除或者补全缺失数据"><a href="#合理的删除或者补全缺失数据" class="headerlink" title="合理的删除或者补全缺失数据"></a>合理的删除或者补全缺失数据</h1><h1 id="比较评估表现"><a href="#比较评估表现" class="headerlink" title="比较评估表现"></a>比较评估表现</h1>]]></content>
+<p>缺失值是随机发生的吗？是如何发生的呢？不同的变量缺失值之间是否存在一些相关性？</p>
+<p>一般来讲，发生缺失值有三种情况：</p>
+<ol>
+<li>完全随机缺失（MCAR）：缺失值与其他变量没有任何关联；</li>
+<li>随机缺失（MAR）：缺失值与其他变量但不是与其他缺失变量纯在相关性；</li>
+<li>非随机缺失（MNAR）：缺失值之间存在相关性。</li>
+</ol>
+<p>理解缺失值的存在原因以及它们之间的相关性对于对缺失值的处理至关重要。我们通过对df的matrix观察可以发现，<code>Glucose</code>变量和<code>BMI</code>变量为完全随机缺失，<code>Diastolic_BP</code>变量为随机缺失，<code>Skin_Fold</code>和<code>Serum_Insulin</code>两个变量的缺失值存在相关行，所以它们是非随机缺失。</p>
+<p>为了更加直观的观察缺失值之间的关系，我们还可以使用missingno包中的热力图及树形决策图来进行可视化：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">msno.heatmap(df)</div><div class="line">msno.dendrogram(df)</div></pre></td></tr></table></figure>
+<center><br><img src="http://mingju.net/uploads/images/Figure_8.png" alt=""><br><img src="http://mingju.net/uploads/images/Figure_9.png" alt=""><br></center>
+
+<p>通过这两张图，我们可以非常直观的看到<code>Skin_Fold</code>和<code>Serum_Insulin</code>两个变量的缺失值存在强相关性。</p>
+<h1 id="合理删除或插补缺失数据"><a href="#合理删除或插补缺失数据" class="headerlink" title="合理删除或插补缺失数据"></a>合理删除或插补缺失数据</h1><p>在分析完缺失值的情况之后，我们可以根据实际情况对缺失数据进行一些处理。对于缺失数据，一般的处理方式有两种：1. 删除缺失数据； 2. 插补缺失数据。</p>
+<p>对于完全随机缺失（MCAR）的情况一般处理方法就是直接删除，其中删除方式有两种：1. 成对删除（pairwise）； 2. 列表删除（listwise）。</p>
+<p>两种删除方式各自有其优点和缺点。一般情况推荐使用成对删除方式，但是当数据确实量较小的时候，为了得到更完整的分析结果，可以考虑使用列表删除。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">df[<span class="string">'Glucose'</span>].isnull().sum()</div><div class="line">Out [<span class="number">9</span>]:</div><div class="line"><span class="number">5</span></div><div class="line">df[<span class="string">'BMI'</span>].isnull().sum()</div><div class="line">Out [<span class="number">9</span>]:</div><div class="line"><span class="number">11</span></div></pre></td></tr></table></figure>
+<p><code>Glucose</code>变量和<code>BMI</code>由于是完全随机缺失且缺失数据量较少，所以我们这边对它们采用列表删除整行数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df.dropna(subset=[<span class="string">"Glucose"</span>, <span class="string">'BMI'</span>], how=<span class="string">'any'</span>, inplace=<span class="keyword">True</span>)</div><div class="line">msno.matrix(df)</div></pre></td></tr></table></figure>
+<p>再次绘制matrix观察对缺失值的删除情况，我们发现<code>Glucose</code>变量和<code>BMI</code>的缺失值已经被完全删除了，这里再次强调一下，仅仅删除缺失数据当我们可以确定数据是完全随机缺失的时候。</p>
+<p><center><br><img src="http://mingju.net/uploads/images/Figure_10.png" alt=""><br></center><br>在对完全随机缺失的数据进行删除操作之后，我们需要对那些因为其他原因缺失的数据进行插补操作。目前我们还有以下变量存在缺失数据：</p>
+<p><code>Diastolic_BP</code></p>
+<p><code>Skin_Fold</code></p>
+<p><code>Serum_Insulin</code></p>
+<p>缺失数据插补一般有两种方式，一种为一般方式还有一种为高级方式。一般方式通常是为缺失数据插补平均数、中位数、众数或者常量，高级插补方式中需要使用到机器学习的一些算法来进行插补，比如KNN，MICE等。使用哪种方式要根据不同的情况进行合理的选择，需要对数据进行合理的插补又不能过度拟合模型。一般方式插补数据需要用到一个python包sklearn：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.impute <span class="keyword">import</span> SimpleImputer</div></pre></td></tr></table></figure>
+<p>平均数插补：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_mean = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">mean_imputer = SimpleImputer(strategy=<span class="string">'mean'</span>)</div><div class="line">df_mean.loc[:, :] = mean_imputer.fit_transform(df_mean)</div></pre></td></tr></table></figure>
+<p>中位数插补：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_median = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">median_imputer = SimpleImputer(strategy=<span class="string">'median'</span>)</div><div class="line">df_median.loc[:, :] = mean_imputer.fit_transform(df_median)</div></pre></td></tr></table></figure>
+<p>众数插补：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_mode = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">mode_imputer = SimpleImputer(strategy=<span class="string">'mode'</span>)</div><div class="line">df_mode.loc[:, :] = mean_imputer.fit_transform(df_mode)</div></pre></td></tr></table></figure>
+<p>常量插补：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_constant = diabetes.copy(deep=<span class="keyword">True</span>)</div><div class="line">constant_imputer = SimpleImputer(strategy=<span class="string">'constant'</span>, fill_value=<span class="number">0</span>))</div><div class="line">df_constant.loc[:, :] = constant_imputer.fit_transform(df_constant)</div></pre></td></tr></table></figure>
+]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;在数据清洗的过程中，还有一个非常重要的问题就是处理缺失的数据，尤其是在我们拿到样本比较小的数据时，能够通过一些合理的方式去补全这些缺失的数据对我们接下来的分析尤为重要。这篇将会介绍一些处理数据缺失的处理方法和手段。&lt;/p&gt;
+      &lt;p&gt;在数据清洗的过程中，还有一个非常重要的问题就是处理缺失的数据，尤其是在我们拿到样本比较小的数据时，能够通过一些合理的方式去插补这些缺失的数据对我们接下来的分析尤为重要。这篇将会介绍一些处理数据缺失的处理方法和手段。&lt;/p&gt;
 &lt;p&gt;一般情况下，缺失的数据通常会以NA, nan
     
     </summary>
