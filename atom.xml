@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://mingju.net/"/>
-  <updated>2020-05-31T05:48:17.089Z</updated>
+  <updated>2020-06-02T22:03:26.919Z</updated>
   <id>http://mingju.net/</id>
   
   <author>
@@ -16,11 +16,83 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Windows安装fancyimpute遇到的问题及解决方案</title>
+    <link href="http://mingju.net/2020/06/installing-fancyimpute-on-windows/"/>
+    <id>http://mingju.net/2020/06/installing-fancyimpute-on-windows/</id>
+    <published>2020-06-02T11:08:00.000Z</published>
+    <updated>2020-06-02T22:03:26.919Z</updated>
+    
+    <content type="html"><![CDATA[<p>Anaconda Cloud中没有提供<a href="https://anaconda.org/search?q=fancyimpute" target="_blank" rel="external">fancyimpute</a>在windows环境下的库，所以我们需要使用pip来安装fancyimpute。网上大多数安装方式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">conda install ecos</div><div class="line">conda install CVXcanon</div><div class="line">pip install fancyimpute</div></pre></td></tr></table></figure>
+<p>在安装ecos和CVXcanon的过程中你可以会遇到在<a href="https://stackoverflow.com/questions/56414925/unable-to-install-fancyimpute-in-anaconda" target="_blank" rel="external">这篇帖子</a>中遇到的错误，至少我是遇到了：</p>
+<table><tr><td bgcolor="black"> <font color="red"><br>ERROR: Failed building wheel for scs   Running setup.py clean for scs Failed to build cvxpy scs<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red"><br>ERROR: Could not build wheels for cvxpy which use PEP 517 and cannot be installed directly<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red"><br>error: Microsoft Visual C++ 14.0 is required. Get it with “Microsoft Visual C++ Build Tools”: <a href="https://visualstudio.microsoft.com/downloads/" target="_blank" rel="external">https://visualstudio.microsoft.com/downloads/</a> </font><br></td></tr></table>
+
+<p>这篇帖子有一个答案给出了解决方案，我当时照着操作就是去下载了<a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#scs" target="_blank" rel="external">scs</a> and <a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#cvxpy" target="_blank" rel="external">cvxpy</a> wheels，然后通过pip安装了这两个whl文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">conda install ecos</div><div class="line">conda install (scs filename).whl</div><div class="line">conda install (cvxpy filename).whl</div><div class="line">pip install fancyimpute</div></pre></td></tr></table></figure>
+<p>然后也成功的安装好了fancyimpute，但是当我在Spyder下import fancyimpute的时候出现了import error：</p>
+<table><tr><td bgcolor="black"> <font color="red"><br>ModuleNotFoundError: No module named ‘cvxpy.cvxcore.python._cvxcore’<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red">ImportError: DLL load failed: The specified module could not be found.<br></font></td></tr></table>
+
+<p>然后去解决ModuleNotFoundError，尝试了很多办法都没能解决问题，但是可以确定的是一定是cvxpy这个库出了问题，导致fancyimpute不能import，所以卸载了cvxpy这个库：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pip uninstall cvxpy</div><div class="line">pip install cvxpy</div></pre></td></tr></table></figure>
+<p>接着又出现了：</p>
+<table><tr><td bgcolor="black"> <font color="red"><br>ERROR: Failed building wheel for scs   Running setup.py clean for scs Failed to build cvxpy scs<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red"><br>ERROR: Could not build wheels for cvxpy which use PEP 517 and cannot be installed directly<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red"><br>error: Microsoft Visual C++ 14.0 is required. Get it with “Microsoft Visual C++ Build Tools”: <a href="https://visualstudio.microsoft.com/downloads/" target="_blank" rel="external">https://visualstudio.microsoft.com/downloads/</a> </font><br></td></tr></table>
+
+<p>这次仔细读了错误内容，然后又去了cvxpy的<a href="https://www.cvxpy.org/install/index.html#conda" target="_blank" rel="external">官方站点</a>。终于发现了问题所在，其实在一开始提到的那篇StackOverflow的帖子里的解决方案中的第一部也提到了这点，就是安装 <a href="https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&amp;rel=16" target="_blank" rel="external">Visual Studio build tools for Python 3</a></p>
+<p>，然后我再最开始忽略了这个步骤。下载好VS之后，然后重新安装cvxpy之后就不会报错了。安装完之后，fancyimpute就可以完美的使用了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Anaconda Cloud中没有提供&lt;a href=&quot;https://anaconda.org/search?q=fancyimpute&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;fancyimpute&lt;/a&gt;在windows环境下的库，所以我们需要
+    
+    </summary>
+    
+      <category term="常见问题" scheme="http://mingju.net/categories/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
+    
+    
+      <category term="fancyimpute" scheme="http://mingju.net/tags/fancyimpute/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>pip安装超时timeout问题及解决方案</title>
+    <link href="http://mingju.net/2020/06/pip-timeout-error-in-python/"/>
+    <id>http://mingju.net/2020/06/pip-timeout-error-in-python/</id>
+    <published>2020-06-02T00:00:00.000Z</published>
+    <updated>2020-06-02T00:15:55.637Z</updated>
+    
+    <content type="html"><![CDATA[<p>在使用pip安装一些比较大的库的时候，由于网络不稳定或者服务器不稳定等其他原因总是会出现安装错误或者超时等错误，从而造成库安装失败。一般我们的解决方式是切换到稳定的服务器源来进行安装。其实除了切换源以外，pip本身也提供了一些参数可以解决超时timeout的问题。</p>
+<p>一般timeout error你将会看到以下报错信息：</p>
+<table><tr><td bgcolor="black"> <font color="red">raise ReadTimeoutError(self._pool, None, “Read timed out.”)<br>pip._vendor.urllib3.exceptions.ReadTimeoutError: HTTPSConnectionPool(host=’pypi.tuna.tsinghua.edu.cn’, port=443): Read timed out.</font></td></tr></table>
+
+<p>我们可以通过为pip添加响应时间参数，来延迟pip对超时的相应：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip --timeout <span class="number">100</span> install packagename</div></pre></td></tr></table></figure>
+<p>如果设置100秒还不能解决问题，可以试着把数字再设置大一些例如200秒。</p>
+<p>我们还可以为pip设置重试次数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip --timeout <span class="number">100</span> --retries <span class="number">10</span> install packagename</div></pre></td></tr></table></figure>
+<p>正如最开始所提到的，pip还有很多其他的参数，可以使用以下命令参考：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip -h</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在使用pip安装一些比较大的库的时候，由于网络不稳定或者服务器不稳定等其他原因总是会出现安装错误或者超时等错误，从而造成库安装失败。一般我们的解决方式是切换到稳定的服务器源来进行安装。其实除了切换源以外，pip本身也提供了一些参数可以解决超时timeout的问题。&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="常见问题" scheme="http://mingju.net/categories/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
+    
+    
+      <category term="Python" scheme="http://mingju.net/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Python中的缺失数据处理方法</title>
     <link href="http://mingju.net/2020/05/dealing_with_missing_data_in_python/"/>
     <id>http://mingju.net/2020/05/dealing_with_missing_data_in_python/</id>
     <published>2020-05-29T00:18:00.000Z</published>
-    <updated>2020-05-31T05:48:17.089Z</updated>
+    <updated>2020-05-31T07:38:37.984Z</updated>
     
     <content type="html"><![CDATA[<p>在数据清洗的过程中，还有一个非常重要的问题就是处理缺失的数据，尤其是在我们拿到样本比较小的数据时，能够通过一些合理的方式去插补这些缺失的数据对我们接下来的分析尤为重要。这篇将会介绍一些处理数据缺失的处理方法和手段。</p>
 <p>一般情况下，缺失的数据通常会以NA, nan, 0, .等来表示，造成缺失数据的原因一般也是两种，一个是人为错误，还有就是技术错误。在遍历缺失数据时，有一个非常好用的可视化库Missingno。接下来会经常使用这个库进行可视化我们的缺失数据，以便更好的去理解数据缺失的原因：</p>
@@ -64,20 +136,14 @@
 <p><code>Glucose</code>变量和<code>BMI</code>由于是完全随机缺失且缺失数据量较少，所以我们这边对它们采用列表删除整行数据：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df.dropna(subset=[<span class="string">"Glucose"</span>, <span class="string">'BMI'</span>], how=<span class="string">'any'</span>, inplace=<span class="keyword">True</span>)</div><div class="line">msno.matrix(df)</div></pre></td></tr></table></figure>
 <p>再次绘制matrix观察对缺失值的删除情况，我们发现<code>Glucose</code>变量和<code>BMI</code>的缺失值已经被完全删除了，这里再次强调一下，仅仅删除缺失数据当我们可以确定数据是完全随机缺失的时候。</p>
-<p><center><br><img src="http://mingju.net/uploads/images/Figure_10.png" alt=""><br></center><br>在对完全随机缺失的数据进行删除操作之后，我们需要对那些因为其他原因缺失的数据进行插补操作。目前我们还有以下变量存在缺失数据：</p>
-<p><code>Diastolic_BP</code></p>
-<p><code>Skin_Fold</code></p>
-<p><code>Serum_Insulin</code></p>
-<p>缺失数据插补一般有两种方式，一种为一般方式还有一种为高级方式。一般方式通常是为缺失数据插补平均数、中位数、众数或者常量，高级插补方式中需要使用到机器学习的一些算法来进行插补，比如KNN，MICE等。使用哪种方式要根据不同的情况进行合理的选择，需要对数据进行合理的插补又不能过度拟合模型。一般方式插补数据需要用到一个python包sklearn：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.impute <span class="keyword">import</span> SimpleImputer</div></pre></td></tr></table></figure>
-<p>平均数插补：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_mean = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">mean_imputer = SimpleImputer(strategy=<span class="string">'mean'</span>)</div><div class="line">df_mean.loc[:, :] = mean_imputer.fit_transform(df_mean)</div></pre></td></tr></table></figure>
-<p>中位数插补：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_median = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">median_imputer = SimpleImputer(strategy=<span class="string">'median'</span>)</div><div class="line">df_median.loc[:, :] = mean_imputer.fit_transform(df_median)</div></pre></td></tr></table></figure>
-<p>众数插补：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_mode = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">mode_imputer = SimpleImputer(strategy=<span class="string">'mode'</span>)</div><div class="line">df_mode.loc[:, :] = mean_imputer.fit_transform(df_mode)</div></pre></td></tr></table></figure>
-<p>常量插补：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_constant = diabetes.copy(deep=<span class="keyword">True</span>)</div><div class="line">constant_imputer = SimpleImputer(strategy=<span class="string">'constant'</span>, fill_value=<span class="number">0</span>))</div><div class="line">df_constant.loc[:, :] = constant_imputer.fit_transform(df_constant)</div></pre></td></tr></table></figure>
+<center><br><img src="http://mingju.net/uploads/images/Figure_10.png" alt=""><br></center><br>在对完全随机缺失的数据进行删除操作之后，我们需要对那些因为其他原因缺失的数据进行插补操作。目前我们还有以下变量存在缺失数据：<br><br><code>Diastolic_BP</code><br><br><code>Skin_Fold</code><br><br><code>Serum_Insulin</code><br><br>缺失数据插补一般有两种方式，一种为一般方式还有一种为高级方式。一般方式通常是为缺失数据插补平均数、中位数、众数或者常量，高级插补方式中需要使用到机器学习的一些算法来进行插补，比如KNN，MICE等。使用哪种方式要根据不同的情况进行合理的选择，需要对数据进行合理的插补又不能过度拟合模型。一般方式插补数据需要用到一个python包sklearn：<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.impute <span class="keyword">import</span> SimpleImputer</div></pre></td></tr></table></figure><br><br>平均数插补：<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_mean = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">mean_imputer = SimpleImputer(strategy=<span class="string">'mean'</span>)</div><div class="line">df_mean.loc[:, :] = mean_imputer.fit_transform(df_mean)</div></pre></td></tr></table></figure><br><br>中位数插补：<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_median = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">median_imputer = SimpleImputer(strategy=<span class="string">'median'</span>)</div><div class="line">df_median.loc[:, :] = mean_imputer.fit_transform(df_median)</div></pre></td></tr></table></figure><br><br>众数插补：<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_mode = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">mode_imputer = SimpleImputer(strategy=<span class="string">'mode'</span>)</div><div class="line">df_mode.loc[:, :] = mean_imputer.fit_transform(df_mode)</div></pre></td></tr></table></figure><br><br>常量插补：<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_constant = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">constant_imputer = SimpleImputer(strategy=<span class="string">'constant'</span>, fill_value=<span class="number">0</span>)</div><div class="line">df_constant.loc[:, :] = constant_imputer.fit_transform(df_constant)</div></pre></td></tr></table></figure><br><br>可视化一下我们的插补情况：<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">nullity = df[<span class="string">'Serum_Insulin'</span>].isnull()+df[<span class="string">'Glucose'</span>].isnull()</div><div class="line">df_mean.plot(x=<span class="string">'Serum_Insulin'</span>, y=<span class="string">'Glucose'</span>, kind=<span class="string">'scatter'</span>, alpha=<span class="number">0.5</span>,</div><div class="line">c=nullity, cmap=<span class="string">'rainbow'</span>, title=<span class="string">'Mean Imputation'</span>)</div></pre></td></tr></table></figure><br><br><center><br><img src="http://mingju.net/uploads/images/Figure_11.png" alt=""><br></center>
+
+<p><code>Serum_Insulin</code>变量和<code>Glucose</code>变量从图中的紫色点可以看出存在一定的正相关性，但是插补的数据（红色点）并没有呈现应有的相关性，所以该插补方式可能不是特别合理。</p>
+<p>我们观察一下另外其他的几种插补情况：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">fig, axes = plt.subplots(nrows=<span class="number">2</span>, ncols=<span class="number">2</span>, figsize=(<span class="number">10</span>, <span class="number">10</span>))</div><div class="line">nullity = df[<span class="string">'Serum_Insulin'</span>].isnull()+df[<span class="string">'Glucose'</span>].isnull()</div><div class="line">imputations = &#123;<span class="string">'Mean Imputation'</span>: df_mean, </div><div class="line">               <span class="string">'Median Imputation'</span>: df_median,</div><div class="line">               <span class="string">'Most Frequent Imputation'</span>: df_mode,</div><div class="line">               <span class="string">'Constant Imputation'</span>: df_constant&#125;</div><div class="line"><span class="keyword">for</span> ax, df_key <span class="keyword">in</span> zip(axes.flatten(), imputations):</div><div class="line">    imputations[df_key].plot(x=<span class="string">'Serum_Insulin'</span>, y=<span class="string">'Glucose'</span>, kind=<span class="string">'scatter'</span>,</div><div class="line">                             alpha=<span class="number">0.5</span>, c=nullity, cmap=<span class="string">'rainbow'</span>, ax=ax,</div><div class="line">                             colorbar=<span class="keyword">False</span>, title=df_key)</div></pre></td></tr></table></figure>
+<center><br><img src="http://mingju.net/uploads/images/Figure_12.png" alt=""><br></center>
+
+<p>出现了与mean插补方式类似的情况。</p>
 ]]></content>
     
     <summary type="html">
@@ -874,69 +940,6 @@
     
     
       <category term="机器学习" scheme="http://mingju.net/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>EXCEL如何把数据基于列分离到不同工作表中</title>
-    <link href="http://mingju.net/2016/02/excel-split-data-into-multiple-worksheets-based-on-column/"/>
-    <id>http://mingju.net/2016/02/excel-split-data-into-multiple-worksheets-based-on-column/</id>
-    <published>2016-02-12T16:37:52.000Z</published>
-    <updated>2020-05-04T23:57:42.876Z</updated>
-    
-    <content type="html"><![CDATA[<p>前一段工作遇到一个需要处理分离大量数据的重复工作，所以在网上找到了一个方法可以比较快速的根据列明把数据分离到不同的sheet中，而且可以把sheet名称命名为该列名。图片可能看得更明白一些，你可能想把上图中的情况根据A列来把数据根据不同的姓名分离成4个不同的工作表从而达到下面4副小图的情况。过程需要使用VBA代码，但是不用担心，接下来我会详细告诉你操作步骤。</p>
-<p><img src="http://mingju.net/uploads/images/doc-split-data-by-columns1.png" alt=""></p>
-<p><img src="http://mingju.net/uploads/images/doc-split-data-by-columns2.png" alt=""><br><img src="http://mingju.net/uploads/images/doc-split-data-by-columns3.png" alt=""><br><img src="http://mingju.net/uploads/images/doc-split-data-by-columns4.png" alt=""><br><img src="http://mingju.net/uploads/images/doc-split-data-by-columns5.png" alt=""></p>
-<p>第一步，同时按住Alt+F11键打开Microsoft Visual Basic for Applications</p>
-<p>第二步，找到“插入”&gt;“Module”，然后把以下代码复制粘贴到Module窗口中。</p>
-<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Sub</span> parse_data()</div><div class="line"><span class="keyword">Dim</span> lr As Long</div><div class="line"><span class="keyword">Dim</span> ws As Worksheet</div><div class="line"><span class="keyword">Dim</span> vcol, i As Integer</div><div class="line"><span class="keyword">Dim</span> icol As Long</div><div class="line"><span class="keyword">Dim</span> myarr As Variant</div><div class="line"><span class="keyword">Dim</span> title As <span class="built_in">String</span></div><div class="line"><span class="keyword">Dim</span> titlerow As Integer</div><div class="line">vcol = <span class="number">1</span>       </div><div class="line"><span class="keyword">Set</span> ws = Sheets(<span class="string">"Sheet1"</span>)       </div><div class="line">lr = ws.Cells(ws.Rows.Count, vcol).<span class="keyword">End</span>(xlUp).Row</div><div class="line">title = <span class="string">"A1:C1"</span>           </div><div class="line">titlerow = ws.Range(title).Cells(<span class="number">1</span>).Row</div><div class="line">icol = ws.Columns.Count</div><div class="line">ws.Cells(<span class="number">1</span>, icol) = <span class="string">"Unique"</span></div><div class="line"><span class="keyword">For</span> i = <span class="number">2</span> <span class="keyword">To</span> lr</div><div class="line"><span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">Resume</span> <span class="keyword">Next</span></div><div class="line"><span class="keyword">If</span> ws.Cells(i, vcol) &lt;&gt; <span class="string">""</span> <span class="keyword">And</span> Application.WorksheetFunction.Match(ws.Cells(i, vcol), ws.Columns(icol), <span class="number">0</span>) = <span class="number">0</span> <span class="keyword">Then</span></div><div class="line">ws.Cells(ws.Rows.Count, icol).<span class="keyword">End</span>(xlUp).Offset(<span class="number">1</span>) = ws.Cells(i, vcol)</div><div class="line"><span class="keyword">End</span> <span class="keyword">If</span></div><div class="line"><span class="keyword">Next</span></div><div class="line">myarr = Application.WorksheetFunction.Transpose(ws.Columns(icol).SpecialCells(xlCellTypeConstants))</div><div class="line">ws.Columns(icol).Clear</div><div class="line"><span class="keyword">For</span> i = <span class="number">2</span> <span class="keyword">To</span> <span class="built_in">UBound</span>(myarr)</div><div class="line">ws.Range(title).AutoFilter field:=vcol, Criteria1:=myarr(i) &amp; <span class="string">""</span></div><div class="line"><span class="keyword">If</span> <span class="keyword">Not</span> Evaluate(<span class="string">"=ISREF('"</span> &amp; myarr(i) &amp; <span class="string">"'!A1)"</span>) <span class="keyword">Then</span></div><div class="line">Sheets.Add(after:=Worksheets(Worksheets.Count)).Name = myarr(i) &amp; <span class="string">""</span></div><div class="line"><span class="keyword">Else</span></div><div class="line">Sheets(myarr(i) &amp; <span class="string">""</span>).Move after:=Worksheets(Worksheets.Count)</div><div class="line"><span class="keyword">End</span> <span class="keyword">If</span></div><div class="line">ws.Range(<span class="string">"A"</span> &amp; titlerow &amp; <span class="string">":A"</span> &amp; lr).EntireRow.Copy Sheets(myarr(i) &amp; <span class="string">""</span>).Range(<span class="string">"A1"</span>)</div><div class="line">Sheets(myarr(i) &amp; <span class="string">""</span>).Columns.AutoFit</div><div class="line"><span class="keyword">Next</span></div><div class="line">ws.AutoFilterMode = <span class="literal">False</span></div><div class="line">ws.Activate</div><div class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></div></pre></td></tr></table></figure>
-<p>注释：<br>vcol =1，数值1是你要根据该列分离数据的列号<br>Set ws = Sheets(“Sheet1”)，Sheet1是你想要分离这些数据的主工作表<br>title = “A1:C1”, A1:C1是标题的范围</p>
-<p>以上这些都是可以根据你自己的需求去改变的。当你设置好代码之后只需要按F5运行这些代码就可以达到你想要的效果了。</p>
-<p>原文链接：<a href="http://www.extendoffice.com/documents/excel/1174-excel-split-data-into-multiple-worksheets-based-on-column.html" target="_blank" rel="external">http://www.extendoffice.com/documents/excel/1174-excel-split-data-into-multiple-worksheets-based-on-column.html</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;前一段工作遇到一个需要处理分离大量数据的重复工作，所以在网上找到了一个方法可以比较快速的根据列明把数据分离到不同的sheet中，而且可以把sheet名称命名为该列名。图片可能看得更明白一些，你可能想把上图中的情况根据A列来把数据根据不同的姓名分离成4个不同的工作表从而达到下
-    
-    </summary>
-    
-      <category term="数据处理" scheme="http://mingju.net/categories/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/"/>
-    
-    
-      <category term="Excel" scheme="http://mingju.net/tags/Excel/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>“xlsx” 包 OutOfMemoryError 解决办法</title>
-    <link href="http://mingju.net/2015/11/solution-for-xlsx-package-java-lang-out-of-memory-error/"/>
-    <id>http://mingju.net/2015/11/solution-for-xlsx-package-java-lang-out-of-memory-error/</id>
-    <published>2015-11-19T17:22:40.000Z</published>
-    <updated>2017-03-24T05:33:36.434Z</updated>
-    
-    <content type="html"><![CDATA[<p>read.xlsx( ) 是“xlsx” Package中读取Excel中.xlsx的方法，但是在Windows环境下读取相对较大的xlsx文件的时候，有可能出现下面的错误信息导致文件无法读取：</p>
-<pre><code>Error in .jcall(&quot;RJavaTools&quot;, &quot;Ljava/lang/Object;&quot;, &quot;invokeMethod&quot;, cl,: java.lang.OutOfMemoryError: Java heap space
-</code></pre><p>当你得到这个错误信息的时候只需要在你载入xlsx package之前运行下列代码即可解决：</p>
-<pre><code>#### 设置 ####
-options(java.parameters = &quot;-Xmx1000m&quot;)
-################
-if (Sys.getenv(&quot;JAVA_HOME&quot;)!=&quot;&quot;) {
-Sys.setenv(JAVA_HOME=&quot;&quot;)
-}
-library (&quot;xlsx&quot;)
-</code></pre><p>如果你有其他问题请在评论里提出。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;read.xlsx( ) 是“xlsx” Package中读取Excel中.xlsx的方法，但是在Windows环境下读取相对较大的xlsx文件的时候，有可能出现下面的错误信息导致文件无法读取：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Error in .jcall(&amp;quot;RJ
-    
-    </summary>
-    
-    
-      <category term="R" scheme="http://mingju.net/tags/R/"/>
     
   </entry>
   

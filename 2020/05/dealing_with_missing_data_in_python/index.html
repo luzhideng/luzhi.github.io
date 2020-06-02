@@ -102,7 +102,9 @@
 <meta property="og:image" content="http://mingju.net/uploads/images/Figure_8.png">
 <meta property="og:image" content="http://mingju.net/uploads/images/Figure_9.png">
 <meta property="og:image" content="http://mingju.net/uploads/images/Figure_10.png">
-<meta property="og:updated_time" content="2020-05-31T05:48:17.089Z">
+<meta property="og:image" content="http://mingju.net/uploads/images/Figure_11.png">
+<meta property="og:image" content="http://mingju.net/uploads/images/Figure_12.png">
+<meta property="og:updated_time" content="2020-05-31T07:38:37.984Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python中的缺失数据处理方法">
 <meta name="twitter:description" content="在数据清洗的过程中，还有一个非常重要的问题就是处理缺失的数据，尤其是在我们拿到样本比较小的数据时，能够通过一些合理的方式去插补这些缺失的数据对我们接下来的分析尤为重要。这篇将会介绍一些处理数据缺失的处理方法和手段。
@@ -430,20 +432,14 @@
 <p><code>Glucose</code>变量和<code>BMI</code>由于是完全随机缺失且缺失数据量较少，所以我们这边对它们采用列表删除整行数据：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df.dropna(subset=[<span class="string">"Glucose"</span>, <span class="string">'BMI'</span>], how=<span class="string">'any'</span>, inplace=<span class="keyword">True</span>)</div><div class="line">msno.matrix(df)</div></pre></td></tr></table></figure>
 <p>再次绘制matrix观察对缺失值的删除情况，我们发现<code>Glucose</code>变量和<code>BMI</code>的缺失值已经被完全删除了，这里再次强调一下，仅仅删除缺失数据当我们可以确定数据是完全随机缺失的时候。</p>
-<p><center><br><img src="http://mingju.net/uploads/images/Figure_10.png" alt=""><br></center><br>在对完全随机缺失的数据进行删除操作之后，我们需要对那些因为其他原因缺失的数据进行插补操作。目前我们还有以下变量存在缺失数据：</p>
-<p><code>Diastolic_BP</code></p>
-<p><code>Skin_Fold</code></p>
-<p><code>Serum_Insulin</code></p>
-<p>缺失数据插补一般有两种方式，一种为一般方式还有一种为高级方式。一般方式通常是为缺失数据插补平均数、中位数、众数或者常量，高级插补方式中需要使用到机器学习的一些算法来进行插补，比如KNN，MICE等。使用哪种方式要根据不同的情况进行合理的选择，需要对数据进行合理的插补又不能过度拟合模型。一般方式插补数据需要用到一个python包sklearn：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.impute <span class="keyword">import</span> SimpleImputer</div></pre></td></tr></table></figure>
-<p>平均数插补：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_mean = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">mean_imputer = SimpleImputer(strategy=<span class="string">'mean'</span>)</div><div class="line">df_mean.loc[:, :] = mean_imputer.fit_transform(df_mean)</div></pre></td></tr></table></figure>
-<p>中位数插补：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_median = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">median_imputer = SimpleImputer(strategy=<span class="string">'median'</span>)</div><div class="line">df_median.loc[:, :] = mean_imputer.fit_transform(df_median)</div></pre></td></tr></table></figure>
-<p>众数插补：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_mode = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">mode_imputer = SimpleImputer(strategy=<span class="string">'mode'</span>)</div><div class="line">df_mode.loc[:, :] = mean_imputer.fit_transform(df_mode)</div></pre></td></tr></table></figure>
-<p>常量插补：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_constant = diabetes.copy(deep=<span class="keyword">True</span>)</div><div class="line">constant_imputer = SimpleImputer(strategy=<span class="string">'constant'</span>, fill_value=<span class="number">0</span>))</div><div class="line">df_constant.loc[:, :] = constant_imputer.fit_transform(df_constant)</div></pre></td></tr></table></figure>
+<center><br><img src="http://mingju.net/uploads/images/Figure_10.png" alt=""><br></center><br>在对完全随机缺失的数据进行删除操作之后，我们需要对那些因为其他原因缺失的数据进行插补操作。目前我们还有以下变量存在缺失数据：<br><br><code>Diastolic_BP</code><br><br><code>Skin_Fold</code><br><br><code>Serum_Insulin</code><br><br>缺失数据插补一般有两种方式，一种为一般方式还有一种为高级方式。一般方式通常是为缺失数据插补平均数、中位数、众数或者常量，高级插补方式中需要使用到机器学习的一些算法来进行插补，比如KNN，MICE等。使用哪种方式要根据不同的情况进行合理的选择，需要对数据进行合理的插补又不能过度拟合模型。一般方式插补数据需要用到一个python包sklearn：<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.impute <span class="keyword">import</span> SimpleImputer</div></pre></td></tr></table></figure><br><br>平均数插补：<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_mean = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">mean_imputer = SimpleImputer(strategy=<span class="string">'mean'</span>)</div><div class="line">df_mean.loc[:, :] = mean_imputer.fit_transform(df_mean)</div></pre></td></tr></table></figure><br><br>中位数插补：<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_median = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">median_imputer = SimpleImputer(strategy=<span class="string">'median'</span>)</div><div class="line">df_median.loc[:, :] = mean_imputer.fit_transform(df_median)</div></pre></td></tr></table></figure><br><br>众数插补：<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_mode = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">mode_imputer = SimpleImputer(strategy=<span class="string">'mode'</span>)</div><div class="line">df_mode.loc[:, :] = mean_imputer.fit_transform(df_mode)</div></pre></td></tr></table></figure><br><br>常量插补：<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">df_constant = df.copy(deep=<span class="keyword">True</span>)</div><div class="line">constant_imputer = SimpleImputer(strategy=<span class="string">'constant'</span>, fill_value=<span class="number">0</span>)</div><div class="line">df_constant.loc[:, :] = constant_imputer.fit_transform(df_constant)</div></pre></td></tr></table></figure><br><br>可视化一下我们的插补情况：<br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">nullity = df[<span class="string">'Serum_Insulin'</span>].isnull()+df[<span class="string">'Glucose'</span>].isnull()</div><div class="line">df_mean.plot(x=<span class="string">'Serum_Insulin'</span>, y=<span class="string">'Glucose'</span>, kind=<span class="string">'scatter'</span>, alpha=<span class="number">0.5</span>,</div><div class="line">c=nullity, cmap=<span class="string">'rainbow'</span>, title=<span class="string">'Mean Imputation'</span>)</div></pre></td></tr></table></figure><br><br><center><br><img src="http://mingju.net/uploads/images/Figure_11.png" alt=""><br></center>
+
+<p><code>Serum_Insulin</code>变量和<code>Glucose</code>变量从图中的紫色点可以看出存在一定的正相关性，但是插补的数据（红色点）并没有呈现应有的相关性，所以该插补方式可能不是特别合理。</p>
+<p>我们观察一下另外其他的几种插补情况：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">fig, axes = plt.subplots(nrows=<span class="number">2</span>, ncols=<span class="number">2</span>, figsize=(<span class="number">10</span>, <span class="number">10</span>))</div><div class="line">nullity = df[<span class="string">'Serum_Insulin'</span>].isnull()+df[<span class="string">'Glucose'</span>].isnull()</div><div class="line">imputations = &#123;<span class="string">'Mean Imputation'</span>: df_mean, </div><div class="line">               <span class="string">'Median Imputation'</span>: df_median,</div><div class="line">               <span class="string">'Most Frequent Imputation'</span>: df_mode,</div><div class="line">               <span class="string">'Constant Imputation'</span>: df_constant&#125;</div><div class="line"><span class="keyword">for</span> ax, df_key <span class="keyword">in</span> zip(axes.flatten(), imputations):</div><div class="line">    imputations[df_key].plot(x=<span class="string">'Serum_Insulin'</span>, y=<span class="string">'Glucose'</span>, kind=<span class="string">'scatter'</span>,</div><div class="line">                             alpha=<span class="number">0.5</span>, c=nullity, cmap=<span class="string">'rainbow'</span>, ax=ax,</div><div class="line">                             colorbar=<span class="keyword">False</span>, title=df_key)</div></pre></td></tr></table></figure>
+<center><br><img src="http://mingju.net/uploads/images/Figure_12.png" alt=""><br></center>
+
+<p>出现了与mean插补方式类似的情况。</p>
 
       
     </div>
@@ -489,6 +485,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/pip-timeout-error-in-python/" rel="prev" title="pip安装超时timeout问题及解决方案">
+                pip安装超时timeout问题及解决方案 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -560,7 +560,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">43</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -571,7 +571,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -582,7 +582,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
