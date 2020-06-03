@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="fancyimpute," />
+  <meta name="keywords" content="Fancyimpute," />
 
 
 
@@ -101,7 +101,7 @@
 123conda install ecosconda install CVXcanonpip install fancyimpute
 在安装ecos和CVXcanon的过程中你可以会遇到在这篇帖子中遇到的错误，至少我是遇到了：
  ER">
-<meta property="og:updated_time" content="2020-06-02T22:03:26.919Z">
+<meta property="og:updated_time" content="2020-06-02T22:33:52.571Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows安装fancyimpute遇到的问题及解决方案">
 <meta name="twitter:description" content="Anaconda Cloud中没有提供fancyimpute在windows环境下的库，所以我们需要使用pip来安装fancyimpute。网上大多数安装方式如下：
@@ -391,20 +391,21 @@
         <p>Anaconda Cloud中没有提供<a href="https://anaconda.org/search?q=fancyimpute" target="_blank" rel="external">fancyimpute</a>在windows环境下的库，所以我们需要使用pip来安装fancyimpute。网上大多数安装方式如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">conda install ecos</div><div class="line">conda install CVXcanon</div><div class="line">pip install fancyimpute</div></pre></td></tr></table></figure>
 <p>在安装ecos和CVXcanon的过程中你可以会遇到在<a href="https://stackoverflow.com/questions/56414925/unable-to-install-fancyimpute-in-anaconda" target="_blank" rel="external">这篇帖子</a>中遇到的错误，至少我是遇到了：</p>
-<table><tr><td bgcolor="black"> <font color="red"><br>ERROR: Failed building wheel for scs   Running setup.py clean for scs Failed to build cvxpy scs<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red"><br>ERROR: Could not build wheels for cvxpy which use PEP 517 and cannot be installed directly<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red"><br>error: Microsoft Visual C++ 14.0 is required. Get it with “Microsoft Visual C++ Build Tools”: <a href="https://visualstudio.microsoft.com/downloads/" target="_blank" rel="external">https://visualstudio.microsoft.com/downloads/</a> </font><br></td></tr></table>
+<table><tr><td bgcolor="black"> <font color="red">ERROR: Failed building wheel for scs   Running setup.py clean for scs Failed to build cvxpy scs<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red">ERROR: Could not build wheels for cvxpy which use PEP 517 and cannot be installed directly<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red">error: Microsoft Visual C++ 14.0 is required. Get it with “Microsoft Visual C++ Build Tools”: <a href="https://visualstudio.microsoft.com/downloads/" target="_blank" rel="external">https://visualstudio.microsoft.com/downloads/</a> </font><br></td></tr></table>
+
 
 <p>这篇帖子有一个答案给出了解决方案，我当时照着操作就是去下载了<a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#scs" target="_blank" rel="external">scs</a> and <a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#cvxpy" target="_blank" rel="external">cvxpy</a> wheels，然后通过pip安装了这两个whl文件：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">conda install ecos</div><div class="line">conda install (scs filename).whl</div><div class="line">conda install (cvxpy filename).whl</div><div class="line">pip install fancyimpute</div></pre></td></tr></table></figure>
-<p>然后也成功的安装好了fancyimpute，但是当我在Spyder下import fancyimpute的时候出现了import error：</p>
+<p>然后也成功的安装好了fancyimpute，但是当我在Spyder下import fancyimpute的时候出现了ModuleNotFoundError和import error：</p>
 <table><tr><td bgcolor="black"> <font color="red"><br>ModuleNotFoundError: No module named ‘cvxpy.cvxcore.python._cvxcore’<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red">ImportError: DLL load failed: The specified module could not be found.<br></font></td></tr></table>
 
 <p>然后去解决ModuleNotFoundError，尝试了很多办法都没能解决问题，但是可以确定的是一定是cvxpy这个库出了问题，导致fancyimpute不能import，所以卸载了cvxpy这个库：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pip uninstall cvxpy</div><div class="line">pip install cvxpy</div></pre></td></tr></table></figure>
 <p>接着又出现了：</p>
-<table><tr><td bgcolor="black"> <font color="red"><br>ERROR: Failed building wheel for scs   Running setup.py clean for scs Failed to build cvxpy scs<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red"><br>ERROR: Could not build wheels for cvxpy which use PEP 517 and cannot be installed directly<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red"><br>error: Microsoft Visual C++ 14.0 is required. Get it with “Microsoft Visual C++ Build Tools”: <a href="https://visualstudio.microsoft.com/downloads/" target="_blank" rel="external">https://visualstudio.microsoft.com/downloads/</a> </font><br></td></tr></table>
+<table><tr><td bgcolor="black"> <font color="red">ERROR: Failed building wheel for scs   Running setup.py clean for scs Failed to build cvxpy scs<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red">ERROR: Could not build wheels for cvxpy which use PEP 517 and cannot be installed directly<br></font></td></tr></table><br><table><tr><td bgcolor="black"> <font color="red">error: Microsoft Visual C++ 14.0 is required. Get it with “Microsoft Visual C++ Build Tools”: <a href="https://visualstudio.microsoft.com/downloads/" target="_blank" rel="external">https://visualstudio.microsoft.com/downloads/</a> </font><br></td></tr></table>
 
-<p>这次仔细读了错误内容，然后又去了cvxpy的<a href="https://www.cvxpy.org/install/index.html#conda" target="_blank" rel="external">官方站点</a>。终于发现了问题所在，其实在一开始提到的那篇StackOverflow的帖子里的解决方案中的第一部也提到了这点，就是安装 <a href="https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&amp;rel=16" target="_blank" rel="external">Visual Studio build tools for Python 3</a></p>
-<p>，然后我再最开始忽略了这个步骤。下载好VS之后，然后重新安装cvxpy之后就不会报错了。安装完之后，fancyimpute就可以完美的使用了。</p>
+
+<p>这次仔细读了错误内容，然后又去了cvxpy的<a href="https://www.cvxpy.org/install/index.html#conda" target="_blank" rel="external">官方站点</a>。终于发现了问题所在，其实在一开始提到的那篇StackOverflow的帖子里的解决方案中的第一部也提到了这点，就是安装 <a href="https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&amp;rel=16" target="_blank" rel="external">Visual Studio build tools for Python 3</a>，然后我再最开始忽略了这个步骤。下载好VS之后，然后重新安装cvxpy之后就不会报错了。安装完cvxpy之后，fancyimpute就可以完美的使用了。</p>
 
       
     </div>
@@ -428,7 +429,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/fancyimpute/" rel="tag"># fancyimpute</a>
+            <a href="/tags/Fancyimpute/" rel="tag"># Fancyimpute</a>
           
         </div>
       
