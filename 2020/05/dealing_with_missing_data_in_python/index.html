@@ -110,7 +110,7 @@
 <meta property="og:image" content="http://mingju.net/uploads/images/Figure_15.png">
 <meta property="og:image" content="http://mingju.net/uploads/images/Figure_16.png">
 <meta property="og:image" content="http://mingju.net/uploads/images/Figure_17.png">
-<meta property="og:updated_time" content="2020-06-05T06:47:36.123Z">
+<meta property="og:updated_time" content="2020-06-05T07:32:47.011Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python中的缺失数据处理方法">
 <meta name="twitter:description" content="在数据清洗的过程中，还有一个非常重要的问题就是处理缺失的数据，尤其是在我们拿到样本比较小的数据时，能够通过一些合理的方式去插补这些缺失的数据对我们接下来的分析尤为重要。这篇将会介绍一些处理数据缺失的处理方法和手段。
@@ -401,7 +401,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#需要配合matplotlib来使用missingno库</span></div><div class="line"><span class="keyword">import</span> missingno <span class="keyword">as</span> msno</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">msno.matrix(df)</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
 <p>首先我们需要了解处理缺失数据的一个基本流程：</p>
 <p><strong>转化所有缺失值为空 –&gt;分析缺失值的数量及类型–&gt;合理删除或插补缺失数据 –&gt;比较评估表现</strong></p>
-<p>这篇将会使用datacamp中的<a href="https://assets.datacamp.com/production/repositories/4584/datasets/459359643874ba6411189d4a5251204b6142dd7d/pima-indians-diabetes%20data.csv" target="_blank" rel="external">diabetes</a>数据。这个链接下载下来的数据是一个xls文件，可能是文件类型出现了问题，可自行修改成csv后缀。其中我对原数据进行了一些修改从而更好的完成这篇文章的例子（该文使用的数据下载地址）：</p>
+<p>这篇将会使用datacamp中的<a href="https://assets.datacamp.com/production/repositories/4584/datasets/459359643874ba6411189d4a5251204b6142dd7d/pima-indians-diabetes%20data.csv" target="_blank" rel="external">diabetes</a>数据。这个链接下载下来的数据是一个xls文件，可能是文件类型出现了问题，可自行修改成csv后缀。其中我对原数据进行了一些修改从而更好的完成这篇文章的例子（该文使用的数据下载地址）：<a href="http://mingju.net/uploads/datasets/pima-indians-diabetes.csv">点击下载</a></p>
 <p>关于数据的解释可以在<a href="https://www.kaggle.com/uciml/pima-indians-diabetes-database" target="_blank" rel="external">kaggle</a>中找到。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">import pandas as pd</div><div class="line">import numpy as np</div><div class="line">df = pd.read_csv('datasets/pima-indians-diabetes.csv')</div><div class="line">df.head()</div><div class="line">Out [1]:</div><div class="line"> 	Pregnant  Glucose  Diastolic_BP ... Diabetes_Pedigree  Age  Class</div><div class="line">0         6    129.0          90.0  ...             0.582   60      0</div><div class="line">1        12     92.0          62.0  ...             0.926   44      1</div><div class="line">2         1     90.0          68.0  ...             1.138   36      0</div><div class="line">3         1    109.0          60.0  ...             0.947   21      0</div><div class="line">4         1     73.0          50.0  ...             0.248   21      0</div><div class="line">df.info()</div><div class="line">Out [2]:</div><div class="line">&lt;class 'pandas.core.frame.DataFrame'&gt;</div><div class="line">RangeIndex: 768 entries, 0 to 767</div><div class="line">Data columns (total 9 columns):</div><div class="line"> #   Column             Non-Null Count  Dtype  </div><div class="line">---  ------             --------------  -----  </div><div class="line"> 0   Pregnant           768 non-null    int64  </div><div class="line"> 1   Glucose            763 non-null    float64</div><div class="line"> 2   Diastolic_BP       733 non-null    float64</div><div class="line"> 3   Skin_Fold          768 non-null    object </div><div class="line"> 4   Serum_Insulin      394 non-null    float64</div><div class="line"> 5   BMI                768 non-null    float64</div><div class="line"> 6   Diabetes_Pedigree  768 non-null    float64</div><div class="line"> 7   Age                768 non-null    int64  </div><div class="line"> 8   Class              768 non-null    int64  </div><div class="line">dtypes: float64(5), int64(3), object(1)</div><div class="line">memory usage: 54.1+ KB</div></pre></td></tr></table></figure>
 <p>通过<code>.head()</code>我们大致对数据有了一个了解，通过<code>.info()</code>我们可以判断出变量<code>Glucose</code>，<code>Diastolic_BP</code>，<code>Serum_Insulin</code>这三个变量是有数据缺失的。除了这三个可以很直观的看出有缺失值的变量外，很多时候数据还会存在一些隐藏的缺失情况。我们观察发现，所有变量类型都是数字类型，只有Skin_Fold是一个对象（object）类型，虽然它在<code>.info()</code>中包含了768条完整的数据，但是这要引起我们的重视，所以要对其进行重点观察：</p>
@@ -477,7 +477,7 @@
 <p>插补之后的数据如下图所示：</p>
 <center><br><img src="http://mingju.net/uploads/images/Figure_17.png" alt=""><br></center>
 
-<p>由于我们的‘Class’变量其实是完整的，我们在例子最开始在’Outcome’中特意删除了50个数据，把这50个数据变为了缺失数据，所以当我们使用KNN插补之后，我们可以把插补后的结果跟原’Class’的真实数据进行一下比较，看下插补的效果如何：</p>
+<p>由于我们的<code>Class</code>变量其实是完整的，我们在例子最开始在<code>Outcome</code>中特意删除了50个数据，把这50个数据变为了缺失数据，所以当我们使用KNN插补之后，我们可以把插补后的结果跟原’Class’的真实数据进行一下比较，看下插补的效果如何：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#打印一下插补数据跟'Class'真实数据不相符的个数</span></div><div class="line">print(len(df_KNN_imputed[<span class="number">0</span>:<span class="number">50</span>][(df_KNN_imputed[<span class="string">'Class'</span>] == <span class="number">1</span>) &amp; \</div><div class="line">                     (df_KNN_imputed[<span class="string">'Outcome'</span>] == <span class="string">'healthy'</span>)]) + \</div><div class="line">len(df_KNN_imputed[<span class="number">0</span>:<span class="number">50</span>][(df_KNN_imputed[<span class="string">'Class'</span>] == <span class="number">0</span>) &amp; \</div><div class="line">                     (df_KNN_imputed[<span class="string">'Outcome'</span>] == <span class="string">'diabetes'</span>)]))</div><div class="line">Out [<span class="number">16</span>]:</div><div class="line"><span class="number">9</span></div></pre></td></tr></table></figure>
 <p>准确率大概有80%以上，效果可以说还算不错。</p>
 
@@ -526,8 +526,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/06/pip-timeout-error-in-python/" rel="prev" title="pip安装超时timeout问题及解决方案">
-                pip安装超时timeout问题及解决方案 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/05/dealing-and-imputing-time-series-data/" rel="prev" title="处理与插补时间序列数据">
+                处理与插补时间序列数据 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -600,7 +600,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
