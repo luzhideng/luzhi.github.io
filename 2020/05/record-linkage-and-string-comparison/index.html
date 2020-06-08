@@ -1,0 +1,895 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Lüzhi's Notebook" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="记录链接（Record linkage）是一个用于融合不同数据集合的强大技巧。当我们处理一些字符输入错误或者拼写不一致的问题时，记录链接技巧变得尤为实用。记录链接的记录操作底层逻辑就是对字符串内的元素的插入、替换以及删除。可以实现这种算法的库有nltk，fuzzywuzzy，textdistance等等。我们这里使用fuzzywuzzy库。
+12345from fuzzywuzzy import">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录链接与字符串比较">
+<meta property="og:url" content="http://mingju.net/2020/05/record-linkage-and-string-comparison/index.html">
+<meta property="og:site_name" content="Lüzhi's Notebook">
+<meta property="og:description" content="记录链接（Record linkage）是一个用于融合不同数据集合的强大技巧。当我们处理一些字符输入错误或者拼写不一致的问题时，记录链接技巧变得尤为实用。记录链接的记录操作底层逻辑就是对字符串内的元素的插入、替换以及删除。可以实现这种算法的库有nltk，fuzzywuzzy，textdistance等等。我们这里使用fuzzywuzzy库。
+12345from fuzzywuzzy import">
+<meta property="og:updated_time" content="2020-06-08T01:44:45.952Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记录链接与字符串比较">
+<meta name="twitter:description" content="记录链接（Record linkage）是一个用于融合不同数据集合的强大技巧。当我们处理一些字符输入错误或者拼写不一致的问题时，记录链接技巧变得尤为实用。记录链接的记录操作底层逻辑就是对字符串内的元素的插入、替换以及删除。可以实现这种算法的库有nltk，fuzzywuzzy，textdistance等等。我们这里使用fuzzywuzzy库。
+12345from fuzzywuzzy import">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://mingju.net/2020/05/record-linkage-and-string-comparison/"/>
+
+
+
+
+
+  <title> 记录链接与字符串比较 | Lüzhi's Notebook </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Lüzhi's Notebook</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Harnessing Data to Drive Marketing</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://mingju.net/2020/05/record-linkage-and-string-comparison/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lüzhi Deng">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Lüzhi's Notebook">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                记录链接与字符串比较
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-25T16:56:00+08:00">
+                2020-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据清理/" itemprop="url" rel="index">
+                    <span itemprop="name">数据清理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录链接（Record linkage）是一个用于融合不同数据集合的强大技巧。当我们处理一些字符输入错误或者拼写不一致的问题时，记录链接技巧变得尤为实用。记录链接的记录操作底层逻辑就是对字符串内的元素的插入、替换以及删除。可以实现这种算法的库有nltk，fuzzywuzzy，textdistance等等。我们这里使用<a href="https://pypi.org/project/fuzzywuzzy/" target="_blank" rel="external">fuzzywuzzy</a>库。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fuzzywuzzy <span class="keyword">import</span> fuzz</div><div class="line"></div><div class="line">fuzz.WRatio(<span class="string">'Reeding'</span>, <span class="string">'Reading'</span>)</div><div class="line">Out [<span class="number">1</span>]:</div><div class="line"><span class="number">86</span></div></pre></td></tr></table></figure>
+<p>上面例子比较了两个字符串‘Reeding’和‘Reading’的相似度，相似度是一个0-100的数字，数字越大代表相似度越高。fuzzywuzzy认为字符串‘Reeding’和‘Reading’的相似度为86。下面再来看两个比较一部分字符串的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#部分字符串比较</span></div><div class="line">fuzz.WRatio(<span class="string">'Houston Rockets'</span>, <span class="string">'Rockets'</span>)</div><div class="line">Out [<span class="number">2</span>]:</div><div class="line"><span class="number">90</span></div><div class="line"><span class="comment">#不同顺序的部分字符串比较</span></div><div class="line">fuzz.WRatio(<span class="string">'Houston Rockets vs Los Angeles Lakers'</span>, <span class="string">'Lakers vs Rockets'</span>)</div><div class="line">Out [<span class="number">3</span>]:</div><div class="line"><span class="number">86</span></div></pre></td></tr></table></figure>
+<p>比较数组：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">from</span> fuzzywuzzy <span class="keyword">import</span> process</div><div class="line"></div><div class="line">string = <span class="string">"Houston Rockets vs Los Angeles Lakers"</span></div><div class="line">choices = pd.Series([<span class="string">'Rockets vs Lakers'</span>, <span class="string">'Lakers vs Rockets'</span>,</div><div class="line"><span class="string">'Houson vs Los Angeles'</span>, <span class="string">'Heat vs Bulls'</span>])</div><div class="line"><span class="comment">#limit = 2 选取数组里的两个元素</span></div><div class="line">process.extract(string, choices, limit = <span class="number">2</span>)</div><div class="line">Out [<span class="number">4</span>]:</div><div class="line">[(<span class="string">'Rockets vs Lakers'</span>, <span class="number">86</span>, <span class="number">0</span>), (<span class="string">'Lakers vs Rockets'</span>, <span class="number">86</span>, <span class="number">1</span>)]</div></pre></td></tr></table></figure>
+<p>在对fuzzywuzzy库有一个基本的了解之后，下面正式进入对实际数据的操作演示。本文使用的数据为restaurant数据，数据包含了餐厅名称name，地址addr，所在城市city，电话phone和食物类型type。</p>
+<p>数据下载地址：<a href="http://mingju.net/uploads/datasets/restaurants.csv">点击下载</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> fuzzywuzzy <span class="keyword">import</span> fuzz</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">from</span> fuzzywuzzy <span class="keyword">import</span> process</div><div class="line"></div><div class="line">restaurants = pd.read_csv(<span class="string">'datasets/restaurants.csv'</span>)</div><div class="line">unique_types = restaurants[<span class="string">'type'</span>].unique()</div><div class="line">print(unique_types)</div><div class="line">Out [<span class="number">5</span>]:</div><div class="line">[<span class="string">'american'</span> <span class="string">'america'</span> <span class="string">'american ( new )'</span> <span class="string">'mericano'</span> <span class="string">'americano'</span> <span class="string">'asia'</span></div><div class="line"> <span class="string">'asian'</span> <span class="string">'cajun'</span> <span class="string">'coffeebar'</span> <span class="string">'italian'</span> <span class="string">'italia'</span> <span class="string">'italiano'</span> <span class="string">'mexican'</span></div><div class="line"> <span class="string">'southern'</span> <span class="string">'southwestern'</span> <span class="string">'steakhouses'</span>]</div></pre></td></tr></table></figure>
+<p>通过查看餐厅的唯一类型，我们可以看到有一些类别其实是重复的，比如’american’ ‘america’ ‘american ( new )’ ‘mericano’ ‘americano’，这些其实是同一个类型的菜品american美国菜。可能是由于数据的录入错误导致一种类型的数据出现了很多种表达方式。我们当然可以使用<code>.replace()</code>函数进行替换，但是每个不对等的字符串都需要单独批量替换就显得有点笨拙了，所以使用记录链接的方式去判断字符串的相似度来解决这个问题更加高效：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#创建标准类型数据框里面分别包含三种标准类型（asian，american还有italian）</span></div><div class="line">cat = &#123;<span class="string">'type'</span>:[<span class="string">'asian'</span>, <span class="string">'american'</span>, <span class="string">'italian'</span>]&#125;</div><div class="line">categories = pd.DataFrame(cat)</div><div class="line"><span class="comment"># 循环categories里的匹配的三种类型</span></div><div class="line"><span class="keyword">for</span> cuisine <span class="keyword">in</span> categories[<span class="string">'type'</span>]:</div><div class="line">  <span class="comment"># 找出相似度</span></div><div class="line">  matches = process.extract(cuisine, restaurants[<span class="string">'type'</span>], </div><div class="line">                 limit = len(restaurants[<span class="string">'type'</span>]))</div><div class="line">  </div><div class="line">  <span class="comment"># 找出相似度 &gt;= 80的数据</span></div><div class="line">  <span class="keyword">for</span> possible_match <span class="keyword">in</span> matches:</div><div class="line">    <span class="keyword">if</span> possible_match[<span class="number">1</span>] &gt;= <span class="number">80</span>:</div><div class="line">      <span class="comment"># 找出相似的类型并且进行替换</span></div><div class="line">      matching_cuisine = restaurants[<span class="string">'type'</span>] == possible_match[<span class="number">0</span>]</div><div class="line">      restaurants.loc[matching_cuisine, <span class="string">'type'</span>] = cuisine</div><div class="line"><span class="comment">#最后打印唯一值来验证一下mapping是否成功</span></div><div class="line">print(restaurants[<span class="string">'type'</span>].unique())</div><div class="line">Out [<span class="number">6</span>]:</div><div class="line">[<span class="string">'american'</span> <span class="string">'asian'</span> <span class="string">'cajun'</span> <span class="string">'coffeebar'</span> <span class="string">'italian'</span> <span class="string">'southern'</span></div><div class="line"> <span class="string">'southwestern'</span> <span class="string">'steakhouses'</span>]</div></pre></td></tr></table></figure>
+<p>通过对比Out [5]和Out [6]的结果，可以看到在Out [5]中杂乱不堪的类别已经被我们根据字符串相似性的条件整理成了统一个类别。’american’ ‘america’ ‘american ( new )’ ‘mericano’ ‘americano’被统一整理成了‘american’，’asia’和’asian’被统一成了’asian’，’italian’ ‘italia’ ‘italiano’被统一成了’italian’。</p>
+<p>记录链接（record linkage）和连接（join）的作用基本类似。不同的是，记录链接不需要数据完全匹配也可以对不同的dataframe进行合并。记录链接的基本操作思路是：</p>
+<ol>
+<li>拿到两个数据框，例如Data A和Data B</li>
+<li>生成配对</li>
+<li>比较配对</li>
+<li>为配生成相似度分数</li>
+<li>连接数据</li>
+</ol>
+<p>例如我们拿到一个新的数据框restaurants_new，这个数据框中我们发现了有一些餐厅的名称存在一些数据错误。这时，我们就需要记录链接来合并两个数据框：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">restaurants_new = pd.read_csv(<span class="string">'datasets/restaurants_new.csv'</span>)</div><div class="line"><span class="comment">#创建indexer和对象去寻找可能的成对数据</span></div><div class="line">indexer = recordlinkage.Index()</div><div class="line"><span class="comment">#避免创建太多的“对”，这里把以'type'创建的“对”给去掉</span></div><div class="line">indexer.block(<span class="string">'type'</span>)</div><div class="line"><span class="comment">#生成“对”</span></div><div class="line">pairs = indexer.index(restaurants, restaurants_new)</div><div class="line">print(pairs)</div><div class="line">Out [<span class="number">7</span>]:</div><div class="line">MultiIndex([(  <span class="number">0</span>,  <span class="number">0</span>),</div><div class="line">            (  <span class="number">0</span>,  <span class="number">1</span>),</div><div class="line">            (  <span class="number">0</span>,  <span class="number">7</span>),</div><div class="line">            (  <span class="number">0</span>, <span class="number">12</span>),</div><div class="line">            (  <span class="number">0</span>, <span class="number">13</span>),</div><div class="line">            (  <span class="number">0</span>, <span class="number">20</span>),</div><div class="line">            (  <span class="number">0</span>, <span class="number">27</span>),</div><div class="line">            (  <span class="number">0</span>, <span class="number">28</span>),</div><div class="line">            (  <span class="number">0</span>, <span class="number">39</span>),</div><div class="line">            (  <span class="number">0</span>, <span class="number">40</span>),</div><div class="line">            ...</div><div class="line">            (<span class="number">312</span>, <span class="number">47</span>),</div><div class="line">            (<span class="number">312</span>, <span class="number">57</span>),</div><div class="line">            (<span class="number">312</span>, <span class="number">73</span>),</div><div class="line">            (<span class="number">312</span>, <span class="number">75</span>),</div><div class="line">            (<span class="number">312</span>, <span class="number">76</span>),</div><div class="line">            (<span class="number">331</span>, <span class="number">18</span>),</div><div class="line">            (<span class="number">332</span>, <span class="number">18</span>),</div><div class="line">            (<span class="number">333</span>, <span class="number">18</span>),</div><div class="line">            (<span class="number">334</span>, <span class="number">18</span>),</div><div class="line">            (<span class="number">335</span>, <span class="number">18</span>)],</div><div class="line">           length=<span class="number">3784</span>)</div></pre></td></tr></table></figure>
+<p>在生成我们的成对数据之后，接下来需要做的是比较每列的数据，然后为比较打上相似分数，最后合并数据框。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#创建比较对象</span></div><div class="line">comp_cl = recordlinkage.Compare()</div><div class="line"><span class="comment">#为变量'city'和变量'type'找到精准匹配</span></div><div class="line">comp_cl.exact(<span class="string">'city'</span>, <span class="string">'city'</span>, label=<span class="string">'city'</span>)</div><div class="line">comp_cl.exact(<span class="string">'type'</span>, <span class="string">'type'</span>, label = <span class="string">'type'</span>)</div><div class="line"><span class="comment">#为餐厅名称'name'匹配0.8匹配度的数据</span></div><div class="line">comp_cl.string(<span class="string">'name'</span>, <span class="string">'name'</span>, label=<span class="string">'name'</span>, threshold = <span class="number">0.8</span>) </div><div class="line"><span class="comment">#计算潜在的匹配数据</span></div><div class="line">potential_matches = comp_cl.compute(pairs, restaurants, restaurants_new)</div><div class="line">print(potential_matches)</div><div class="line">Out [<span class="number">8</span>]:</div><div class="line">      	 city  type  name</div><div class="line"><span class="number">0</span>   <span class="number">0</span>      <span class="number">0</span>     <span class="number">1</span>   <span class="number">0.0</span></div><div class="line">    <span class="number">1</span>      <span class="number">0</span>     <span class="number">1</span>   <span class="number">0.0</span></div><div class="line">    <span class="number">7</span>      <span class="number">0</span>     <span class="number">1</span>   <span class="number">0.0</span></div><div class="line">    <span class="number">12</span>     <span class="number">0</span>     <span class="number">1</span>   <span class="number">0.0</span></div><div class="line">    <span class="number">13</span>     <span class="number">0</span>     <span class="number">1</span>   <span class="number">0.0</span></div><div class="line">     ...   ...   ...</div><div class="line"><span class="number">331</span> <span class="number">18</span>     <span class="number">0</span>     <span class="number">1</span>   <span class="number">0.0</span></div><div class="line"><span class="number">332</span> <span class="number">18</span>     <span class="number">0</span>     <span class="number">1</span>   <span class="number">0.0</span></div><div class="line"><span class="number">333</span> <span class="number">18</span>     <span class="number">0</span>     <span class="number">1</span>   <span class="number">0.0</span></div><div class="line"><span class="number">334</span> <span class="number">18</span>     <span class="number">0</span>     <span class="number">1</span>   <span class="number">0.0</span></div><div class="line"><span class="number">335</span> <span class="number">18</span>     <span class="number">0</span>     <span class="number">1</span>   <span class="number">0.0</span></div><div class="line"></div><div class="line">[<span class="number">3784</span> rows x <span class="number">3</span> columns]</div></pre></td></tr></table></figure>
+<p>变量里等于1代表是潜在的匹配，0代表不匹配。根据我们的实际情况，我们需要‘city’，’type’和’name’三者都为1的时候，我们才能确定这两个数据框中的某两条餐厅数据为同一家餐厅。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">#选出‘city’，’type’和’name’三者都为1的数据</div><div class="line">matches = potential_matches[potential_matches.sum(axis=1) &gt;= 3]</div><div class="line">#获取三者完全匹配数据的index</div><div class="line">matching_indices = matches.index.get_level_values(1)</div><div class="line">#获取restaurants_new中没有出现在restaurants中的餐厅数据</div><div class="line">non_dup = restaurants_new[~restaurants_new.index.isin(matching_indices)]</div><div class="line">#将两个df中唯一的餐厅数据合并</div><div class="line">full_restaurants = restaurants.append(non_dup)</div><div class="line">print(full_restaurants)</div><div class="line">Out [9]:</div><div class="line"> Unnamed: 0                       name  ...       phone         type</div><div class="line">0            0  arnie morton's of chicago  ...  3102461501     american</div><div class="line">1            1         art's delicatessen  ...  8187621221     american</div><div class="line">2            2                  campanile  ...  2139381447     american</div><div class="line">3            3                      fenix  ...  2138486677     american</div><div class="line">4            4         grill on the alley  ...  3102760615     american</div><div class="line">..         ...                        ...  ...         ...          ...</div><div class="line">76          76                        don  ...  3102091422      italian</div><div class="line">77          77                      feast  ...  3104750400      chinese</div><div class="line">78          78                   mulberry  ...  8189068881        pizza</div><div class="line">80          80                    jiraffe  ...  3109176671  californian</div><div class="line">81          81                   martha's  ...  3103767786     american</div><div class="line"></div><div class="line">[396 rows x 6 columns]</div></pre></td></tr></table></figure>
+<p>借此，我们就完成了对两个df的记录链接的所有操作。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/data_cleaning_basics_in_python/" rel="next" title="Python中的基本数据清理">
+                <i class="fa fa-chevron-left"></i> Python中的基本数据清理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/dealing_with_missing_data_in_python/" rel="prev" title="Python中的缺失数据处理方法">
+                Python中的缺失数据处理方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Lüzhi Deng" />
+          <p class="site-author-name" itemprop="name">Lüzhi Deng</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/luzhideng/" target="_blank" title="Linkedin">
+                  
+                    <i class="fa fa-fw fa-linkedin"></i>
+                  
+                  Linkedin
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/luzhideng" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-git"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lüzhi Deng</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
